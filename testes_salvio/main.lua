@@ -1,6 +1,7 @@
 require("core.auxiliary.world_functions")
 require("core.auxiliary.utils")
 require("core.auxiliary.debug")
+local Parede = require("entitiesGame.parede")
 if arg[2] == "debug" then
     require("lldebugger").start()
     DEBUG_MODE = true
@@ -8,6 +9,7 @@ end
 -- love.load -> love.update -> love.draw -> love.update -> love.draw -> love.update (...)
 function love.load()
     CreateWorld()
+    parede = Parede(200, 230)
 end
 function love.update(dt)
     UpdateWorldEntities(dt)
