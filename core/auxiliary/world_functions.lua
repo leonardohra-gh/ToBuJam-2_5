@@ -60,6 +60,20 @@ function GetWorldEntities()
     return worldEntities
 end
 
+function GetWorldEntitiesByTag(tag)
+    local WorldEntitiesWithTag = {}
+    local worldBodies = World:getBodies()
+    for i = 1, #worldBodies do
+        local possibleEntity = worldBodies[i]:getFixtures()[1]:getUserData()
+        if possibleEntity ~= nil and
+           possibleEntity:is(Entity) and
+           possibleEntity:getTag() == tag then
+            table.insert(WorldEntitiesWithTag, possibleEntity)
+        end
+    end
+    return WorldEntitiesWithTag
+end
+
 function UpdateWorldEntities(dt)
     World:update(dt)
 

@@ -2,7 +2,9 @@ require("core.auxiliary.world_functions")
 require("core.auxiliary.utils")
 require("core.auxiliary.debug")
 local TELA = require("core.enums.telas")
+local Botao = require("entitiesGame.botao")
 local Tamagochi = require("entitiesGame.tamagochi")
+local SHAPE = require("core.enums.shape_types")
 local NECESSIDADE = require("core.enums.necessidades")
 
 if arg[2] == "debug" then
@@ -23,19 +25,20 @@ local telaSelecionada = TELA.INICIO
 
 function love.load()
     CreateWorld()
-    Tamagochi1 = Tamagochi(200, 200)
+    -- botaoStart = Botao(300, 500, "assets/botaoRect.png", SHAPE.RECTANGLE)
+    -- botaoAlimentar = Botao(400, 500, "assets/botaoCircular.png", SHAPE.CIRCLE)
+    -- Tamagochi1 = Tamagochi(200, 200)
 end
 
 function love.update(dt)
-    
-    if telaSelecionada == TELA.JOGO then
-        UpdateWorldEntities(dt)
-        if love.keyboard.isDown("right") then
-            Tamagochi1:atenderNecessidade(NECESSIDADE.BRINCAR)
-        end
+
+    UpdateWorldEntities(dt)
+    if telaSelecionada == TELA.INICIO then
+        
+        -- if love.keyboard.isDown("right") then
+        --     Tamagochi1:atenderNecessidade(NECESSIDADE.BRINCAR)
+        -- end
     end
-
-
 
 end
 
@@ -47,6 +50,12 @@ function love.draw()
         -- DrawColliders()
     end
 end
+
+-- function love.mousereleased(x, y, button)
+--     if button == 1 then
+--         -- TODO
+--     end
+-- end
 
 local love_errorhandler = love.errorhandler
 
