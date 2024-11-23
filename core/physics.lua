@@ -6,6 +6,7 @@ require("core.auxiliary.utils")
 
 function Physics:new(world, position, size, shapeType, bodyType, atravessavel)
     self.body = love.physics.newBody(world, position.x, position.y, bodyType or BodyType.DYNAMIC)
+    self.body:setFixedRotation(true)
     local screenWidth = love.graphics.getWidth()
     local screenHeight = love.graphics.getHeight()
     atravessavel = atravessavel or false
