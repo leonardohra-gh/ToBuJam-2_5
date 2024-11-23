@@ -18,10 +18,10 @@ function Jogador:new(x, y)
     }
     self.dinheiro = 100
     self.pontuacao = 0
+    self.movementDisabled = false
 end
 
-function Jogador:update(dt)
-    
+function Jogador:mover()
     local velocityX, velocityY = 0, 0
     
     if love.keyboard.isDown("right") then
@@ -38,6 +38,12 @@ function Jogador:update(dt)
     end
     
     self.physics:setVelocity(velocityX, velocityY)
+end
+
+function Jogador:update(dt)
+    if not self.movementDisabled then
+        self:mover()
+    end
     Jogador.super.update(self, dt)
 end
 
@@ -47,7 +53,11 @@ end
 
 function Jogador:beginContact(entidade_colisora, coll)
     if entidade_colisora.tag == EntityTags.CHAO_ESCORREGADIO then
-        
+        self.movementDisabled = true
+        local velocityX, velocityY = self.physics:getVelocity()
+        self.physics:setVelocity(2*velocityX, 2*velocityY)
+    elseif entidade_colisora.tag == EntityTags.PAREDE then
+        self.movementDisabled = false
     end
 end
 

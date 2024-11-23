@@ -20,6 +20,7 @@ function love.load()
     local parede = Parede(200, 200)
     -- local chao = Chao(300, 300)
     local chaoEscorregadio = chaoEscorregadio(300, 300)
+    local parede2 = Parede(900, 300)
     --local chaoCraquelado = ChaoCraquelado(100, 200)
     -- local ruaSize = 96
     -- local mult = 1.5
@@ -40,7 +41,7 @@ function love.draw()
     DrawWorldEntities()
     if DEBUG_MODE then
         DrawWorldEntityCountTopLeft()
-        --DrawColliders()
+        DrawColliders()
         DrawTester("Leo")
     end
 end
