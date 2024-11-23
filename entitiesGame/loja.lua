@@ -33,6 +33,12 @@ function Loja:beginContact(entidade_colisora, coll)
     end
 end
 
+function Loja:endContact(entidade_colisora, coll)
+    if entidade_colisora.tag == EntityTags.JOGADOR then
+        self:Fechar()
+    end
+end
+
 function Loja:Abrir()
     self.aberta = true
     self.botoes.comprarPantufa:ativar()
@@ -40,6 +46,7 @@ end
 
 function Loja:Fechar()
     self.aberta = false
+    self.botoes.comprarPantufa:desativar()
 end
 
 function Loja:comprar()

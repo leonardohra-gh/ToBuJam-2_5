@@ -9,6 +9,7 @@ local Jogador = require("entitiesGame.jogador")
 local Robozinho = require("entitiesGame.robozinho")
 local Parede = require("entitiesGame.parede")
 local Loja = require("entitiesGame.loja")
+local Casa = require("entitiesGame.casa")
 
 if arg[2] == "debug" then
     require("lldebugger").start()
@@ -64,14 +65,8 @@ function iniciarJogo()
     botaoJogarNovamente:desativar()
     botaoStart:desativar()
     jogador = Jogador(0, 0)
-    robo = Robozinho(300, 505)
-    Parede(400, 500)
-    Parede(350, 550)
-    Parede(366, 550)
-    Parede(382, 550)
-    Parede(408, 550)
-    Parede(424, 550)
     Loja(300, 300)
+    criarCasasAleatorias()
 end
 
 function finalizarJogo()
@@ -114,6 +109,20 @@ function destruirArmadilhas()
     end
 end
 
+function criarCasasAleatorias()
+    positions = {
+        {x = 100, y = 100},
+        {x = 1000, y = 150},
+        {x = 300, y = 200},
+        {x = 750, y = 400},
+        {x = 100, y = 600},
+        {x = 1250, y = 500},
+    }
+
+    for i = 1, #positions do
+        Casa(positions[i].x, positions[i].y)
+    end
+end
 
 local love_errorhandler = love.errorhandler
 

@@ -8,7 +8,7 @@ local Mochila = require('entitiesGame.mochila')
 function Jogador:new(x, y)
     local imagePath = "assets/jogador.png"
     Jogador.super.new(self, x, y, imagePath, World, ShapeTypes.RECTANGLE, BodyTypes.DYNAMIC, EntityTags.JOGADOR)
-    self.speed = 100
+    self.speed = 300
     self.mochila = Mochila()
     self.pontuacao = 0
     self.movementDisabled = false
