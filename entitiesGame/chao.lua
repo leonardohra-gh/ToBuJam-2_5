@@ -6,7 +6,8 @@ local Chao = Entity:extend()
 
 function Chao:new(x, y)
     local imagePath = "assets/chao.png"
-    Chao.super.new(self, x, y, imagePath, World, ShapeTypes.RECTANGLE, BodyTypes.STATIC, "chao", true)
+    local atravessavel = true
+    Chao.super.new(self, x, y, imagePath, World, ShapeTypes.RECTANGLE, BodyTypes.STATIC, "chao", atravessavel)
 end
 
 function Chao:update(dt)
