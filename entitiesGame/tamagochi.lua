@@ -8,15 +8,15 @@ local EntityTags = require("enumsGame.EntityTags")
 
 function Tamagotchi:new(x, y)
     local imagePath = "assets/tamagotchi.png"
-    Tamagotchi.super.new(self, x, y, imagePath, World, ShapeTypes.CIRCLE, BodyTypes.DYNAMIC, EntityTags.TAMAGOCHI)
+    Tamagotchi.super.new(self, x, y, imagePath, World, ShapeTypes.CIRCLE, BodyTypes.DYNAMIC, EntityTags.TAMAGOCHI, true)
 
     self.estaVivo = true
     self.necessidadesValorInicial = {
-        AGUA = 10,
-        BANHO = 20,
-        BRINCAR = 5,
-        COMER = 10,
-        DORMIR = 10
+        AGUA = 100,
+        BANHO = 200,
+        BRINCAR = 50,
+        COMER = 100,
+        DORMIR = 100
     }
     self.necessidades = {
         AGUA = self.necessidadesValorInicial.AGUA,
@@ -41,13 +41,30 @@ function Tamagotchi:update(dt)
 end
 
 function Tamagotchi:draw()
+
+    -- if self.estaVivo then
+    --     Tamagotchi.super.draw(self)
+    -- end
+
+    -- self:desenharNecessidades()
+
+end
+
+function Tamagotchi:desenharNecessidades()
     if self.estaVivo then
-        Tamagotchi.super.draw(self)        
+        Tamagotchi.super.draw(self)
+        local x, y = self.physics:getPositionRounded()
+        self:desenharBarraNecessidade(x - 20, y - 40, self.necessidades.AGUA, self.necessidadesValorInicial.AGUA)
     end
+end
 
-    self:desenharNecessidades()
-
-
+function Tamagotchi:desenharBarraNecessidade(x, y, valor, max)
+    local width, height = 50, 5
+    love.graphics.setColor(0, 0, 1, 1)
+    love.graphics.rectangle("fill", x, y, width * valor / max, height)
+    love.graphics.setColor(0, 0, 0, 1)
+    love.graphics.rectangle("line", x, y, width, height)
+    love.graphics.setColor(1, 1, 1, 1)
 end
 
 function Tamagotchi:checarVida()
@@ -89,7 +106,7 @@ function Tamagotchi:atenderNecessidade(necessidade)
     end
 end
 
-function Tamagotchi:desenharNecessidades()
+function Tamagotchi:printarNecessidades()
     love.graphics.print("Água: " .. self.necessidades.AGUA, 10, 30)
     love.graphics.print("Banho: " .. self.necessidades.BANHO, 10, 40)
     love.graphics.print("Brincar: " .. self.necessidades.BRINCAR, 10, 50)

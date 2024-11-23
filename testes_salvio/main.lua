@@ -64,8 +64,8 @@ function iniciarJogo()
     telaSelecionada = TELA.JOGO
     botaoJogarNovamente:desativar()
     botaoStart:desativar()
-    jogador = Jogador(0, 0)
-    Loja(300, 300)
+    jogador = Jogador(600, 500)
+    Loja(300, 500)
     criarCasasAleatorias()
 end
 
