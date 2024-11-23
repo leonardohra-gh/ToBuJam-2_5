@@ -4,16 +4,15 @@ local ShapeTypes = require("core.enums.shape_types")
 local BodyTypes = require("core.enums.body_types")
 
 function Jogador:new(x, y)
-    local imagePath = "assets/jogador.png"
+    local imagePath = "assets/jogadorTeste.png"
     Jogador.super.new(self, x, y, imagePath, World, ShapeTypes.RECTANGLE, BodyTypes.DYNAMIC)
-    self.speed = 10
+    self.speed = 100
 end
 
 function Jogador:update(dt)
-    Jogador.super.update(self, dt)
-
+    
     local velocityX, velocityY = 0, 0
-
+    
     if love.keyboard.isDown("right") then
         velocityX = self.speed
     end
@@ -26,8 +25,9 @@ function Jogador:update(dt)
     if love.keyboard.isDown("down") then
         velocityY = self.speed
     end
-
+    
     self.physics:setVelocity(velocityX, velocityY)
+    Jogador.super.update(self, dt)
 end
 
 function Jogador:draw()
