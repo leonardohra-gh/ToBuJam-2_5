@@ -9,7 +9,7 @@ function Casa:new(x, y)
     local imagePath = "assets/casa.png"
     Casa.super.new(self, x, y, imagePath, World, ShapeTypes.RECTANGLE, BodyTypes.STATIC, EntityTags.CASA)
     local casaX, casaY = self.physics:getPositionRounded()
-    if math.random() <= 0.5 then
+    if math.random() <= 0.8 then
         self.tamagotchi = Tamagochi(casaX, casaY)
     end
 end

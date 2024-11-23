@@ -5,6 +5,10 @@ local BodyTypes = require("core.enums.body_types")
 local EntityTags = require("enumsGame.EntityTags")
 local Mochila = require('entitiesGame.mochila')
 
+local TAMAGOTCHI_VIDAS = 5
+local IMAGE_TAMAGOTCHI_VIDA = love.graphics.newImage("assets/tamagotchiVida.png")
+local vidasX, vidasY = 200, 50
+
 function Jogador:new(x, y)
     local imagePath = "assets/jogador.png"
     Jogador.super.new(self, x, y, imagePath, World, ShapeTypes.RECTANGLE, BodyTypes.DYNAMIC, EntityTags.JOGADOR)
@@ -12,6 +16,7 @@ function Jogador:new(x, y)
     self.mochila = Mochila()
     self.pontuacao = 0
     self.movementDisabled = false
+    self.tamagotchometro = TAMAGOTCHI_VIDAS
 end
 
 function Jogador:mover()
@@ -42,7 +47,10 @@ end
 
 function Jogador:draw()
     Jogador.super.draw(self)
-    self.mochila:draw()
+    self.mochila:draw()    
+    for i = 1, self.tamagotchometro do
+        love.graphics.draw(IMAGE_TAMAGOTCHI_VIDA, vidasX + 20 * i, vidasY)
+    end
 end
 
 function Jogador:beginContact(entidade_colisora, coll)
@@ -66,6 +74,19 @@ end
 
 function Jogador:AddPontuacao(quantidade)
     self.pontuacao = self.pontuacao + quantidade
+end
+
+function Jogador:AumentarTamagotchiVidas()
+    if self.tamagotchometro + 1 <= TAMAGOTCHI_VIDAS then
+        self.tamagotchometro = self.tamagotchometro + 1
+    end
+end
+
+function Jogador:DiminuirTamagotchiVidas()
+    self.tamagotchometro = self.tamagotchometro - 1
+    if self.tamagotchometro <= 0 then
+        finalizarJogo()
+    end
 end
 
 return Jogador

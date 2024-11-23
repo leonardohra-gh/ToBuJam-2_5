@@ -19,17 +19,16 @@ function Tamagotchi:new(x, y)
         DORMIR = 10
     }
     self.necessidades = {
-        AGUA = self.necessidadesValorInicial.AGUA,
-        BANHO = self.necessidadesValorInicial.BANHO,
-        BRINCAR = self.necessidadesValorInicial.BRINCAR,
-        COMER = self.necessidadesValorInicial.COMER,
-        DORMIR = self.necessidadesValorInicial.DORMIR
+        AGUA = (0.8 + 0.2 * math.random()) * self.necessidadesValorInicial.AGUA,
+        BANHO = (0.8 + 0.2 * math.random()) * self.necessidadesValorInicial.BANHO,
+        BRINCAR = (0.8 + 0.2 * math.random()) * self.necessidadesValorInicial.BRINCAR,
+        COMER = (0.8 + 0.2 * math.random()) * self.necessidadesValorInicial.COMER,
+        DORMIR = (0.8 + 0.2 * math.random()) * self.necessidadesValorInicial.DORMIR
     }
 end
 
 function Tamagotchi:update(dt)
-    Tamagotchi.super.update(self, dt)
-
+    
     if self.estaVivo then
         self.necessidades.AGUA = self.necessidades.AGUA - dt
         self.necessidades.BANHO = self.necessidades.BANHO - dt
@@ -37,7 +36,12 @@ function Tamagotchi:update(dt)
         self.necessidades.COMER = self.necessidades.COMER - dt
         self.necessidades.DORMIR = self.necessidades.DORMIR - dt
         self.estaVivo = self:checarVida()
+    else
+        self.toBeDestroyed = true
+        local jogador = GetWorldEntitiesByTag(EntityTags.JOGADOR)[1]
+        jogador:DiminuirTamagotchiVidas()
     end
+    Tamagotchi.super.update(self, dt)
 end
 
 function Tamagotchi:draw()

@@ -22,6 +22,7 @@ function Loja:new(x, y)
 end
 
 function Loja:update(dt)
+    Loja.super.update(self, dt)
 end
 
 function Loja:draw()

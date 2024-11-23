@@ -73,7 +73,10 @@ end
 function finalizarJogo()
     telaSelecionada = TELA.FIM
     botaoJogarNovamente:ativar()
+    destruirLoja()
+    destruirCasas()
     destruirArmadilhas()
+    destruirTamagotchis()
     jogador.toBeDestroyed = true
 end
 
@@ -108,6 +111,26 @@ function destruirArmadilhas()
     for i, lancaDardos in ipairs(todosLancaDardos) do
         lancaDardos.toBeDestroyed = true
     end
+end
+
+function destruirTamagotchis()
+    
+    local todosTamagotchis = GetWorldEntitiesByTag(EntityTags.TAMAGOCHI)
+    for i, tamagotchi in ipairs(todosTamagotchis) do
+        tamagotchi.toBeDestroyed = true
+    end
+end
+
+function destruirCasas()
+    local todasCasas = GetWorldEntitiesByTag(EntityTags.CASA)
+    for i, casa in ipairs(todasCasas) do
+        casa.toBeDestroyed = true
+    end
+end
+
+function destruirLoja()
+    local loja = GetWorldEntitiesByTag(EntityTags.LOJA)[1]
+    loja.toBeDestroyed = true
 end
 
 function criarCasasAleatorias()
