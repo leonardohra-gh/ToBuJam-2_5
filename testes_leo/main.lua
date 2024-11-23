@@ -7,6 +7,7 @@ Chao = require("entitiesGame.chao")
 ChaoCraquelado = require("entitiesGame.chaoCraquelado")
 chaoEscorregadio = require("entitiesGame.chaoEscorregadio")
 Rua = require("entitiesGame.rua")
+Casa = require("entitiesGame.casa")
 
 if arg[2] == "debug" then
     require("lldebugger").start()
@@ -16,11 +17,11 @@ end
 function love.load()
     love.window.setMode(1366, 768)
     CreateWorld()
-    local player = Mochila(100, 100)
-    local parede = Parede(200, 200)
+    local player = Jogador(600, 300)
+    -- local parede = Parede(200, 200)
     -- local chao = Chao(300, 300)
-    local chaoEscorregadio = chaoEscorregadio(300, 300)
-    local parede2 = Parede(900, 300)
+    -- local chaoEscorregadio = chaoEscorregadio(300, 300)
+    -- local parede2 = Parede(900, 300)
     --local chaoCraquelado = ChaoCraquelado(100, 200)
     -- local ruaSize = 96
     -- local mult = 1.5
@@ -32,6 +33,7 @@ function love.load()
     -- for i = 1, 6*mult do
     --     local rua = Rua(xi, ruaSize*(i-1), math.pi/2)
     -- end
+    criarCasasAleatorias()
 end
 function love.update(dt)
     UpdateWorldEntities(dt)
@@ -45,6 +47,26 @@ function love.draw()
         DrawTester("Leo")
     end
 end
+
+function gerarCasaProceduralmente()
+    
+end
+
+function criarCasasAleatorias()
+    positions = {
+        {x = 100, y = 100},
+        {x = 1000, y = 150},
+        {x = 300, y = 200},
+        {x = 750, y = 400},
+        {x = 100, y = 600},
+        {x = 1250, y = 500},
+    }
+
+    for i = 1, #positions do
+        Casa(positions[i].x, positions[i].y)
+    end
+end
+
 local love_errorhandler = love.errorhandler
 function love.errorhandler(msg)
     if lldebugger then
