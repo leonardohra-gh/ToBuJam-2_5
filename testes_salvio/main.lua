@@ -61,9 +61,14 @@ function iniciarJogo()
     telaSelecionada = TELA.JOGO
     botaoJogarNovamente:desativar()
     botaoStart:desativar()
-    jogador = Jogador(400, 500)
-    robo = Robozinho(300, 500)
-    -- Parede(400, 200)
+    jogador = Jogador(400, 200)
+    robo = Robozinho(300, 505)
+    Parede(400, 500)
+    Parede(350, 550)
+    Parede(366, 550)
+    Parede(382, 550)
+    Parede(408, 550)
+    Parede(424, 550)
 end
 
 function finalizarJogo()
