@@ -1,6 +1,7 @@
 require("core.auxiliary.world_functions")
 require("core.auxiliary.utils")
 require("core.auxiliary.debug")
+local TELA = require("core.enums.telas")
 
 if arg[2] == "debug" then
     require("lldebugger").start()
@@ -8,6 +9,15 @@ if arg[2] == "debug" then
 end
 
 -- love.load -> love.update -> love.draw -> love.update -> love.draw -> love.update (...)
+
+local tela = {
+    inicio = love.graphics.newImage("assets/telaInicial.png"),
+    jogo = love.graphics.newImage("assets/telaJogo.png"),
+    pausa = love.graphics.newImage("assets/telaPausa.png"),
+    fim = love.graphics.newImage("assets/telaFim.png")
+}
+
+local telaSelecionada = TELA.INICIO
 
 function love.load()
     CreateWorld()
@@ -23,6 +33,7 @@ function love.draw()
         DrawWorldEntityCountTopLeft()
         DrawColliders()
     end
+    love.graphics.draw(tela[telaSelecionada])
 end
 
 local love_errorhandler = love.errorhandler
