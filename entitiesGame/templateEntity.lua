@@ -3,6 +3,7 @@ local BodyTypes = require("core.enums.body_types")
 local ShapeTypes = require("core.enums.shape_types")
 local Entity = require("core.entity")
 local MyEntity = Entity:extend()
+local EntityTags = require("enumsGame.EntityTags")
 
 function MyEntity:new(x, y)
     local imagePath = "assets/NOMEDAIMAGEM.png"
