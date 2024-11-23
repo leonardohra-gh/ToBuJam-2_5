@@ -2,19 +2,20 @@
 local BodyTypes = require("core.enums.body_types")
 local ShapeTypes = require("core.enums.shape_types")
 local Entity = require("core.entity")
-local Parede = Entity:extend()
+local Chao = Entity:extend()
 
-function Parede:new(x, y)
-    local imagePath = "assets/parede.png"
-    Parede.super.new(self, x, y, imagePath, World, ShapeTypes.RECTANGLE, BodyTypes.STATIC, "parede")
+function Chao:new(x, y)
+    local imagePath = "assets/chao.png"
+    local atravessavel = true
+    Chao.super.new(self, x, y, imagePath, World, ShapeTypes.RECTANGLE, BodyTypes.STATIC, "chao", atravessavel)
 end
 
-function Parede:update(dt)
-    Parede.super.update(self, dt)
+function Chao:update(dt)
+    Chao.super.update(self, dt)
 end
 
-function Parede:draw()
-    Parede.super.draw(self)
+function Chao:draw()
+    Chao.super.draw(self)
 end
 
 -- function MyEntity:beginContact(entidade_colisora, coll)
@@ -29,4 +30,4 @@ end
 -- function MyEntity:postSolve(entidade_colisora, b, coll, normalimpulse, tangentimpulse)
 -- end
 
-return Parede
+return Chao
