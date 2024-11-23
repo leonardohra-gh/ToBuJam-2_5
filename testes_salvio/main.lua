@@ -89,6 +89,11 @@ function destruirArmadilhas()
     for i, robo in ipairs(todosRobos) do
         robo.toBeDestroyed = true
     end
+
+    local todosConeVisao = GetWorldEntitiesByTag("coneVisao")
+    for i, coneVisao in ipairs(todosConeVisao) do
+        coneVisao.toBeDestroyed = true
+    end
     
     local todosChaoEscorregadio = GetWorldEntitiesByTag("chaoEscorregadio")
     for i, chaoEscorregadio in ipairs(todosChaoEscorregadio) do
