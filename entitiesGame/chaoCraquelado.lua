@@ -7,7 +7,7 @@ local ChaoCraquelado = Entity:extend()
 function ChaoCraquelado:new(x, y)
     local imagePath = "assets/chao_craquelado.png"
     local atravessavel = true
-    ChaoCraquelado.super.new(self, x, y, imagePath, World, ShapeTypes.CIRCLE, BodyTypes.DYNAMIC, "entity", atravessavel)
+    ChaoCraquelado.super.new(self, x, y, imagePath, World, ShapeTypes.CIRCLE, BodyTypes.DYNAMIC, "chaoCraquelado", atravessavel)
 end
 
 function ChaoCraquelado:update(dt)
