@@ -2,6 +2,7 @@
 local BodyTypes = require("core.enums.body_types")
 local ShapeTypes = require("core.enums.shape_types")
 local Entity = require("core.entity")
+local ConeVisao = require("entitiesGame.coneVisao")
 local Robozinho = Entity:extend()
 
 function Robozinho:new(x, y)
@@ -10,6 +11,7 @@ function Robozinho:new(x, y)
     self.initialPos = {x = x, y = y}
     self.vel = {x = 20, y = 0}
     self.maxDistToStart = {x = 100, y = 0}
+    self.coneVisao = ConeVisao(x + self.physics.width, y)
 end
 
 function Robozinho:update(dt)
@@ -28,6 +30,7 @@ function Robozinho:mover()
     end
 
     self.physics:setVelocity(self.vel.x, self.vel.y)
+    self.coneVisao.physics:setVelocity(self.vel.x, self.vel.y)
 
     
 end
