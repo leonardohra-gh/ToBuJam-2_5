@@ -5,6 +5,7 @@ local TELA = require("core.enums.telas")
 local Botao = require("entitiesGame.botao")
 local SHAPE = require("core.enums.shape_types")
 local Jogador = require("entitiesGame.jogador")
+local Casa = require("entitiesGame.casa")
 
 if arg[2] == "debug" then
     require("lldebugger").start()
@@ -60,12 +61,14 @@ function iniciarJogo()
     botaoJogarNovamente:desativar()
     botaoStart:desativar()
     jogador = Jogador(400, 500)
+    casa = Casa(500,600)
 end
 
 function finalizarJogo()
     telaSelecionada = TELA.FIM
     botaoJogarNovamente:ativar()
     jogador.toBeDestroyed = true
+    casa.toBeDestroyed = true
 end
 
 function carregarTelaInicial()
