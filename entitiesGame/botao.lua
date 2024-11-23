@@ -5,7 +5,7 @@ local Entity = require("core.entity")
 local Botao = Entity:extend()
 
 function Botao:new(x, y, imagePath, shapeType, action)
-    Botao.super.new(self, x, y, imagePath, World, shapeType, BodyTypes.STATIC, "botao")
+    Botao.super.new(self, x, y, imagePath, World, shapeType, BodyTypes.STATIC, "botao", true)
     self.ativo = true
     self.action = action
 end

@@ -62,7 +62,7 @@ function iniciarJogo()
     botaoJogarNovamente:desativar()
     botaoStart:desativar()
     jogador = Jogador(400, 500)
-    robo = Robozinho(300, 200)
+    robo = Robozinho(300, 500)
     -- Parede(400, 200)
 end
 
