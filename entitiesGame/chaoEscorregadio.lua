@@ -8,7 +8,7 @@ local EntityTags = require("enumsGame.EntityTags")
 function ChaoEscorregadio:new(x, y)
     local imagePath = "assets/chao_escorregadio.png"
     local atravessavel = true
-    ChaoEscorregadio.super.new(self, x, y, imagePath, World, ShapeTypes.CIRCLE, BodyTypes.DYNAMIC, EntityTags.CHAO_ESCORREGADIO, atravessavel)
+    ChaoEscorregadio.super.new(self, x, y, imagePath, World, ShapeTypes.RECTANGLE, BodyTypes.DYNAMIC, EntityTags.CHAO_ESCORREGADIO, atravessavel)
 end
 
 function ChaoEscorregadio:update(dt)
