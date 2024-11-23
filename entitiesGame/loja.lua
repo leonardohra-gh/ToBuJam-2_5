@@ -45,9 +45,9 @@ end
 function Loja:comprar()
     local jogador = GetWorldEntitiesByTag(EntityTags.JOGADOR)[1]
     local precoItem = Items.PANTUFA.PRECO
-    if jogador:TemDinheiroSuficiente(precoItem) then
-        jogador:AddPantufa(1)
-        jogador:RemoverDinheiro(precoItem)
+    if jogador.mochila:TemDinheiroSuficiente(precoItem) then
+        jogador.mochila:AddPantufa(1)
+        jogador.mochila:RemoverDinheiro(precoItem)
     end
 end
 
