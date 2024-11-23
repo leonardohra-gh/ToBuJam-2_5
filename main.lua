@@ -1,7 +1,7 @@
 require("core.auxiliary.world_functions")
 require("core.auxiliary.utils")
 require("core.auxiliary.debug")
-local EntityTags = require("EntityTags")
+local EntityTags = require("enumsGame.EntityTags")
 local TELA = require("core.enums.telas")
 local SHAPE = require("core.enums.shape_types")
 local Botao = require("entitiesGame.botao")

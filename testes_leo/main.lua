@@ -1,7 +1,7 @@
 require("core.auxiliary.world_functions")
 require("core.auxiliary.utils")
 require("core.auxiliary.debug")
-Jogador = require("entitiesGame.jogador")
+Mochila = require("entitiesGame.jogador")
 Parede = require("entitiesGame.parede")
 Chao = require("entitiesGame.chao")
 ChaoCraquelado = require("entitiesGame.chaoCraquelado")

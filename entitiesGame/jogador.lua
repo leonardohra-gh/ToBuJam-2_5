@@ -3,20 +3,13 @@ local Jogador = Entity:extend()
 local ShapeTypes = require("core.enums.shape_types")
 local BodyTypes = require("core.enums.body_types")
 local EntityTags = require("enumsGame.EntityTags")
+local Mochila = require('entitiesGame.mochila')
 
 function Jogador:new(x, y)
     local imagePath = "assets/jogador.png"
     Jogador.super.new(self, x, y, imagePath, World, ShapeTypes.RECTANGLE, BodyTypes.DYNAMIC, EntityTags.JOGADOR)
     self.speed = 100
-    self.itens = {
-        pantufa = 0,
-        cobertor = 0,
-        botasDeNeve = 0,
-        escudo = 0,
-        patins = 0,
-        superCharger = 0
-    }
-    self.dinheiro = 100
+    self.mochila = Mochila()
     self.pontuacao = 0
     self.movementDisabled = false
 end
@@ -49,6 +42,7 @@ end
 
 function Jogador:draw()
     Jogador.super.draw(self)
+    self.mochila:draw()
 end
 
 function Jogador:beginContact(entidade_colisora, coll)
@@ -70,70 +64,8 @@ end
 function Jogador:postSolve(entidade_colisora, b, coll, normalimpulse, tangentimpulse)
 end
 
-function Jogador:AddPantufa()
-    self.itens.pantufa = self.itens.pantufa + 1
-end
-
-function Jogador:AddCobertor()
-    self.itens.cobertor = self.itens.covertor + 1
-end
-
-function Jogador:AddBotasDeNeve()
-    self.itens.botasDeNeve = self.itens.botasDeNeve + 1
-end
-
-function Jogador:AddEscudo()
-    self.itens.escudo = self.itens.escudo + 1
-end
-
-function Jogador:AddPatins()
-    self.itens.patins = self.itens.patins + 1
-end
-
-function Jogador:AddSuperCharger()
-    self.itens.superCharger = self.itens.superCharger + 1
-end
-
-function Jogador:RemovePantufa()
-    self.itens.pantufa = self.itens.pantufa - 1
-end
-
-function Jogador:RemoveCobertor()
-    self.itens.cobertor = self.itens.covertor - 1
-end
-
-function Jogador:RemoveBotasDeNeve()
-    self.itens.botasDeNeve = self.itens.botasDeNeve - 1
-end
-
-function Jogador:RemoveEscudo()
-    self.itens.escudo = self.itens.escudo - 1
-end
-
-function Jogador:RemovePatins()
-    self.itens.patins = self.itens.patins - 1
-end
-
-function Jogador:RemoveSuperCharger()
-    self.itens.superCharger = self.itens.superCharger - 1
-end
-
-function Jogador:AddDinheiro(quantidade)
-    self.dinheiro = self.dinheiro + quantidade
-end
-
 function Jogador:AddPontuacao(quantidade)
     self.pontuacao = self.pontuacao + quantidade
-end
-
-function Jogador:TemDinheiroSuficiente(quantidade)
-    return quantidade <= self.dinheiro
-end
-
-function Jogador:RemoverDinheiro(quantidade)
-    if self:TemDinheiroSuficiente(quantidade) then
-        self.dinheiro = self.dinheiro + quantidade
-    end
 end
 
 return Jogador
