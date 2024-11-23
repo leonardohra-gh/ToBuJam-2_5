@@ -2,6 +2,8 @@ require("core.auxiliary.world_functions")
 require("core.auxiliary.utils")
 require("core.auxiliary.debug")
 local TELA = require("core.enums.telas")
+local Tamagochi = require("entitiesGame.tamagochi")
+local NECESSIDADE = require("core.enums.necessidades")
 
 if arg[2] == "debug" then
     require("lldebugger").start()
@@ -21,19 +23,29 @@ local telaSelecionada = TELA.INICIO
 
 function love.load()
     CreateWorld()
+    Tamagochi1 = Tamagochi(200, 200)
 end
 
 function love.update(dt)
-    UpdateWorldEntities(dt)
+    
+    if telaSelecionada == TELA.JOGO then
+        UpdateWorldEntities(dt)
+        if love.keyboard.isDown("right") then
+            Tamagochi1:atenderNecessidade(NECESSIDADE.BRINCAR)
+        end
+    end
+
+
+
 end
 
 function love.draw()
+    love.graphics.draw(tela[telaSelecionada])
     DrawWorldEntities()
     if DEBUG_MODE then
         DrawWorldEntityCountTopLeft()
-        DrawColliders()
+        -- DrawColliders()
     end
-    love.graphics.draw(tela[telaSelecionada])
 end
 
 local love_errorhandler = love.errorhandler
