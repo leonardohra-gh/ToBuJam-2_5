@@ -15,6 +15,8 @@ function Jogador:new(x, y)
         patins = 0,
         superCharger = 0
     }
+    self.dinheiro = 0
+    self.pontuacao = 0
 end
 
 function Jogador:update(dt)
@@ -100,6 +102,14 @@ end
 
 function Jogador:RemoveSuperCharger()
     self.itens.superCharger = self.itens.superCharger - 1
+end
+
+function Jogador:AddDinheiro(quantidade)
+    self.itens.dinheiro = self.itens.dinheiro + quantidade
+end
+
+function Jogador:AddPontuacao(quantidade)
+    self.itens.pontuacao = self.itens.pontuacao + quantidade
 end
 
 return Jogador
