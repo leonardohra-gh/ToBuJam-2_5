@@ -1,6 +1,7 @@
 require("core.auxiliary.world_functions")
 require("core.auxiliary.utils")
 require("core.auxiliary.debug")
+local EntityTags = require("EntityTags")
 local TELA = require("core.enums.telas")
 local SHAPE = require("core.enums.shape_types")
 local Botao = require("entitiesGame.botao")
@@ -49,7 +50,7 @@ end
 
 function love.mousereleased(x, y, button)
     if button == 1 then
-        local todosBotoes = GetWorldEntitiesByTag("botao")
+        local todosBotoes = GetWorldEntitiesByTag(EntityTags.BOTAO)
         for i, botao in ipairs(todosBotoes) do
             if botao:estaAtivo() and botao:isHovered() then
                 botao:action()
@@ -87,27 +88,27 @@ function carregarTelaInicial()
 end
 
 function destruirArmadilhas()
-    local todosChaoCraquelado = GetWorldEntitiesByTag("chaoCraquelado")
+    local todosChaoCraquelado = GetWorldEntitiesByTag(EntityTags.CHAO_CRAQUELADO)
     for i, chaoCraquelado in ipairs(todosChaoCraquelado) do
         chaoCraquelado.toBeDestroyed = true
     end
 
-    local todosRobos = GetWorldEntitiesByTag("robozinho")
+    local todosRobos = GetWorldEntitiesByTag(EntityTags.ROBOZINHO)
     for i, robo in ipairs(todosRobos) do
         robo.toBeDestroyed = true
     end
 
-    local todosConeVisao = GetWorldEntitiesByTag("coneVisao")
+    local todosConeVisao = GetWorldEntitiesByTag(EntityTags.CONE_VISAO)
     for i, coneVisao in ipairs(todosConeVisao) do
         coneVisao.toBeDestroyed = true
     end
     
-    local todosChaoEscorregadio = GetWorldEntitiesByTag("chaoEscorregadio")
+    local todosChaoEscorregadio = GetWorldEntitiesByTag(EntityTags.CHAO_ESCORREGADIO)
     for i, chaoEscorregadio in ipairs(todosChaoEscorregadio) do
         chaoEscorregadio.toBeDestroyed = true
     end
     
-    local todosLancaDardos = GetWorldEntitiesByTag("lancaDardos")
+    local todosLancaDardos = GetWorldEntitiesByTag(EntityTags.LANCA_DARDOS)
     for i, lancaDardos in ipairs(todosLancaDardos) do
         lancaDardos.toBeDestroyed = true
     end

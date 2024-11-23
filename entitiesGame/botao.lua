@@ -1,11 +1,12 @@
 
 local BodyTypes = require("core.enums.body_types")
 local ShapeTypes = require("core.enums.shape_types")
+local EntityTags = require("enumsGame.EntityTags")
 local Entity = require("core.entity")
 local Botao = Entity:extend()
 
 function Botao:new(x, y, imagePath, shapeType, action)
-    Botao.super.new(self, x, y, imagePath, World, shapeType, BodyTypes.STATIC, "botao", true)
+    Botao.super.new(self, x, y, imagePath, World, shapeType, BodyTypes.STATIC, EntityTags.BOTAO, true)
     self.ativo = true
     self.action = action
 end

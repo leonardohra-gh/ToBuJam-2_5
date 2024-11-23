@@ -4,10 +4,11 @@ local ShapeTypes = require("core.enums.shape_types")
 local Entity = require("core.entity")
 local Tamagotchi = Entity:extend()
 local NECESSIDADE = require("core.enums.necessidades")
+local EntityTags = require("enumsGame.EntityTags")
 
 function Tamagotchi:new(x, y)
     local imagePath = "assets/tamagotchi.png"
-    Tamagotchi.super.new(self, x, y, imagePath, World, ShapeTypes.CIRCLE, BodyTypes.DYNAMIC, "tamagotchi")
+    Tamagotchi.super.new(self, x, y, imagePath, World, ShapeTypes.CIRCLE, BodyTypes.DYNAMIC, EntityTags.TAMAGOCHI)
 
     self.estaVivo = true
     self.necessidadesValorInicial = {

@@ -3,11 +3,12 @@ local BodyTypes = require("core.enums.body_types")
 local ShapeTypes = require("core.enums.shape_types")
 local Entity = require("core.entity")
 local Chao = Entity:extend()
+local EntityTags = require("enumsGame.EntityTags")
 
 function Chao:new(x, y)
     local imagePath = "assets/chao.png"
     local atravessavel = true
-    Chao.super.new(self, x, y, imagePath, World, ShapeTypes.RECTANGLE, BodyTypes.STATIC, "chao", atravessavel)
+    Chao.super.new(self, x, y, imagePath, World, ShapeTypes.RECTANGLE, BodyTypes.STATIC, EntityTags.CHAO, atravessavel)
 end
 
 function Chao:update(dt)

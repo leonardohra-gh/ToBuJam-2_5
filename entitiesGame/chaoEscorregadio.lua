@@ -3,11 +3,12 @@ local BodyTypes = require("core.enums.body_types")
 local ShapeTypes = require("core.enums.shape_types")
 local Entity = require("core.entity")
 local ChaoEscorregadio = Entity:extend()
+local EntityTags = require("enumsGame.EntityTags")
 
 function ChaoEscorregadio:new(x, y)
     local imagePath = "assets/chao_escorregadio.png"
     local atravessavel = true
-    ChaoEscorregadio.super.new(self, x, y, imagePath, World, ShapeTypes.CIRCLE, BodyTypes.DYNAMIC, "chaoEscorregadio", atravessavel)
+    ChaoEscorregadio.super.new(self, x, y, imagePath, World, ShapeTypes.CIRCLE, BodyTypes.DYNAMIC, EntityTags.CHAO_ESCORREGADIO, atravessavel)
 end
 
 function ChaoEscorregadio:update(dt)

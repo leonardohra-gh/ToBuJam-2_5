@@ -2,10 +2,11 @@ local Entity = require('core.entity')
 local Jogador = Entity:extend()
 local ShapeTypes = require("core.enums.shape_types")
 local BodyTypes = require("core.enums.body_types")
+local EntityTags = require("enumsGame.EntityTags")
 
 function Jogador:new(x, y)
     local imagePath = "assets/jogador.png"
-    Jogador.super.new(self, x, y, imagePath, World, ShapeTypes.RECTANGLE, BodyTypes.DYNAMIC, "jogador")
+    Jogador.super.new(self, x, y, imagePath, World, ShapeTypes.RECTANGLE, BodyTypes.DYNAMIC, EntityTags.JOGADOR)
     self.speed = 100
     self.itens = {
         pantufa = 0,
@@ -45,6 +46,9 @@ function Jogador:draw()
 end
 
 function Jogador:beginContact(entidade_colisora, coll)
+    if entidade_colisora.tag == EntityTags.CHAO_ESCORREGADIO then
+        
+    end
 end
 
 function Jogador:endContact(entidade_colisora, b, coll)

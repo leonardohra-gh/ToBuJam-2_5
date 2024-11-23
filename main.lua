@@ -1,6 +1,7 @@
 require("core.auxiliary.world_functions")
 require("core.auxiliary.utils")
 require("core.auxiliary.debug")
+local EntityTags = require("EntityTags")
 local TELA = require("core.enums.telas")
 local SHAPE = require("core.enums.shape_types")
 local Botao = require("entitiesGame.botao")
@@ -48,7 +49,7 @@ end
 
 function love.mousereleased(x, y, button)
     if button == 1 then
-        local todosBotoes = GetWorldEntitiesByTag("botao")
+        local todosBotoes = GetWorldEntitiesByTag(EntityTags.BOTAO)
         for i, botao in ipairs(todosBotoes) do
             if botao:estaAtivo() and botao:isHovered() then
                 botao:action()

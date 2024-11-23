@@ -3,10 +3,11 @@ local BodyTypes = require("core.enums.body_types")
 local ShapeTypes = require("core.enums.shape_types")
 local Entity = require("core.entity")
 local Parede = Entity:extend()
+local EntityTags = require("enumsGame.EntityTags")
 
 function Parede:new(x, y)
     local imagePath = "assets/parede.png"
-    Parede.super.new(self, x, y, imagePath, World, ShapeTypes.RECTANGLE, BodyTypes.STATIC, "parede")
+    Parede.super.new(self, x, y, imagePath, World, ShapeTypes.RECTANGLE, BodyTypes.STATIC, EntityTags.PAREDE)
 end
 
 function Parede:update(dt)

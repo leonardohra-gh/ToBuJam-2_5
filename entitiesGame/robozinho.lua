@@ -4,10 +4,11 @@ local ShapeTypes = require("core.enums.shape_types")
 local Entity = require("core.entity")
 local ConeVisao = require("entitiesGame.coneVisao")
 local Robozinho = Entity:extend()
+local EntityTags = require("enumsGame.EntityTags")
 
 function Robozinho:new(x, y)
     local imagePath = "assets/robozinho.png"
-    Robozinho.super.new(self, x, y, imagePath, World, ShapeTypes.CIRCLE, BodyTypes.DYNAMIC, "robozinho")
+    Robozinho.super.new(self, x, y, imagePath, World, ShapeTypes.CIRCLE, BodyTypes.DYNAMIC, EntityTags.ROBOZINHO)
     self.direcaoInicial = "x"
     self.initialPos = {x = x, y = y}
     self.vel = {x = 20, y = 0}
@@ -66,10 +67,10 @@ end
 
 function Robozinho:beginContact(entidade_colisora, coll)
     local normal, tangente = coll:getNormal()
-    if entidade_colisora.tag == "parede" then --  and normal == -1
+    if entidade_colisora.tag == EntityTags.PAREDE then --  and normal == -1
         self:rotacionar()
     end
-    if entidade_colisora.tag == "jogador" then
+    if entidade_colisora.tag == EntityTags.JOGADOR then
         finalizarJogo()
     end
 end
