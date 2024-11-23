@@ -5,16 +5,13 @@ local Entity = require("core.entity")
 local Botao = Entity:extend()
 
 function Botao:new(x, y, imagePath, shapeType)
-    Botao.super.new(self, x, y, imagePath, World, shapeType, BodyTypes.STATIC)
+    Botao.super.new(self, x, y, imagePath, World, shapeType, BodyTypes.STATIC, "botao")
     self.ativo = true
 end
 
 function Botao:update(dt)
 
     Botao.super.update(self, dt)
-    if self:isHovered() then
-        self:action()
-    end
 
 end
 
@@ -43,7 +40,12 @@ function Botao:isHovered()
 
 end
 
+function Botao:estaAtivo()
+    return self.ativo
+end
+
 function Botao:action()
+
     self.ativo = false
     -- a depender do botão, se desative
 end

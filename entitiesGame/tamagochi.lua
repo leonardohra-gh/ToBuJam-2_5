@@ -2,12 +2,12 @@
 local BodyTypes = require("core.enums.body_types")
 local ShapeTypes = require("core.enums.shape_types")
 local Entity = require("core.entity")
-local Tamagochi = Entity:extend()
+local Tamagotchi = Entity:extend()
 local NECESSIDADE = require("core.enums.necessidades")
 
-function Tamagochi:new(x, y)
-    local imagePath = "assets/tamagochi.png"
-    Tamagochi.super.new(self, x, y, imagePath, World, ShapeTypes.CIRCLE, BodyTypes.DYNAMIC)
+function Tamagotchi:new(x, y)
+    local imagePath = "assets/tamagotchi.png"
+    Tamagotchi.super.new(self, x, y, imagePath, World, ShapeTypes.CIRCLE, BodyTypes.DYNAMIC, "tamagotchi")
 
     self.estaVivo = true
     self.necessidadesValorInicial = {
@@ -26,8 +26,8 @@ function Tamagochi:new(x, y)
     }
 end
 
-function Tamagochi:update(dt)
-    Tamagochi.super.update(self, dt)
+function Tamagotchi:update(dt)
+    Tamagotchi.super.update(self, dt)
 
     if self.estaVivo then
         self.necessidades.AGUA = self.necessidades.AGUA - dt
@@ -39,9 +39,9 @@ function Tamagochi:update(dt)
     end
 end
 
-function Tamagochi:draw()
+function Tamagotchi:draw()
     if self.estaVivo then
-        Tamagochi.super.draw(self)        
+        Tamagotchi.super.draw(self)        
     end
 
     self:desenharNecessidades()
@@ -49,7 +49,7 @@ function Tamagochi:draw()
 
 end
 
-function Tamagochi:checarVida()
+function Tamagotchi:checarVida()
     if self.necessidades.AGUA <= 0 then
         return false
     end
@@ -69,7 +69,7 @@ function Tamagochi:checarVida()
     return true
 end
 
-function Tamagochi:atenderNecessidade(necessidade)
+function Tamagotchi:atenderNecessidade(necessidade)
     
     if necessidade == NECESSIDADE.AGUA then
         self.necessidades.AGUA = self.necessidadesValorInicial.AGUA
@@ -88,7 +88,7 @@ function Tamagochi:atenderNecessidade(necessidade)
     end
 end
 
-function Tamagochi:desenharNecessidades()
+function Tamagotchi:desenharNecessidades()
     love.graphics.print("Água: " .. self.necessidades.AGUA, 10, 30)
     love.graphics.print("Banho: " .. self.necessidades.BANHO, 10, 40)
     love.graphics.print("Brincar: " .. self.necessidades.BRINCAR, 10, 50)
@@ -108,4 +108,4 @@ end
 -- function MyEntity:postSolve(entidade_colisora, b, coll, normalimpulse, tangentimpulse)
 -- end
 
-return Tamagochi
+return Tamagotchi
