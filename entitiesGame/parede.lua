@@ -6,7 +6,7 @@ local Parede = Entity:extend()
 
 function Parede:new(x, y)
     local imagePath = "assets/parede.png"
-    Parede.super.new(self, x, y, imagePath, World, ShapeTypes.RECTANGLE, BodyTypes.STATIC)
+    Parede.super.new(self, x, y, imagePath, World, ShapeTypes.RECTANGLE, BodyTypes.STATIC, "parede")
 end
 
 function Parede:update(dt)

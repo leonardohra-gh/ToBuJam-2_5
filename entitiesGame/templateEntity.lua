@@ -6,7 +6,7 @@ local MyEntity = Entity:extend()
 
 function MyEntity:new(x, y)
     local imagePath = "assets/NOMEDAIMAGEM.png"
-    MyEntity.super.new(self, x, y, imagePath, World, ShapeTypes.CIRCLE, BodyTypes.DYNAMIC)
+    MyEntity.super.new(self, x, y, imagePath, World, ShapeTypes.CIRCLE, BodyTypes.DYNAMIC, "entity")
 end
 
 function MyEntity:update(dt)
