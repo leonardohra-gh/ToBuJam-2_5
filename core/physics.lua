@@ -6,6 +6,7 @@ require("core.auxiliary.utils")
 
 function Physics:new(world, position, size, shapeType, bodyType, atravessavel)
     self.body = love.physics.newBody(world, position.x, position.y, bodyType or BodyType.DYNAMIC)
+    self.body:setFixedRotation(true)
     local screenWidth = love.graphics.getWidth()
     local screenHeight = love.graphics.getHeight()
     atravessavel = atravessavel or false
@@ -46,7 +47,15 @@ function Physics:move(speedX, speedY)
     local posisitonX, positionY = self.body:getPosition()
     local newPositionX, newPositionY = posisitonX + (speedX or 0), positionY + (speedY or 0)
 
-    if self:isPositionOutOfBounds(newPositionX, newPositionY) then
+    if not self.fixture:isSensor() and self:isPositionOutOfBounds(newPositionX, newPositionY) then
+        return
+    end
+
+    self.body:setPosition(newPositionX, newPositionY)
+end
+
+function Physics:moveTo(newPositionX, newPositionY)
+    if not self.fixture:isSensor() and self:isPositionOutOfBounds(newPositionX, newPositionY) then
         return
     end
 
