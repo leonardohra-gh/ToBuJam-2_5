@@ -1,6 +1,10 @@
 require("core.auxiliary.world_functions")
 require("core.auxiliary.utils")
 require("core.auxiliary.debug")
+local Jogador = require("entitiesGame.jogador")
+local Casa = require("entitiesGame.casa")
+local Rua = require("entitiesGame.rua")
+
 if arg[2] == "debug" then
     require("lldebugger").start()
     DEBUG_MODE = true
@@ -8,6 +12,9 @@ end
 -- love.load -> love.update -> love.draw -> love.update -> love.draw -> love.update (...)
 function love.load()
     CreateWorld()
+    jogador = Jogador(250,250)
+    casa = Casa(300,200)
+    rua = Rua(100,100)
 end
 function love.update(dt)
     UpdateWorldEntities(dt)

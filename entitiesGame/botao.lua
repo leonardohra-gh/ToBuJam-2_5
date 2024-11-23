@@ -45,6 +45,10 @@ function Botao:estaAtivo()
     return self.ativo
 end
 
+function Botao:ativar()
+    self.ativo = true
+end
+
 function Botao:desativar()
     self.ativo = false
 end
