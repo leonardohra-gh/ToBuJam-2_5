@@ -2,8 +2,8 @@ require("core.auxiliary.world_functions")
 require("core.auxiliary.utils")
 require("core.auxiliary.debug")
 local TELA = require("core.enums.telas")
-local Botao = require("entitiesGame.botao")
 local SHAPE = require("core.enums.shape_types")
+local Botao = require("entitiesGame.botao")
 local Jogador = require("entitiesGame.jogador")
 
 if arg[2] == "debug" then
