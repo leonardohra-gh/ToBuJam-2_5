@@ -25,7 +25,7 @@ local telaSelecionada = TELA.INICIO
 
 function love.load()
     CreateWorld()
-    -- botaoStart = Botao(300, 500, "assets/botaoRect.png", SHAPE.RECTANGLE)
+    botaoStart = Botao(300, 500, "assets/botaoRect.png", SHAPE.RECTANGLE, iniciarJogo)
     -- botaoAlimentar = Botao(400, 500, "assets/botaoCircular.png", SHAPE.CIRCLE)
     -- Tamagochi1 = Tamagochi(200, 200)
 end
@@ -60,6 +60,11 @@ function love.mousereleased(x, y, button)
             end
         end
     end
+end
+
+function iniciarJogo()
+    telaSelecionada = TELA.JOGO
+    botaoStart:desativar()
 end
 
 local love_errorhandler = love.errorhandler

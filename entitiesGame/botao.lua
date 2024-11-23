@@ -4,9 +4,10 @@ local ShapeTypes = require("core.enums.shape_types")
 local Entity = require("core.entity")
 local Botao = Entity:extend()
 
-function Botao:new(x, y, imagePath, shapeType)
+function Botao:new(x, y, imagePath, shapeType, action)
     Botao.super.new(self, x, y, imagePath, World, shapeType, BodyTypes.STATIC, "botao")
     self.ativo = true
+    self.action = action
 end
 
 function Botao:update(dt)
@@ -44,10 +45,12 @@ function Botao:estaAtivo()
     return self.ativo
 end
 
-function Botao:action()
-
+function Botao:desativar()
     self.ativo = false
-    -- a depender do botão, se desative
+end
+
+function Botao:performAction()
+    self.action()
 end
 
 return Botao
