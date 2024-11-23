@@ -16,7 +16,7 @@ function Jogador:new(x, y)
         patins = 0,
         superCharger = 0
     }
-    self.dinheiro = 0
+    self.dinheiro = 100
     self.pontuacao = 0
 end
 
@@ -109,11 +109,21 @@ function Jogador:RemoveSuperCharger()
 end
 
 function Jogador:AddDinheiro(quantidade)
-    self.itens.dinheiro = self.itens.dinheiro + quantidade
+    self.dinheiro = self.dinheiro + quantidade
 end
 
 function Jogador:AddPontuacao(quantidade)
-    self.itens.pontuacao = self.itens.pontuacao + quantidade
+    self.pontuacao = self.pontuacao + quantidade
+end
+
+function Jogador:TemDinheiroSuficiente(quantidade)
+    return quantidade <= self.dinheiro
+end
+
+function Jogador:RemoverDinheiro(quantidade)
+    if self:TemDinheiroSuficiente(quantidade) then
+        self.dinheiro = self.dinheiro + quantidade
+    end
 end
 
 return Jogador
