@@ -4,10 +4,11 @@ local BodyType = require("core.enums.body_types")
 local ShapeType = require("core.enums.shape_types")
 require("core.auxiliary.utils")
 
-function Physics:new(world, position, size, shapeType, bodyType)
+function Physics:new(world, position, size, shapeType, bodyType, atravessavel)
     self.body = love.physics.newBody(world, position.x, position.y, bodyType or BodyType.DYNAMIC)
     local screenWidth = love.graphics.getWidth()
     local screenHeight = love.graphics.getHeight()
+    atravessavel = atravessavel or false
     self.shapeType = shapeType
 
     if shapeType == ShapeType.CIRCLE then
@@ -29,6 +30,7 @@ function Physics:new(world, position, size, shapeType, bodyType)
     end
 
     self.fixture = love.physics.newFixture(self.body, self.shape)
+    self.fixture:setSensor(atravessavel)
     self.body:setSleepingAllowed(false)
 end
 
