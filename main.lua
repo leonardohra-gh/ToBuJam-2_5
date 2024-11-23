@@ -51,11 +51,16 @@ function love.draw()
     end
 end
 
--- function love.mousereleased(x, y, button)
---     if button == 1 then
---         -- TODO
---     end
--- end
+function love.mousereleased(x, y, button)
+    if button == 1 then
+        local todosBotoes = GetWorldEntitiesByTag("botao")
+        for i, botao in ipairs(todosBotoes) do
+            if botao:estaAtivo() and botao:isHovered() then
+                botao:action()
+            end
+        end
+    end
+end
 
 local love_errorhandler = love.errorhandler
 
