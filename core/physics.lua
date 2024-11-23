@@ -46,7 +46,15 @@ function Physics:move(speedX, speedY)
     local posisitonX, positionY = self.body:getPosition()
     local newPositionX, newPositionY = posisitonX + (speedX or 0), positionY + (speedY or 0)
 
-    if self:isPositionOutOfBounds(newPositionX, newPositionY) then
+    if !self.fixture:isSensor() and self:isPositionOutOfBounds(newPositionX, newPositionY) then
+        return
+    end
+
+    self.body:setPosition(newPositionX, newPositionY)
+end
+
+function Physics:moveTo(newPositionX, newPositionY)
+    if !self.fixture:isSensor() and self:isPositionOutOfBounds(newPositionX, newPositionY) then
         return
     end
 
