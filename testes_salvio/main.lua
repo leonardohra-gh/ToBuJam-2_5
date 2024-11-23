@@ -6,6 +6,7 @@ local SHAPE = require("core.enums.shape_types")
 local Botao = require("entitiesGame.botao")
 local Jogador = require("entitiesGame.jogador")
 local Robozinho = require("entitiesGame.robozinho")
+local Parede = require("entitiesGame.parede")
 
 if arg[2] == "debug" then
     require("lldebugger").start()
@@ -61,7 +62,8 @@ function iniciarJogo()
     botaoJogarNovamente:desativar()
     botaoStart:desativar()
     jogador = Jogador(400, 500)
-    robo = Robozinho(300, 500)
+    robo = Robozinho(300, 200)
+    -- Parede(400, 200)
 end
 
 function finalizarJogo()

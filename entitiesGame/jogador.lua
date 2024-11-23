@@ -4,7 +4,7 @@ local ShapeTypes = require("core.enums.shape_types")
 local BodyTypes = require("core.enums.body_types")
 
 function Jogador:new(x, y)
-    local imagePath = "assets/jogadorTeste.png"
+    local imagePath = "assets/jogador.png"
     Jogador.super.new(self, x, y, imagePath, World, ShapeTypes.RECTANGLE, BodyTypes.DYNAMIC)
     self.speed = 100
 end
