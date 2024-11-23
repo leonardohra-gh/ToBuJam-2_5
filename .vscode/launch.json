@@ -24,5 +24,41 @@
                 ".",
             ],
         },
+        {
+            "type": "lua-local",
+            "request": "launch",
+            "name": "Testes Leo",
+            "program": {
+                "command": "love"
+            },
+            "args": [
+                "testes_leo",
+                "debug"
+            ],
+        },
+        {
+            "type": "lua-local",
+            "request": "launch",
+            "name": "Testes Luana",
+            "program": {
+                "command": "love"
+            },
+            "args": [
+                "testes_luana",
+                "debug"
+            ],
+        },
+        {
+            "type": "lua-local",
+            "request": "launch",
+            "name": "Testes Salvio",
+            "program": {
+                "command": "love"
+            },
+            "args": [
+                "testes_salvio",
+                "debug"
+            ],
+        },
     ]
 }
