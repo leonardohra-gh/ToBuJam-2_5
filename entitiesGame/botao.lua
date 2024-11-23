@@ -5,10 +5,11 @@ local EntityTags = require("enumsGame.EntityTags")
 local Entity = require("core.entity")
 local Botao = Entity:extend()
 
-function Botao:new(x, y, imagePath, shapeType, action)
+function Botao:new(x, y, imagePath, texto, shapeType, action)
     Botao.super.new(self, x, y, imagePath, World, shapeType, BodyTypes.STATIC, EntityTags.BOTAO, true)
     self.ativo = true
     self.action = action
+    self.texto = texto
 end
 
 function Botao:update(dt)
@@ -19,7 +20,11 @@ end
 
 function Botao:draw()
     if self.ativo then
+        local centroX, centroY = self.physics:getPositionRounded()
+        local textWidth  = love.graphics.getFont():getWidth(self.texto)
+	    local textHeight = love.graphics.getFont():getHeight()
         Botao.super.draw(self)
+        love.graphics.print(self.texto, centroX - textWidth / 2, centroY - textHeight / 2)
     end
 end
 

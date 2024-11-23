@@ -12,11 +12,11 @@ function Tamagotchi:new(x, y)
 
     self.estaVivo = true
     self.necessidadesValorInicial = {
-        AGUA = 100,
-        BANHO = 200,
-        BRINCAR = 50,
-        COMER = 100,
-        DORMIR = 100
+        AGUA = 10,
+        BANHO = 20,
+        BRINCAR = 5,
+        COMER = 10,
+        DORMIR = 10
     }
     self.necessidades = {
         AGUA = self.necessidadesValorInicial.AGUA,

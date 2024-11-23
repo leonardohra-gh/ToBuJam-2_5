@@ -10,9 +10,10 @@ local EntityTags = require("enumsGame.EntityTags")
 function Loja:new(x, y)
     local imagePath = "assets/lojaExterior.png"
     Loja.super.new(self, x, y, imagePath, World, ShapeTypes.RECTANGLE, BodyTypes.STATIC, EntityTags.LOJA, true)
+    local botoesX, botoesY = x + self.physics.width / 2 + 150 / 2, y - self.physics.height / 2 + 60 / 2
     self.aberta = false
     self.botoes = {
-        comprarPantufa = Botao(100, 100, "assets/botaoRect.png", ShapeTypes.RECTANGLE, self.comprar)
+        comprarPantufa = Botao(botoesX, botoesY, "assets/botaoRect.png", "Comprar pantufa", ShapeTypes.RECTANGLE, self.comprar)
     }
     self.precos = {
         pantufa = 50

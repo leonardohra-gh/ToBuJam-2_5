@@ -27,8 +27,8 @@ local telaSelecionada = TELA.INICIO
 function love.load()
     love.window.setMode(1366, 768)
     CreateWorld()
-    botaoStart = Botao(300, 500, "assets/botaoRect.png", SHAPE.RECTANGLE, iniciarJogo)
-    botaoJogarNovamente = Botao(500, 500, "assets/botaoRect.png", SHAPE.RECTANGLE, carregarTelaInicial)
+    botaoStart = Botao(300, 500, "assets/botaoRect.png", "Start", SHAPE.RECTANGLE, iniciarJogo)
+    botaoJogarNovamente = Botao(500, 500, "assets/botaoRect.png", "Jogar novamente", SHAPE.RECTANGLE, carregarTelaInicial)
     carregarTelaInicial()
 end
 
