@@ -4,7 +4,7 @@ local Drawer = require("core.drawer")
 local Size = require("core.structures.size")
 local Physics = require("core.physics")
 
-function Entity:new(x, y, imagePath, world, shapeType, bodyType)
+function Entity:new(x, y, imagePath, world, shapeType, bodyType, tag)
     if imagePath == nil then
         self.drawer = nil
         self.size = nil
@@ -22,6 +22,11 @@ function Entity:new(x, y, imagePath, world, shapeType, bodyType)
     )
     self.physics:setUserData(self)
     self.toBeDestroyed = false
+    self.tag = tag or "entity"
+end
+
+function Entity:getTag()
+    return self.tag
 end
 
 function Entity:update(dt)
