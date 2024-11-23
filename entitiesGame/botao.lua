@@ -5,11 +5,12 @@ local EntityTags = require("enumsGame.EntityTags")
 local Entity = require("core.entity")
 local Botao = Entity:extend()
 
-function Botao:new(x, y, imagePath, texto, shapeType, action)
+function Botao:new(x, y, imagePath, imageHoveredPath, texto, shapeType, action)
     Botao.super.new(self, x, y, imagePath, World, shapeType, BodyTypes.STATIC, EntityTags.BOTAO, true)
     self.ativo = true
     self.action = action
     self.texto = texto
+    self.hoveredImage = love.graphics.newImage(imageHoveredPath)
 end
 
 function Botao:update(dt)
@@ -21,10 +22,16 @@ end
 function Botao:draw()
     if self.ativo then
         local centroX, centroY = self.physics:getPositionRounded()
+        local width, height = self.physics:getSize()
         local textWidth  = love.graphics.getFont():getWidth(self.texto)
 	    local textHeight = love.graphics.getFont():getHeight()
-        Botao.super.draw(self)
-        love.graphics.print(self.texto, centroX - textWidth / 2, centroY - textHeight / 2)
+        if self:isHovered() then
+            love.graphics.draw(self.hoveredImage, centroX - width / 2, centroY - height / 2)
+            love.graphics.print(self.texto, centroX - textWidth / 2, centroY - textHeight / 2)
+        else
+            Botao.super.draw(self)
+            love.graphics.print(self.texto, centroX - textWidth / 2, centroY - textHeight / 2 - 10)
+        end
     end
 end
 

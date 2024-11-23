@@ -13,7 +13,7 @@ function Loja:new(x, y)
     local botoesX, botoesY = x + self.physics.width / 2 + 150 / 2, y - self.physics.height / 2 + 60 / 2
     self.aberta = false
     self.botoes = {
-        comprarPantufa = Botao(botoesX, botoesY, "assets/botaoRect.png", "Comprar pantufa", ShapeTypes.RECTANGLE, self.comprar)
+        comprarPantufa = Botao(botoesX, botoesY, "assets/botaoRect.png", "assets/botaoRectHovered.png", "Comprar pantufa", ShapeTypes.RECTANGLE, self.comprar)
     }
     self.precos = {
         pantufa = 50

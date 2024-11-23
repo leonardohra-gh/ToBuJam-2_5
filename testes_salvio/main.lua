@@ -30,8 +30,8 @@ local telaSelecionada = TELA.INICIO
 function love.load()
     CreateWorld()
     love.graphics.setFont(love.graphics.newFont(18))
-    botaoStart = Botao(300, 500, "assets/botaoRect.png", "Start", SHAPE.RECTANGLE, iniciarJogo)
-    botaoJogarNovamente = Botao(500, 500, "assets/botaoRect.png", "Jogar novamente", SHAPE.RECTANGLE, carregarTelaInicial)
+    botaoStart = Botao(300, 500, "assets/botaoRect.png", "assets/botaoRectHovered.png", "Start", SHAPE.RECTANGLE, iniciarJogo)
+    botaoJogarNovamente = Botao(500, 500, "assets/botaoRect.png", "assets/botaoRectHovered.png", "Jogar novamente", SHAPE.RECTANGLE, carregarTelaInicial)
     carregarTelaInicial()
 end
 
