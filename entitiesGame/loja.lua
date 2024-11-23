@@ -43,7 +43,7 @@ function Loja:Fechar()
 end
 
 function Loja:comprar()
-    local jogador = GetWorldEntitiesByTag("jogador")[1]
+    local jogador = GetWorldEntitiesByTag(EntityTags.JOGADOR)[1]
     local precoItem = Items.PANTUFA.PRECO
     if jogador:TemDinheiroSuficiente(precoItem) then
         jogador:AddPantufa(1)
