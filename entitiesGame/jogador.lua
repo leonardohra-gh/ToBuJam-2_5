@@ -9,24 +9,41 @@ function Jogador:new(x, y)
     MyEntity.super.new(self, x, y, imagePath, World, ShapeTypes.RECTANGLE, BodyTypes.DYNAMIC)
 end
 
-function Jogador:update()
-    
-    local velocityX, velocityY = 0, 0
+function MyEntity:update(dt)
+    MyEntity.super.update(self, dt)
 
-    if love.keyboard.isDown("right") then
-        velocityX = self.speed
-    end
-    if love.keyboard.isDown("left") then
-        velocityX = - self.speed
-    end
-    if love.keyboard.isDown("up") then
-        velocityY = - self.speed
-    end
-    if love.keyboard.isDown("down") then
-        velocityY = self.speed
-    end
+    -- local velocityX, velocityY = 0, 0
 
-    self.physics:setVelocity(velocityX, velocityY)
+    -- if love.keyboard.isDown("right") then
+    --     velocityX = self.speed
+    -- end
+    -- if love.keyboard.isDown("left") then
+    --     velocityX = - self.speed
+    -- end
+    -- if love.keyboard.isDown("up") then
+    --     velocityY = - self.speed
+    -- end
+    -- if love.keyboard.isDown("down") then
+    --     velocityY = self.speed
+    -- end
+
+    -- self.physics:setVelocity(velocityX, velocityY)
 end
+
+function MyEntity:draw()
+    MyEntity.super.draw(self)
+end
+
+-- function MyEntity:beginContact(entidade_colisora, coll)
+-- end
+
+-- function MyEntity:endContact(entidade_colisora, b, coll)
+-- end
+
+-- function MyEntity:preSolve(entidade_colisora, b, coll)
+-- end
+
+-- function MyEntity:postSolve(entidade_colisora, b, coll, normalimpulse, tangentimpulse)
+-- end
 
 return Jogador
