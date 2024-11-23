@@ -5,7 +5,7 @@ local BodyTypes = require("core.enums.body_types")
 local MyEntity = Entity:extend()
 
 function Rua:new(x, y)
-    local imagePath = "assets/NOMEDAIMAGEM.png"
+    local imagePath = "assets/rua.png"
     MyEntity.super.new(self, x, y, imagePath, World, ShapeTypes.RECTANGLE, BodyTypes.STATIC)
 end
 
