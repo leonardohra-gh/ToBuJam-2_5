@@ -1,9 +1,10 @@
 require("core.auxiliary.world_functions")
 require("core.auxiliary.utils")
 require("core.auxiliary.debug")
-Player = require("entitiesGame.jogador")
+Jogador = require("entitiesGame.jogador")
 Parede = require("entitiesGame.parede")
 Chao = require("entitiesGame.chao")
+ChaoCraquelado = require("entitiesGame.chaoCraquelado")
 
 if arg[2] == "debug" then
     require("lldebugger").start()
@@ -12,9 +13,10 @@ end
 -- love.load -> love.update -> love.draw -> love.update -> love.draw -> love.update (...)
 function love.load()
     CreateWorld()
-    local player = Player(100, 100)
+    local player = Jogador(100, 100)
     local parede = Parede(200, 200)
-    local chaoAtravessavel = Chao(300, 300)
+    local chao = Chao(300, 300)
+    local chaoCraquelado = ChaoCraquelado(100, 200)
 end
 function love.update(dt)
     UpdateWorldEntities(dt)
