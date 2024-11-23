@@ -7,6 +7,7 @@ local Botao = require("entitiesGame.botao")
 local Jogador = require("entitiesGame.jogador")
 local Robozinho = require("entitiesGame.robozinho")
 local Parede = require("entitiesGame.parede")
+local Loja = require("entitiesGame.loja")
 
 if arg[2] == "debug" then
     require("lldebugger").start()
@@ -61,7 +62,7 @@ function iniciarJogo()
     telaSelecionada = TELA.JOGO
     botaoJogarNovamente:desativar()
     botaoStart:desativar()
-    jogador = Jogador(400, 200)
+    jogador = Jogador(0, 0)
     robo = Robozinho(300, 505)
     Parede(400, 500)
     Parede(350, 550)
@@ -69,6 +70,7 @@ function iniciarJogo()
     Parede(382, 550)
     Parede(408, 550)
     Parede(424, 550)
+    Loja(300, 300)
 end
 
 function finalizarJogo()
