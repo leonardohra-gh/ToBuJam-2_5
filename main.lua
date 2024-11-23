@@ -6,6 +6,7 @@ local Botao = require("entitiesGame.botao")
 local Tamagochi = require("entitiesGame.tamagochi")
 local SHAPE = require("core.enums.shape_types")
 local NECESSIDADE = require("core.enums.necessidades")
+local Jogador = require("entitiesGame.jogador")
 
 if arg[2] == "debug" then
     require("lldebugger").start()
@@ -26,6 +27,7 @@ local telaSelecionada = TELA.INICIO
 function love.load()
     CreateWorld()
     botaoStart = Botao(300, 500, "assets/botaoRect.png", SHAPE.RECTANGLE, iniciarJogo)
+    carregarTelaInicial()
     -- botaoAlimentar = Botao(400, 500, "assets/botaoCircular.png", SHAPE.CIRCLE)
     -- Tamagochi1 = Tamagochi(200, 200)
 end
@@ -65,7 +67,13 @@ end
 function iniciarJogo()
     telaSelecionada = TELA.JOGO
     botaoStart:desativar()
+    jogador = Jogador(400, 500)
 end
+
+function carregarTelaInicial()
+    botaoStart:ativar()
+end
+
 
 local love_errorhandler = love.errorhandler
 
