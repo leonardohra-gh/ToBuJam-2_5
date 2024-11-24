@@ -89,27 +89,22 @@ end
 function destruirArmadilhas()
     local todosChaoCraquelado = GetWorldEntitiesByTag(EntityTags.CHAO_CRAQUELADO)
     for i, chaoCraquelado in ipairs(todosChaoCraquelado) do
-        chaoCraquelado.toBeDestroyed = true
+        chaoCraquelado:destruir()
     end
 
     local todosRobos = GetWorldEntitiesByTag(EntityTags.ROBOZINHO)
     for i, robo in ipairs(todosRobos) do
-        robo.toBeDestroyed = true
-    end
-
-    local todosConeVisao = GetWorldEntitiesByTag(EntityTags.CONE_VISAO)
-    for i, coneVisao in ipairs(todosConeVisao) do
-        coneVisao.toBeDestroyed = true
+        robo:destruir()
     end
     
     local todosChaoEscorregadio = GetWorldEntitiesByTag(EntityTags.CHAO_ESCORREGADIO)
     for i, chaoEscorregadio in ipairs(todosChaoEscorregadio) do
-        chaoEscorregadio.toBeDestroyed = true
+        chaoEscorregadio:destruir()
     end
     
     local todosLancaDardos = GetWorldEntitiesByTag(EntityTags.LANCA_DARDOS)
     for i, lancaDardos in ipairs(todosLancaDardos) do
-        lancaDardos.toBeDestroyed = true
+        lancaDardos:destruir()
     end
 end
 
@@ -117,14 +112,14 @@ function destruirTamagotchis()
     
     local todosTamagotchis = GetWorldEntitiesByTag(EntityTags.TAMAGOCHI)
     for i, tamagotchi in ipairs(todosTamagotchis) do
-        tamagotchi.toBeDestroyed = true
+        tamagotchi:destruir()
     end
 end
 
 function destruirCasas()
     local todasCasas = GetWorldEntitiesByTag(EntityTags.CASA)
     for i, casa in ipairs(todasCasas) do
-        casa.toBeDestroyed = true
+        casa:destruir()
     end
 end
 
@@ -138,7 +133,7 @@ end
 function destruirJogador()
     local jogador = GetWorldEntitiesByTag(EntityTags.JOGADOR)[1]
     if not (jogador == nil) then
-        jogador.toBeDestroyed = true
+        jogador:destruir()
     end
 end
 

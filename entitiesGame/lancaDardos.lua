@@ -30,4 +30,8 @@ end
 -- function MyEntity:postSolve(entidade_colisora, b, coll, normalimpulse, tangentimpulse)
 -- end
 
+function LancaDardos:destruir()
+    self.toBeDestroyed = true
+end
+
 return LancaDardos

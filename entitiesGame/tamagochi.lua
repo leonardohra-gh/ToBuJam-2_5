@@ -1,10 +1,11 @@
 
 local BodyTypes = require("core.enums.body_types")
 local ShapeTypes = require("core.enums.shape_types")
+local NECESSIDADE = require("core.enums.necessidades")
 local Entity = require("core.entity")
 local Tamagotchi = Entity:extend()
-local NECESSIDADE = require("core.enums.necessidades")
 local EntityTags = require("enumsGame.EntityTags")
+local BotaoPadrao = require("entitiesGame.botaoPadrao")
 
 function Tamagotchi:new(x, y)
     local imagePath = "assets/tamagotchi.png"
@@ -25,6 +26,14 @@ function Tamagotchi:new(x, y)
         COMER = (0.8 + 0.2 * math.random()) * self.necessidadesValorInicial.COMER,
         DORMIR = (0.8 + 0.2 * math.random()) * self.necessidadesValorInicial.DORMIR
     }
+    local botoesX, botoesY = self.physics:getPositionRounded()
+    self.botoes = {
+        DARAGUA = BotaoPadrao(botoesX, botoesY - 20, "", self.atenderNecessidade(NECESSIDADE.AGUA)),
+        
+    }
+    for i, botao in pairs(self.botoes) do
+        botao:desativar()
+    end
 end
 
 function Tamagotchi:update(dt)
@@ -37,7 +46,7 @@ function Tamagotchi:update(dt)
         self.necessidades.DORMIR = self.necessidades.DORMIR - dt
         self.estaVivo = self:checarVida()
     else
-        self.toBeDestroyed = true
+        self:destruir()
         local jogador = GetWorldEntitiesByTag(EntityTags.JOGADOR)[1]
         if not (jogador == nil) then
             jogador:DiminuirTamagotchiVidas()
@@ -120,16 +129,27 @@ function Tamagotchi:printarNecessidades()
     love.graphics.print("Dormir: " .. self.necessidades.DORMIR, 10, 70)
 end
 
--- function MyEntity:beginContact(entidade_colisora, coll)
--- end
+function Tamagotchi:beginContact(entidade_colisora, coll)
+    if entidade_colisora.tag == EntityTags.JOGADOR then
+        for i, botao in pairs(self.botoes) do
+            botao:ativar()
+        end
+    end
+end
 
--- function MyEntity:endContact(entidade_colisora, b, coll)
--- end
+function Tamagotchi:endContact(entidade_colisora, b, coll)
+    if entidade_colisora.tag == EntityTags.JOGADOR then
+        for i, botao in pairs(self.botoes) do
+            botao:desativar()
+        end
+    end
+end
 
--- function MyEntity:preSolve(entidade_colisora, b, coll)
--- end
-
--- function MyEntity:postSolve(entidade_colisora, b, coll, normalimpulse, tangentimpulse)
--- end
+function Tamagotchi:destruir()
+    for i, botao in pairs(self.botoes) do
+        botao:destruir()
+    end
+    self.toBeDestroyed = true
+end
 
 return Tamagotchi

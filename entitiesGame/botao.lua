@@ -70,4 +70,8 @@ function Botao:performAction()
     self.action()
 end
 
+function Botao:destruir()
+    self.toBeDestroyed = true
+end
+
 return Botao

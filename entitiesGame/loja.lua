@@ -86,7 +86,7 @@ end
 
 function Loja:destruir()
     for i, botao in pairs(self.botoes) do
-        botao.toBeDestroyed = true
+        botao:destruir()
     end
     self.toBeDestroyed = true
 end

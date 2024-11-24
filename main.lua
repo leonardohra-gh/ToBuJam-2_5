@@ -69,8 +69,8 @@ end
 function finalizarJogo()
     telaSelecionada = TELA.FIM
     botaoJogarNovamente:ativar()
-    jogador.toBeDestroyed = true
-    casa.toBeDestroyed = true
+    jogador:destruir()
+    casa:destruir()
 end
 
 function carregarTelaInicial()

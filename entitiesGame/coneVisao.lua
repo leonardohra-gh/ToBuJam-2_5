@@ -21,4 +21,8 @@ end
 -- function MyEntity:beginContact(entidade_colisora, coll)
 -- end
 
+function ConeVisao:destruir()
+    self.toBeDestroyed = true
+end
+
 return ConeVisao

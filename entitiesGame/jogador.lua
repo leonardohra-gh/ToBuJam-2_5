@@ -89,4 +89,8 @@ function Jogador:DiminuirTamagotchiVidas()
     end
 end
 
+function Jogador:destruir()
+    self.toBeDestroyed = true
+end
+
 return Jogador

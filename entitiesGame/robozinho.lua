@@ -84,4 +84,9 @@ end
 -- function MyEntity:postSolve(entidade_colisora, b, coll, normalimpulse, tangentimpulse)
 -- end
 
+function Robozinho:destruir()
+    self.coneVisao:destruir()
+    self.toBeDestroyed = true
+end
+
 return Robozinho

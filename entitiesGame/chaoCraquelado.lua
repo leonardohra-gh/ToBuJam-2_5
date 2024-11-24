@@ -34,4 +34,8 @@ end
 -- function MyEntity:postSolve(entidade_colisora, b, coll, normalimpulse, tangentimpulse)
 -- end
 
+function ChaoCraquelado:destruir()
+    self.toBeDestroyed = true
+end
+
 return ChaoCraquelado
