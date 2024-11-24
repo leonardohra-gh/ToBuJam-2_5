@@ -10,6 +10,7 @@ local Robozinho = require("entitiesGame.robozinho")
 local Parede = require("entitiesGame.parede")
 local Loja = require("entitiesGame.loja")
 local Casa = require("entitiesGame.casa")
+local Moedas = require("entitiesGame.moedas")
 
 if arg[2] == "debug" then
     require("lldebugger").start()
@@ -75,6 +76,7 @@ function iniciarJogo()
     jogador = Jogador(600, 500)
     Loja(300, 400)
     criarCasasAleatorias()
+    Moedas(500, 100)
     telaSelecionada = TELA.JOGO
 end
 
