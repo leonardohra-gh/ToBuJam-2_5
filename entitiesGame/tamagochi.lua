@@ -5,7 +5,8 @@ local NECESSIDADE = require("core.enums.necessidades")
 local Entity = require("core.entity")
 local Tamagotchi = Entity:extend()
 local EntityTags = require("enumsGame.EntityTags")
-local BotaoPadrao = require("entitiesGame.botaoPadrao")
+-- local BotaoPadrao = require("entitiesGame.botaoPadrao")
+local InterfaceTamagotchi = require("entitiesGame.interfaceTamagotchi")
 
 function Tamagotchi:new(x, y)
     local imagePath = "assets/tamagotchi.png"
@@ -14,10 +15,10 @@ function Tamagotchi:new(x, y)
     self.estaVivo = true
     self.necessidadesValorInicial = {
         AGUA = 10,
-        BANHO = 20,
-        BRINCAR = 5,
-        COMER = 10,
-        DORMIR = 10
+        BANHO = 200,
+        BRINCAR = 50,
+        COMER = 100,
+        DORMIR = 100
     }
     self.necessidades = {
         AGUA = (0.8 + 0.2 * math.random()) * self.necessidadesValorInicial.AGUA,
@@ -27,13 +28,14 @@ function Tamagotchi:new(x, y)
         DORMIR = (0.8 + 0.2 * math.random()) * self.necessidadesValorInicial.DORMIR
     }
     local botoesX, botoesY = self.physics:getPositionRounded()
-    self.botoes = {
-        DARAGUA = BotaoPadrao(botoesX, botoesY - 20, "", self.atenderNecessidade(NECESSIDADE.AGUA)),
+    self.interface = InterfaceTamagotchi(botoesX, botoesY - 100)
+    -- self.botoes = {
+    --     DARAGUA = BotaoPadrao(botoesX, botoesY - 20, "", self.darAgua),
         
-    }
-    for i, botao in pairs(self.botoes) do
-        botao:desativar()
-    end
+    -- }
+    -- for i, botao in pairs(self.botoes) do
+    --     botao:desativar()
+    -- end
 end
 
 function Tamagotchi:update(dt)
@@ -57,9 +59,11 @@ end
 
 function Tamagotchi:draw()
 
-    -- if self.estaVivo then
-    --     Tamagotchi.super.draw(self)
-    -- end
+    if self.estaVivo then
+        Tamagotchi.super.draw(self)
+        self.interface:draw()
+    end
+    
 
     -- self:desenharNecessidades()
 
@@ -69,7 +73,7 @@ function Tamagotchi:desenharNecessidades()
     if self.estaVivo then
         Tamagotchi.super.draw(self)
         local x, y = self.physics:getPositionRounded()
-        self:desenharBarraNecessidade(x - 20, y - 40, self.necessidades.AGUA, self.necessidadesValorInicial.AGUA)
+        self:desenharBarraNecessidade(x - 20, y - 60, self.necessidades.AGUA, self.necessidadesValorInicial.AGUA)
     end
 end
 
@@ -131,24 +135,36 @@ end
 
 function Tamagotchi:beginContact(entidade_colisora, coll)
     if entidade_colisora.tag == EntityTags.JOGADOR then
-        for i, botao in pairs(self.botoes) do
-            botao:ativar()
-        end
+        self.interface:ativar()
+        -- for i, botao in pairs(self.botoes) do
+        --     botao:ativar()
+        -- end
     end
 end
 
 function Tamagotchi:endContact(entidade_colisora, b, coll)
     if entidade_colisora.tag == EntityTags.JOGADOR then
-        for i, botao in pairs(self.botoes) do
-            botao:desativar()
-        end
+        self.interface:desativar()
+        -- for i, botao in pairs(self.botoes) do
+        --     botao:desativar()
+        -- end
+    end
+end
+
+-- function Tamagotchi:estaVivo()
+--     return self.estaVivo
+-- end
+
+function Tamagotchi:checkInterfaceClick()
+    if self.interface.ativa and self.interface:isHovered() then
+        self:atenderNecessidade(NECESSIDADE.AGUA)
     end
 end
 
 function Tamagotchi:destruir()
-    for i, botao in pairs(self.botoes) do
-        botao:destruir()
-    end
+    -- for i, botao in pairs(self.botoes) do
+    --     botao:destruir()
+    -- end
     self.toBeDestroyed = true
 end
 

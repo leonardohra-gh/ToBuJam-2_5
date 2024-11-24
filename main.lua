@@ -55,6 +55,15 @@ function love.mousereleased(x, y, button)
                 botao:action()
             end
         end
+
+
+        local todosTamagotchis = GetWorldEntitiesByTag(EntityTags.TAMAGOCHI)
+        for i, tamagochi in ipairs(todosTamagotchis) do
+            if tamagochi:estaVivo() then
+                tamagochi:checkInterfaceClick()
+            end
+        end
+
     end
 end
 
