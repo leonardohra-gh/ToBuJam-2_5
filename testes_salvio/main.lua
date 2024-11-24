@@ -66,7 +66,7 @@ function iniciarJogo()
     botaoJogarNovamente:desativar()
     botaoStart:desativar()
     jogador = Jogador(600, 500)
-    Loja(300, 500)
+    Loja(300, 400)
     criarCasasAleatorias()
 end
 

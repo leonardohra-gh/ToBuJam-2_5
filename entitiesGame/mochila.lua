@@ -1,4 +1,5 @@
 
+local Items = require("core.enums.items")
 local Object = require("libs.classic")
 local Mochila = Object:extend()
 
@@ -44,28 +45,21 @@ function Mochila:RemoverDinheiro(quantidade)
     end
 end
 
-function Mochila:AddPantufa()
-    self.itens.pantufa = self.itens.pantufa + 1
-end
-
-function Mochila:AddCobertor()
-    self.itens.cobertor = self.itens.covertor + 1
-end
-
-function Mochila:AddBotasDeNeve()
-    self.itens.botasDeNeve = self.itens.botasDeNeve + 1
-end
-
-function Mochila:AddEscudo()
-    self.itens.escudo = self.itens.escudo + 1
-end
-
-function Mochila:AddPatins()
-    self.itens.patins = self.itens.patins + 1
-end
-
-function Mochila:AddSuperCharger()
-    self.itens.superCharger = self.itens.superCharger + 1
+function Mochila:AddItem(item)
+    if item == Items.PANTUFA then
+        self.itens.pantufa = self.itens.pantufa + 1
+    elseif item == Items.COBERTOR then
+        self.itens.cobertor = self.itens.cobertor + 1
+    elseif item == Items.BOTASNEVE then
+        self.itens.botasDeNeve = self.itens.botasDeNeve + 1
+    elseif item == Items.ESCUDO then
+        self.itens.escudo = self.itens.escudo + 1
+    elseif item == Items.PATINS then
+        self.itens.patins = self.itens.patins + 1
+    elseif item == Items.SUPERCHARGER then
+        self.itens.superCharger = self.itens.superCharger + 1
+    end
+    
 end
 
 function Mochila:RemovePantufa()
