@@ -15,10 +15,10 @@ function Tamagotchi:new(x, y)
     self.estaVivo = true
     self.necessidadesValorInicial = {
         AGUA = 10,
-        BANHO = 200,
-        BRINCAR = 50,
-        COMER = 100,
-        DORMIR = 100
+        BANHO = 20,
+        BRINCAR = 5,
+        COMER = 10,
+        DORMIR = 10
     }
     self.necessidades = {
         AGUA = (0.8 + 0.2 * math.random()) * self.necessidadesValorInicial.AGUA,
@@ -27,6 +27,7 @@ function Tamagotchi:new(x, y)
         COMER = (0.8 + 0.2 * math.random()) * self.necessidadesValorInicial.COMER,
         DORMIR = (0.8 + 0.2 * math.random()) * self.necessidadesValorInicial.DORMIR
     }
+    self.necessidadeAtual = NECESSIDADE:aleatoria()
     local botoesX, botoesY = self.physics:getPositionRounded()
     self.interface = InterfaceTamagotchi(botoesX, botoesY - 100)
     -- self.botoes = {
@@ -41,11 +42,7 @@ end
 function Tamagotchi:update(dt)
     
     if self.estaVivo then
-        self.necessidades.AGUA = self.necessidades.AGUA - dt
-        self.necessidades.BANHO = self.necessidades.BANHO - dt
-        self.necessidades.BRINCAR = self.necessidades.BRINCAR - dt
-        self.necessidades.COMER = self.necessidades.COMER - dt
-        self.necessidades.DORMIR = self.necessidades.DORMIR - dt
+        self:aumentarNecessidade(dt)
         self.estaVivo = self:checarVida()
     else
         self:destruir()
@@ -69,11 +66,33 @@ function Tamagotchi:draw()
 
 end
 
+function Tamagotchi:aumentarNecessidade(qtd)
+    if self.necessidadeAtual == NECESSIDADE.AGUA then
+        self.necessidades.AGUA = self.necessidades.AGUA - qtd
+    end
+    if self.necessidadeAtual == NECESSIDADE.BANHO then
+        self.necessidades.BANHO = self.necessidades.BANHO - qtd
+    end
+    if self.necessidadeAtual == NECESSIDADE.BRINCAR then
+        self.necessidades.BRINCAR = self.necessidades.BRINCAR - qtd
+    end
+    if self.necessidadeAtual == NECESSIDADE.COMER then
+        self.necessidades.COMER = self.necessidades.COMER - qtd
+    end
+    if self.necessidadeAtual == NECESSIDADE.DORMIR then
+        self.necessidades.DORMIR = self.necessidades.DORMIR - qtd
+    end
+end
+
 function Tamagotchi:desenharNecessidades()
     if self.estaVivo then
         Tamagotchi.super.draw(self)
         local x, y = self.physics:getPositionRounded()
         self:desenharBarraNecessidade(x - 20, y - 60, self.necessidades.AGUA, self.necessidadesValorInicial.AGUA)
+        self:desenharBarraNecessidade(x - 20, y - 80, self.necessidades.COMER, self.necessidadesValorInicial.COMER)
+        self:desenharBarraNecessidade(x - 20, y - 100, self.necessidades.BANHO, self.necessidadesValorInicial.BANHO)
+        self:desenharBarraNecessidade(x - 20, y - 120, self.necessidades.BRINCAR, self.necessidadesValorInicial.BRINCAR)
+        self:desenharBarraNecessidade(x - 20, y - 140, self.necessidades.DORMIR, self.necessidadesValorInicial.DORMIR)
     end
 end
 
@@ -123,6 +142,8 @@ function Tamagotchi:atenderNecessidade(necessidade)
     if necessidade == NECESSIDADE.DORMIR then
         self.necessidades.DORMIR = self.necessidadesValorInicial.DORMIR
     end
+
+    self.necessidadeAtual = NECESSIDADE:aleatoria()
 end
 
 function Tamagotchi:printarNecessidades()
