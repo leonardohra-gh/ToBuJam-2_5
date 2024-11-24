@@ -29,6 +29,8 @@ local tela = {
 local telaSelecionada = TELA.INICIO
 local TEMPOCRIACAOTAMAGOTCHI = 1000
 local contadorCriarTamagotchi = 0
+local musicIntro = love.audio.newSource("music/Intro.ogg", "stream")
+local musicJogo = love.audio.newSource("music/Jogo.ogg", "stream")
 local pausado = false
 
 function love.load()
@@ -99,6 +101,8 @@ function iniciarJogo()
     criarLoja()
     criarCasasMapa1()
     criarTamagotchiEmUmaCasa()
+    musicIntro:stop()
+    musicJogo:play()
     telaSelecionada = TELA.JOGO
 end
 
@@ -106,6 +110,8 @@ function carregarTelaInicial()
     telaSelecionada = TELA.INICIO
     botaoStart:ativar()
     botaoJogarNovamente:desativar()
+    musicJogo:stop()
+    musicIntro:play()
 end
 
 function criarTamagotchiEmUmaCasa()
