@@ -11,6 +11,7 @@ function VisaoLancaDardos:new(x, y, height, width)
     local imagePath = "assets/lancaDardos.png"
     local atravessavel = true
     local xReposicionado = x + width/2
+    local automaticDraw = true
     VisaoLancaDardos.super.new(self,
                                     xReposicionado,
                                     y,
@@ -20,6 +21,7 @@ function VisaoLancaDardos:new(x, y, height, width)
                                     BodyTypes.STATIC,
                                     EntityTags.VISAO_LANCA_DARDOS,
                                     atravessavel,
+                                    automaticDraw,
                                     Size(width, height)
                                 )
     self.shootingCooldown = 0.5

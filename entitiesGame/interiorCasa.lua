@@ -17,6 +17,8 @@ function InteriorCasa:new(qtdArmadilhas)
     self.tileWidth, self.tileHeight = 64, 64
     self.estruturaCasa, self.armadilhasCasa = {}, {}
     self.estruturaCasaEntities, self.armadilhasCasaEntities = {}, {}
+    self.tamagochi = nil
+    self.start = {i = 0, j = 0}
     self:gerarCasaProcedural(qtdArmadilhas)
 end
 
@@ -26,6 +28,8 @@ function InteriorCasa:gerarCasaProcedural(qtdArmadilhas)
     -- começar com 11 pixeis livres à esquerda, 11 à direita
 
     -- colocar chão
+    math.randomseed(os.time())
+    math.random(); math.random(); math.random()
     for i = 1, self.width do
         self.estruturaCasa[i] = {}
         for j = 1, self.height do
@@ -60,6 +64,12 @@ function InteriorCasa:gerarCasaProcedural(qtdArmadilhas)
         end
     end
 
+    local iPossibilities = {2, self.width - 1}
+    local jPossibilities = {2, self.height - 1}
+    local randomI = iPossibilities[math.random(1, 2)]
+    local randomJ = jPossibilities[math.random(1, 2)]
+    self.start = {i = randomI, j = randomJ}
+
     self:popularEstruturas()
 
     -- colocar chão
@@ -70,8 +80,6 @@ function InteriorCasa:gerarCasaProcedural(qtdArmadilhas)
         end
     end
 
-    math.randomseed(os.time())
-    math.random(); math.random(); math.random()
 
     local armadilhas = {EntityTags.CHAO_CRAQUELADO, EntityTags.CHAO_ESCORREGADIO, EntityTags.LANCA_DARDOS, EntityTags.ROBOZINHO}
     local keyset = {}
@@ -83,10 +91,24 @@ function InteriorCasa:gerarCasaProcedural(qtdArmadilhas)
         local random_elem = armadilhas[keyset[math.random(#keyset)]]
         local random_i = math.random(2, self.width-1)
         local random_j = math.random(2, self.height-1)
-        self.armadilhasCasa[random_i][random_j] = random_elem
+        if self:distanceToStart(random_i, random_j) > 2 then
+            self.armadilhasCasa[random_i][random_j] = random_elem
+        end
     end
 
     self:popularArmadilhas()
+end
+
+function InteriorCasa:distanceToStart(i, j)
+    local distance = math.sqrt(math.pow((i - self.start.i), 2) + math.pow((j - self.start.j), 2))
+    return distance
+end
+
+function InteriorCasa:getPositionStart()
+    local halfTileWidth, halfTileHeight = self.tileWidth/2, self.tileHeight/2
+    local offsetX = 11
+    local xStart, ystart = offsetX + ((self.start.i-1)*self.tileWidth) + halfTileWidth, ((self.start.j-1)*self.tileWidth) + halfTileHeight
+    return xStart, ystart
 end
 
 function InteriorCasa:draw()

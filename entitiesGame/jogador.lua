@@ -40,6 +40,10 @@ function Jogador:mover()
     self.physics:setVelocity(velocityX, velocityY)
 end
 
+function Jogador:moverPara(x, y)
+    self.physics:moveTo(x, y)
+end
+
 function Jogador:update(dt)
     if not self.movementDisabled then
         self:mover()

@@ -1,5 +1,6 @@
 require("core.auxiliary.utils")
 local Entity = require("core.entity")
+local EntityTags = require("enumsGame.EntityTags")
 
 -- Funções callback do mundo
 
@@ -89,6 +90,8 @@ function DrawWorldEntities()
     for i=1, #worldEntities do
         worldEntities[i]:draw()
     end
+    local player = GetWorldEntitiesByTag(EntityTags.JOGADOR)[1]
+    player:draw()
 end
 
 function CreateWorld()

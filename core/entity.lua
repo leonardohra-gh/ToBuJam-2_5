@@ -4,7 +4,7 @@ local Drawer = require("core.drawer")
 local Size = require("core.structures.size")
 local Physics = require("core.physics")
 
-function Entity:new(x, y, imagePath, world, shapeType, bodyType, tag, atravessavel, size, automaticDraw)
+function Entity:new(x, y, imagePath, world, shapeType, bodyType, tag, atravessavel, automaticDraw, size)
     self.automaticDraw = automaticDraw or true
     if imagePath == nil then
         self.drawer = nil
