@@ -18,9 +18,10 @@ end
 function love.load()
     love.window.setMode(1366, 768)
     CreateWorld()
-    local player = Jogador(600, 300)
-    local parede = Parede(300, 300)
-    local parede = LancaDardos(364, 300)
+    local player = Jogador(800, 300)
+    --local parede = Parede(300, 300)
+    local lancaDardos = LancaDardos(364, 300, 300)
+    local parede = Parede(900, 300)
     -- local parede = Parede(200, 200)
     -- local chao = Chao(300, 300)
     -- local chaoEscorregadio = chaoEscorregadio(300, 300)
@@ -36,7 +37,7 @@ function love.load()
     -- for i = 1, 6*mult do
     --     local rua = Rua(xi, ruaSize*(i-1), math.pi/2)
     -- end
-    criarCasasMapa1()
+    --criarCasasAleatorias()
 end
 function love.update(dt)
     UpdateWorldEntities(dt)
@@ -46,7 +47,7 @@ function love.draw()
     DrawWorldEntities()
     if DEBUG_MODE then
         DrawWorldEntityCountTopLeft()
-        --DrawColliders()
+        DrawColliders()
         DrawTester("Leo")
     end
 end

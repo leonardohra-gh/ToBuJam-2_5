@@ -4,13 +4,13 @@ local Drawer = require("core.drawer")
 local Size = require("core.structures.size")
 local Physics = require("core.physics")
 
-function Entity:new(x, y, imagePath, world, shapeType, bodyType, tag, atravessavel)
+function Entity:new(x, y, imagePath, world, shapeType, bodyType, tag, atravessavel, size)
     if imagePath == nil then
         self.drawer = nil
         self.size = nil
     else
         self.drawer = Drawer(imagePath)
-        self.size = Size(self.drawer:getWidth(), self.drawer:getHeight())
+        self.size = size or Size(self.drawer:getWidth(), self.drawer:getHeight())
     end
 
     self.physics = Physics(
