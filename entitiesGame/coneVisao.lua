@@ -18,8 +18,11 @@ function ConeVisao:draw()
     ConeVisao.super.draw(self)
 end
 
--- function MyEntity:beginContact(entidade_colisora, coll)
--- end
+function ConeVisao:beginContact(entidade_colisora, coll)
+    if entidade_colisora.tag == EntityTags.JOGADOR then
+        finalizarJogo()
+    end
+end
 
 function ConeVisao:destruir()
     self.toBeDestroyed = true
