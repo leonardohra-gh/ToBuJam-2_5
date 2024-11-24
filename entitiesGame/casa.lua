@@ -6,7 +6,8 @@ local EntityTags = require("enumsGame.EntityTags")
 local Tamagochi = require("entitiesGame.tamagochi")
 
 function Casa:new(x, y)
-    local imagePath = "assets/casa.png"
+    local corCasa = math.random(5)
+    local imagePath = "assets/casa_" .. corCasa .. ".png"
     Casa.super.new(self, x, y, imagePath, World, ShapeTypes.RECTANGLE, BodyTypes.STATIC, EntityTags.CASA)
     local casaX, casaY = self.physics:getPositionRounded()
     if math.random() <= 1 then
