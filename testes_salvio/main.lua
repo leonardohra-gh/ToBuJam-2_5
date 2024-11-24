@@ -27,6 +27,8 @@ local tela = {
 }
 
 local telaSelecionada = TELA.INICIO
+local TEMPOCRIACAOTAMAGOTCHI = 1000
+local contadorCriarTamagotchi = 0
 
 function love.load()
     CreateWorld()
@@ -39,6 +41,13 @@ end
 function love.update(dt)
 
     UpdateWorldEntities(dt)
+    if telaSelecionada == TELA.JOGO then
+        contadorCriarTamagotchi = contadorCriarTamagotchi + 1
+    end
+    if TEMPOCRIACAOTAMAGOTCHI <= contadorCriarTamagotchi then
+        contadorCriarTamagotchi = 0
+        criarTamagotchiEmUmaCasa()
+    end
 
 end
 
@@ -73,27 +82,61 @@ end
 function iniciarJogo()
     botaoJogarNovamente:desativar()
     botaoStart:desativar()
-    jogador = Jogador(600, 500)
-    Loja(300, 400)
+    criarJogador()
+    criarLoja()
     criarCasasAleatorias()
-    Moedas(500, 100)
+    criarTamagotchiEmUmaCasa()
     telaSelecionada = TELA.JOGO
-end
-
-function finalizarJogo()
-    destruirLoja()
-    destruirCasas()
-    destruirArmadilhas()
-    destruirTamagotchis()
-    destruirJogador()
-    telaSelecionada = TELA.FIM
-    botaoJogarNovamente:ativar()
 end
 
 function carregarTelaInicial()
     telaSelecionada = TELA.INICIO
     botaoStart:ativar()
     botaoJogarNovamente:desativar()
+end
+
+function criarTamagotchiEmUmaCasa()
+    
+    local todasCasas = GetWorldEntitiesByTag(EntityTags.CASA)
+    for i, casa in ipairs(todasCasas) do
+        if casa.tamagotchi == nil then
+            casa:criarTamagotchi()
+            break
+        end
+    end
+end
+
+
+function criarJogador()    
+    jogador = Jogador(600, 500)
+end
+
+
+function criarLoja()    
+    Loja(150, 480)
+end
+
+function criarCasasAleatorias()
+    positions = {
+        {x = 100, y = 100},
+        {x = 100, y = 300},
+        {x = 300, y = 100},
+        {x = 300, y = 300},
+        {x = 500, y = 100},
+        {x = 500, y = 300},
+    }
+
+    for i = 1, #positions do
+        Casa(positions[i].x, positions[i].y)
+    end
+end
+
+function destruirMoedas()
+    
+    local todasMoedas = GetWorldEntitiesByTag(EntityTags.MOEDAS)
+    for i, moeda in ipairs(todasMoedas) do
+        moeda:destruir()
+    end
 end
 
 function destruirArmadilhas()
@@ -147,19 +190,15 @@ function destruirJogador()
     end
 end
 
-function criarCasasAleatorias()
-    positions = {
-        {x = 100, y = 100},
-        {x = 1000, y = 150},
-        {x = 300, y = 200},
-        {x = 750, y = 400},
-        {x = 100, y = 600},
-        {x = 1250, y = 500},
-    }
-
-    for i = 1, #positions do
-        Casa(positions[i].x, positions[i].y)
-    end
+function finalizarJogo()
+    destruirMoedas()
+    destruirLoja()
+    destruirCasas()
+    destruirArmadilhas()
+    destruirTamagotchis()
+    destruirJogador()
+    telaSelecionada = TELA.FIM
+    botaoJogarNovamente:ativar()
 end
 
 local love_errorhandler = love.errorhandler

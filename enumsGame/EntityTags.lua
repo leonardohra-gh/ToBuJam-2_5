@@ -11,7 +11,8 @@ local EntityTags= {
     ROBOZINHO = "robozinho",
     RUA = "rua",
     TAMAGOCHI = "tamagochi",
-    LANCA_DARDOS = "lancaDardos"
+    LANCA_DARDOS = "lancaDardos",
+    MOEDAS = "moedas"
 }
 
 return EntityTags

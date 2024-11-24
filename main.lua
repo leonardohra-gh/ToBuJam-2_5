@@ -6,7 +6,11 @@ local TELA = require("core.enums.telas")
 local SHAPE = require("core.enums.shape_types")
 local Botao = require("entitiesGame.botao")
 local Jogador = require("entitiesGame.jogador")
+local Robozinho = require("entitiesGame.robozinho")
+local Parede = require("entitiesGame.parede")
+local Loja = require("entitiesGame.loja")
 local Casa = require("entitiesGame.casa")
+local Moedas = require("entitiesGame.moedas")
 
 if arg[2] == "debug" then
     require("lldebugger").start()
@@ -23,10 +27,12 @@ local tela = {
 }
 
 local telaSelecionada = TELA.INICIO
+local TEMPOCRIACAOTAMAGOTCHI = 1000
+local contadorCriarTamagotchi = 0
 
 function love.load()
-    love.window.setMode(1366, 768)
     CreateWorld()
+    love.graphics.setFont(love.graphics.newFont(18))
     botaoStart = Botao(300, 500, "assets/botaoRect.png", "assets/botaoRectHovered.png", "Start", SHAPE.RECTANGLE, iniciarJogo)
     botaoJogarNovamente = Botao(500, 500, "assets/botaoRect.png", "assets/botaoRectHovered.png", "Jogar novamente", SHAPE.RECTANGLE, carregarTelaInicial)
     carregarTelaInicial()
@@ -35,6 +41,13 @@ end
 function love.update(dt)
 
     UpdateWorldEntities(dt)
+    if telaSelecionada == TELA.JOGO then
+        contadorCriarTamagotchi = contadorCriarTamagotchi + 1
+    end
+    if TEMPOCRIACAOTAMAGOTCHI <= contadorCriarTamagotchi then
+        contadorCriarTamagotchi = 0
+        criarTamagotchiEmUmaCasa()
+    end
 
 end
 
@@ -56,10 +69,9 @@ function love.mousereleased(x, y, button)
             end
         end
 
-
         local todosTamagotchis = GetWorldEntitiesByTag(EntityTags.TAMAGOCHI)
-        for i, tamagochi in ipairs(todosTamagotchis) do
-            if tamagochi:estaVivo() then
+        for i, tamagochi in pairs(todosTamagotchis) do
+            if tamagochi.estaVivo then
                 tamagochi:checkInterfaceClick()
             end
         end
@@ -68,18 +80,13 @@ function love.mousereleased(x, y, button)
 end
 
 function iniciarJogo()
-    telaSelecionada = TELA.JOGO
     botaoJogarNovamente:desativar()
     botaoStart:desativar()
-    jogador = Jogador(400, 500)
-    casa = Casa(500,600)
-end
-
-function finalizarJogo()
-    telaSelecionada = TELA.FIM
-    botaoJogarNovamente:ativar()
-    jogador:destruir()
-    casa:destruir()
+    criarJogador()
+    criarLoja()
+    criarCasasAleatorias()
+    criarTamagotchiEmUmaCasa()
+    telaSelecionada = TELA.JOGO
 end
 
 function carregarTelaInicial()
@@ -88,6 +95,111 @@ function carregarTelaInicial()
     botaoJogarNovamente:desativar()
 end
 
+function criarTamagotchiEmUmaCasa()
+    
+    local todasCasas = GetWorldEntitiesByTag(EntityTags.CASA)
+    for i, casa in ipairs(todasCasas) do
+        if casa.tamagotchi == nil then
+            casa:criarTamagotchi()
+            break
+        end
+    end
+end
+
+
+function criarJogador()    
+    jogador = Jogador(600, 500)
+end
+
+
+function criarLoja()    
+    Loja(150, 480)
+end
+
+function criarCasasAleatorias()
+    positions = {
+        {x = 100, y = 100},
+        {x = 100, y = 300},
+        {x = 300, y = 100},
+        {x = 300, y = 300},
+        {x = 500, y = 100},
+        {x = 500, y = 300},
+    }
+
+    for i = 1, #positions do
+        Casa(positions[i].x, positions[i].y)
+    end
+end
+
+function destruirMoedas()
+    
+    local todasMoedas = GetWorldEntitiesByTag(EntityTags.MOEDAS)
+    for i, moeda in ipairs(todasMoedas) do
+        moeda:destruir()
+    end
+end
+
+function destruirArmadilhas()
+    local todosChaoCraquelado = GetWorldEntitiesByTag(EntityTags.CHAO_CRAQUELADO)
+    for i, chaoCraquelado in ipairs(todosChaoCraquelado) do
+        chaoCraquelado:destruir()
+    end
+
+    local todosRobos = GetWorldEntitiesByTag(EntityTags.ROBOZINHO)
+    for i, robo in ipairs(todosRobos) do
+        robo:destruir()
+    end
+    
+    local todosChaoEscorregadio = GetWorldEntitiesByTag(EntityTags.CHAO_ESCORREGADIO)
+    for i, chaoEscorregadio in ipairs(todosChaoEscorregadio) do
+        chaoEscorregadio:destruir()
+    end
+    
+    local todosLancaDardos = GetWorldEntitiesByTag(EntityTags.LANCA_DARDOS)
+    for i, lancaDardos in ipairs(todosLancaDardos) do
+        lancaDardos:destruir()
+    end
+end
+
+function destruirTamagotchis()
+    
+    local todosTamagotchis = GetWorldEntitiesByTag(EntityTags.TAMAGOCHI)
+    for i, tamagotchi in ipairs(todosTamagotchis) do
+        tamagotchi:destruir()
+    end
+end
+
+function destruirCasas()
+    local todasCasas = GetWorldEntitiesByTag(EntityTags.CASA)
+    for i, casa in ipairs(todasCasas) do
+        casa:destruir()
+    end
+end
+
+function destruirLoja()
+    local loja = GetWorldEntitiesByTag(EntityTags.LOJA)[1]
+    if not (loja == nil) then
+        loja:destruir()
+    end
+end
+
+function destruirJogador()
+    local jogador = GetWorldEntitiesByTag(EntityTags.JOGADOR)[1]
+    if not (jogador == nil) then
+        jogador:destruir()
+    end
+end
+
+function finalizarJogo()
+    destruirMoedas()
+    destruirLoja()
+    destruirCasas()
+    destruirArmadilhas()
+    destruirTamagotchis()
+    destruirJogador()
+    telaSelecionada = TELA.FIM
+    botaoJogarNovamente:ativar()
+end
 
 local love_errorhandler = love.errorhandler
 
