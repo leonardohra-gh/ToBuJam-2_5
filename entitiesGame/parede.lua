@@ -4,10 +4,11 @@ local ShapeTypes = require("core.enums.shape_types")
 local Entity = require("core.entity")
 local Parede = Entity:extend()
 local EntityTags = require("enumsGame.EntityTags")
+local OrientacaoParede = require("enumsGame.OrientacaoParede")
 
-function Parede:new(x, y)
-    local imagePath = "assets/parede.png"
-    Parede.super.new(self, x, y, imagePath, World, ShapeTypes.RECTANGLE, BodyTypes.STATIC, EntityTags.PAREDE)
+function Parede:new(x, y, orientacao)
+    orientacao = orientacao or OrientacaoParede.SIMPLES_VERTICAL
+    Parede.super.new(self, x, y, orientacao, World, ShapeTypes.RECTANGLE, BodyTypes.STATIC, EntityTags.PAREDE)
 end
 
 function Parede:update(dt)
