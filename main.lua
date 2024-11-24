@@ -21,7 +21,7 @@ end
 
 local tela = {
     inicio = love.graphics.newImage("assets/telaInicial.png"),
-    jogo = love.graphics.newImage("assets/telaJogo.png"),
+    jogo = love.graphics.newImage("assets/mapa_1.png"),
     pausa = love.graphics.newImage("assets/telaPausa.png"),
     fim = love.graphics.newImage("assets/telaFim.png")
 }
@@ -29,6 +29,7 @@ local tela = {
 local telaSelecionada = TELA.INICIO
 local TEMPOCRIACAOTAMAGOTCHI = 1000
 local contadorCriarTamagotchi = 0
+local pausado = false
 
 function love.load()
     love.window.setMode(1366, 768)
@@ -41,13 +42,15 @@ end
 
 function love.update(dt)
 
-    UpdateWorldEntities(dt)
-    if telaSelecionada == TELA.JOGO then
-        contadorCriarTamagotchi = contadorCriarTamagotchi + 1
-    end
-    if TEMPOCRIACAOTAMAGOTCHI <= contadorCriarTamagotchi then
-        contadorCriarTamagotchi = 0
-        criarTamagotchiEmUmaCasa()
+    if not pausado then
+        UpdateWorldEntities(dt)
+        if telaSelecionada == TELA.JOGO then
+            contadorCriarTamagotchi = contadorCriarTamagotchi + 1
+        end
+        if TEMPOCRIACAOTAMAGOTCHI <= contadorCriarTamagotchi then
+            contadorCriarTamagotchi = 0
+            criarTamagotchiEmUmaCasa()
+        end
     end
 
 end
@@ -58,6 +61,15 @@ function love.draw()
     if DEBUG_MODE then
         DrawWorldEntityCountTopLeft()
         -- DrawColliders()
+    end
+    if pausado then
+        love.graphics.draw(tela[TELA.PAUSA])
+    end
+end
+
+function love.keypressed(key)
+    if key == "escape" then
+        pausado = not pausado
     end
 end
 

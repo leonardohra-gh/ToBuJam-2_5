@@ -23,6 +23,7 @@ local tela = {
     fim = love.graphics.newImage("assets/telaFim.png")
 }
 
+local filtroNoite = love.graphics.newImage("assets/filtroNoite.png")
 local telaSelecionada = TELA.INICIO
 local TEMPOCRIACAOTAMAGOTCHI = 100
 local contadorCriarTamagotchi = 0
@@ -56,6 +57,17 @@ function love.draw()
     if DEBUG_MODE then
         DrawWorldEntityCountTopLeft()
         -- DrawColliders()
+    end
+    if telaSelecionada == TELA.JOGO then
+        love.graphics.draw(filtroNoite)
+    end
+    if pausado then
+        
+        love.graphics.draw(tela[TELA.PAUSA])
+        local texto = "Jogo pausado"
+        local textWidth  = love.graphics.getFont():getWidth(texto)
+	    local textHeight = love.graphics.getFont():getHeight()
+        love.graphics.print(texto, 1366 / 2 - textWidth / 2, 768 / 2 - textHeight / 2)
     end
 end
 
