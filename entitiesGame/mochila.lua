@@ -6,7 +6,7 @@ local BotaoMochila = require("entitiesGame.botaoMochila")
 
 function Mochila:new()
     self.pos = {x = 1250, y = 130}
-    self.dinheiro = 100
+    self.dinheiro = 10000
     self.itens = {
         pantufa = 0,
         cobertor = 0,

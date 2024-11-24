@@ -77,7 +77,11 @@ function Loja:venderEscudo()
 end
 
 function Loja:venderPatins()
-    venderItem(Items.PATINS)
+    local jogador = GetWorldEntitiesByTag(EntityTags.JOGADOR)[1]
+    if jogador:PodeAumentarVelocidade() then
+        venderItem(Items.PATINS)
+        jogador:AddVelocidade()
+    end
 end
 
 function Loja:venderSuperCharger()

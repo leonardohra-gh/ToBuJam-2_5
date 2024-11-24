@@ -8,11 +8,13 @@ local Mochila = require('entitiesGame.mochila')
 local TAMAGOTCHI_VIDAS = 5
 local IMAGE_TAMAGOTCHI_VIDA = love.graphics.newImage("assets/tamagotchiVida.png")
 local vidasX, vidasY = 1250 - 16 / 2, 100
+local MAX_SPEED = 300
+local SPEED_INC = 50
 
 function Jogador:new(x, y)
     local imagePath = "assets/jogador.png"
     Jogador.super.new(self, x, y, imagePath, World, ShapeTypes.RECTANGLE, BodyTypes.DYNAMIC, EntityTags.JOGADOR)
-    self.speed = 300
+    self.speed = 150
     self.mochila = Mochila()
     self.pontuacao = 0
     self.movementDisabled = false
@@ -75,6 +77,16 @@ end
 
 function Jogador:AddPontuacao(quantidade)
     self.pontuacao = self.pontuacao + quantidade
+end
+
+function Jogador:AddVelocidade()
+    if self:PodeAumentarVelocidade()then
+        self.speed = self.speed + SPEED_INC
+    end
+end
+
+function Jogador:PodeAumentarVelocidade()
+    return self.speed + SPEED_INC <= MAX_SPEED
 end
 
 function Jogador:AumentarTamagotchiVidas()
