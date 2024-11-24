@@ -22,7 +22,7 @@ end
 function love.load()
     love.window.setMode(1366, 768)
     CreateWorld()
-    -- local player = Jogador(800, 300)
+    local player = Jogador(800, 300)
     --local parede = Parede(300, 300)
     -- local lancaDardos = LancaDardos(364, 300, 300)
     -- local parede = Parede(900, 300)
@@ -42,20 +42,27 @@ function love.load()
     --     local rua = Rua(xi, ruaSize*(i-1), math.pi/2)
     -- end
     --criarCasasAleatorias()
-    CasaCriada = InteriorCasa(5)
+    CasaCriada = InteriorCasa(10)
+    local xStart, yStart = CasaCriada:getPositionStart()
+    player:moverPara(xStart, yStart)
 end
 function love.update(dt)
     UpdateWorldEntities(dt)
 
 end
 function love.draw()
-    DrawWorldEntities()
     if CasaCriada then
-        CasaCriada:draw()
+        CasaCriada:renderizarEstrutura()
+    end
+
+    DrawWorldEntities()
+
+    if CasaCriada then
+        CasaCriada:renderizarArmadilhas()
     end
     if DEBUG_MODE then
         DrawWorldEntityCountTopLeft()
-        --DrawColliders()
+        DrawColliders()
         DrawTester("Leo")
     end
 end
