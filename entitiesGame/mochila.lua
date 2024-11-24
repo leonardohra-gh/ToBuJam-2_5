@@ -2,9 +2,10 @@
 local Items = require("core.enums.items")
 local Object = require("libs.classic")
 local Mochila = Object:extend()
+local BotaoMochila = require("entitiesGame.botaoMochila")
 
 function Mochila:new()
-    self.pos = {x = 650, y = 30}
+    self.pos = {x = 1250, y = 130}
     self.dinheiro = 100
     self.itens = {
         pantufa = 0,
@@ -20,38 +21,21 @@ function Mochila:new()
         botasDeNeve = false,
         escudo = false
     }
+    self.botoes = {
+        pantufa = BotaoMochila(self.pos.x + 64 / 2, self.pos.y + 32 / 2, self.itens.pantufa),
+        cobertor = BotaoMochila(self.pos.x + 64 / 2, self.pos.y + 32 / 2 + 32, self.itens.cobertor),
+        botasDeNeve = BotaoMochila(self.pos.x + 64 / 2, self.pos.y + 32 / 2 + 2 * 32, self.itens.botasDeNeve),
+        escudo = BotaoMochila(self.pos.x + 64 / 2, self.pos.y + 32 / 2 + 3 * 32, self.itens.escudo),
+    }
 end
 
 function Mochila:update(dt)
 end
 
 function Mochila:draw()
-    local selTexto = ""
-    if self.itensSelecionados.pantufa then
-        selTexto = "Sel "
-    end
-    love.graphics.print(selTexto .. "Pantufas: " .. self.itens.pantufa, self.pos.x, self.pos.y)
-    
-    selTexto = ""
-    if self.itensSelecionados.cobertor then
-        selTexto = "Sel "
-    end
-    love.graphics.print(selTexto .. "Cobertores: " .. self.itens.cobertor, self.pos.x, self.pos.y + 20)
-
-    selTexto = ""
-    if self.itensSelecionados.botasDeNeve then
-        selTexto = "Sel "
-    end
-    love.graphics.print(selTexto .. "Botas de neve: " .. self.itens.botasDeNeve, self.pos.x, self.pos.y + 40)
-
-    selTexto = ""
-    if self.itensSelecionados.escudo then
-        selTexto = "Sel "
-    end
-    love.graphics.print(selTexto .. "Escudo: " .. self.itens.escudo, self.pos.x, self.pos.y + 60)
-    love.graphics.print("Patins: " .. self.itens.patins, self.pos.x, self.pos.y + 80)
-    love.graphics.print("Super charger: " .. self.itens.superCharger, self.pos.x, self.pos.y + 100)
-    love.graphics.print("Moedas: " .. self.dinheiro, self.pos.x, self.pos.y + 120)
+    love.graphics.print("Patins: " .. self.itens.patins, self.pos.x, self.pos.y + 4 * 32)
+    love.graphics.print("Super charger: " .. self.itens.superCharger, self.pos.x, self.pos.y + 5 * 32)
+    love.graphics.print("Moedas: " .. self.dinheiro, self.pos.x, self.pos.y + 6 * 32)
 end
 
 function Mochila:selecionarItem(item)
@@ -95,13 +79,17 @@ end
 
 function Mochila:AddItem(item)
     if item == Items.PANTUFA then
-        self.itens.pantufa = self.itens.pantufa + 1
+        -- self.itens.pantufa = self.itens.pantufa + 1
+        self.botoes.pantufa:AddItem()
     elseif item == Items.COBERTOR then
-        self.itens.cobertor = self.itens.cobertor + 1
+        -- self.itens.cobertor = self.itens.cobertor + 1
+        self.botoes.cobertor:AddItem()
     elseif item == Items.BOTASNEVE then
-        self.itens.botasDeNeve = self.itens.botasDeNeve + 1
+        -- self.itens.botasDeNeve = self.itens.botasDeNeve + 1
+        self.botoes.botasDeNeve:AddItem()
     elseif item == Items.ESCUDO then
-        self.itens.escudo = self.itens.escudo + 1
+        -- self.itens.escudo = self.itens.escudo + 1
+        self.botoes.escudo:AddItem()
     elseif item == Items.PATINS then
         self.itens.patins = self.itens.patins + 1
     elseif item == Items.SUPERCHARGER then
@@ -112,19 +100,29 @@ end
 
 function Mochila:RemoverItem(item)
     if item == Items.PANTUFA and 1 <= self.itens.pantufa then
-        self.itens.pantufa = self.itens.pantufa - 1
+        -- self.itens.pantufa = self.itens.pantufa - 1
+        self.botoes.pantufa:RemoverItem()
     elseif item == Items.COBERTOR and 1 <= self.itens.cobertor then
-        self.itens.cobertor = self.itens.cobertor - 1
+        -- self.itens.cobertor = self.itens.cobertor - 1
+        self.botoes.cobertor:RemoverItem()
     elseif item == Items.BOTASNEVE and 1 <= self.itens.botasDeNeve then
-        self.itens.botasDeNeve = self.itens.botasDeNeve - 1
+        -- self.itens.botasDeNeve = self.itens.botasDeNeve - 1
+        self.botoes.botasDeNeve:RemoverItem()
     elseif item == Items.ESCUDO and 1 <= self.itens.escudo then
-        self.itens.escudo = self.itens.escudo - 1
+        -- self.itens.escudo = self.itens.escudo - 1
+        self.botoes.escudo:RemoverItem()
     elseif item == Items.PATINS and 1 <= self.itens.patins then
         self.itens.patins = self.itens.patins - 1
     elseif item == Items.SUPERCHARGER and 1 <= self.itens.superCharger then
         self.itens.superCharger = self.itens.superCharger - 1
     end
     
+end
+
+function Mochila:destruir()
+    for i, botao in pairs(self.botoes) do
+        botao:destruir()
+    end
 end
 
 return Mochila

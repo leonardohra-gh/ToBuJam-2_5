@@ -14,7 +14,19 @@ function BotaoPadrao:update(dt)
 end
 
 function BotaoPadrao:draw()
-    BotaoPadrao.super.draw(self)
+    if self.ativo then
+        local centroX, centroY = self.physics:getPositionRounded()
+        local width, height = self.physics:getSize()
+        local textWidth  = love.graphics.getFont():getWidth(self.texto)
+	    local textHeight = love.graphics.getFont():getHeight()
+        if self:isHovered() then
+            love.graphics.draw(self.hoveredImage, centroX - width / 2, centroY - height / 2)
+            love.graphics.print(self.texto, centroX - textWidth / 2, centroY - textHeight / 2)
+        else
+            Botao.super.draw(self)
+            love.graphics.print(self.texto, centroX - textWidth / 2, centroY - textHeight / 2 - 10)
+        end
+    end
 end
 
 return BotaoPadrao

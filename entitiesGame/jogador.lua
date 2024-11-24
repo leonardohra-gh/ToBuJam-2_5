@@ -7,7 +7,7 @@ local Mochila = require('entitiesGame.mochila')
 
 local TAMAGOTCHI_VIDAS = 5
 local IMAGE_TAMAGOTCHI_VIDA = love.graphics.newImage("assets/tamagotchiVida.png")
-local vidasX, vidasY = 200, 50
+local vidasX, vidasY = 1250 - 16 / 2, 100
 
 function Jogador:new(x, y)
     local imagePath = "assets/jogador.png"
@@ -48,7 +48,7 @@ end
 function Jogador:draw()
     Jogador.super.draw(self)
     self.mochila:draw()
-    love.graphics.print("Pontuação: " .. self.pontuacao, 550, 250)
+    love.graphics.print("Pontuação: " .. self.pontuacao, 1250, 350)
     for i = 1, self.tamagotchometro do
         love.graphics.draw(IMAGE_TAMAGOTCHI_VIDA, vidasX + 20 * i, vidasY)
     end
@@ -91,6 +91,7 @@ function Jogador:DiminuirTamagotchiVidas()
 end
 
 function Jogador:destruir()
+    self.mochila:destruir()
     self.toBeDestroyed = true
 end
 

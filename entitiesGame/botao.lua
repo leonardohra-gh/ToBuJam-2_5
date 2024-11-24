@@ -27,11 +27,11 @@ function Botao:draw()
 	    local textHeight = love.graphics.getFont():getHeight()
         if self:isHovered() then
             love.graphics.draw(self.hoveredImage, centroX - width / 2, centroY - height / 2)
-            love.graphics.print(self.texto, centroX - textWidth / 2, centroY - textHeight / 2)
         else
             Botao.super.draw(self)
-            love.graphics.print(self.texto, centroX - textWidth / 2, centroY - textHeight / 2 - 10)
         end
+
+        love.graphics.print(self.texto, centroX - textWidth / 2, centroY - textHeight / 2)
     end
 end
 
