@@ -62,22 +62,22 @@ function love.mousereleased(x, y, button)
 end
 
 function iniciarJogo()
-    telaSelecionada = TELA.JOGO
     botaoJogarNovamente:desativar()
     botaoStart:desativar()
     jogador = Jogador(600, 500)
     Loja(300, 400)
     criarCasasAleatorias()
+    telaSelecionada = TELA.JOGO
 end
 
 function finalizarJogo()
-    telaSelecionada = TELA.FIM
-    botaoJogarNovamente:ativar()
     destruirLoja()
     destruirCasas()
     destruirArmadilhas()
     destruirTamagotchis()
-    jogador.toBeDestroyed = true
+    destruirJogador()
+    telaSelecionada = TELA.FIM
+    botaoJogarNovamente:ativar()
 end
 
 function carregarTelaInicial()
@@ -130,7 +130,16 @@ end
 
 function destruirLoja()
     local loja = GetWorldEntitiesByTag(EntityTags.LOJA)[1]
-    loja.toBeDestroyed = true
+    if not (loja == nil) then
+        loja:destruir()
+    end
+end
+
+function destruirJogador()
+    local jogador = GetWorldEntitiesByTag(EntityTags.JOGADOR)[1]
+    if not (jogador == nil) then
+        jogador.toBeDestroyed = true
+    end
 end
 
 function criarCasasAleatorias()

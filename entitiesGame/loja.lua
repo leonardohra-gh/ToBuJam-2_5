@@ -84,6 +84,13 @@ function Loja:venderSuperCharger()
     venderItem(Items.SUPERCHARGER)
 end
 
+function Loja:destruir()
+    for i, botao in pairs(self.botoes) do
+        botao.toBeDestroyed = true
+    end
+    self.toBeDestroyed = true
+end
+
 function venderItem(item)
     local precoItem = item.PRECO
     local jogador = GetWorldEntitiesByTag(EntityTags.JOGADOR)[1]

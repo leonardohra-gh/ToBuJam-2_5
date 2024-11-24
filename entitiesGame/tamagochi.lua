@@ -39,7 +39,9 @@ function Tamagotchi:update(dt)
     else
         self.toBeDestroyed = true
         local jogador = GetWorldEntitiesByTag(EntityTags.JOGADOR)[1]
-        jogador:DiminuirTamagotchiVidas()
+        if not (jogador == nil) then
+            jogador:DiminuirTamagotchiVidas()
+        end
     end
     Tamagotchi.super.update(self, dt)
 end
