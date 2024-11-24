@@ -27,7 +27,7 @@ local tela = {
 }
 
 local telaSelecionada = TELA.INICIO
-local TEMPOCRIACAOTAMAGOTCHI = 1000
+local TEMPOCRIACAOTAMAGOTCHI = 100
 local contadorCriarTamagotchi = 0
 local musicIntro = love.audio.newSource("music/Intro.ogg", "stream")
 local musicJogo = love.audio.newSource("music/Jogo.ogg", "stream")
@@ -131,22 +131,25 @@ function criarJogador()
 end
 
 
-function criarLoja()    
-    Loja(150, 480)
+function criarLoja()
+    Loja(480 + 96 / 2, 0 + 96 / 2)
 end
 
 function criarCasasMapa1()
     positions = {
-        {x = 100, y = 100},
-        {x = 100, y = 300},
-        {x = 300, y = 100},
-        {x = 300, y = 300},
-        {x = 500, y = 100},
-        {x = 500, y = 300},
+        {x = 192, y = 192},
+        {x = 192, y = 448},
+        {x = 352, y = 448},
+        {x = 592, y = 224},
+        {x = 608, y = 416},
+        {x = 864, y = 208},
+        {x = 880, y = 416},
+        {x = 1018, y = 320}
     }
 
+    local casaWidth, casaHeight = 128, 128
     for i = 1, #positions do
-        Casa(positions[i].x, positions[i].y)
+        Casa(positions[i].x + casaWidth / 2, positions[i].y + casaHeight / 2)
     end
 end
 
