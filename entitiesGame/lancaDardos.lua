@@ -2,12 +2,14 @@
 local BodyTypes = require("core.enums.body_types")
 local ShapeTypes = require("core.enums.shape_types")
 local Entity = require("core.entity")
+local VisaoLancaDardos = require("entitiesGame.visaoLancaDardos")
 local LancaDardos = Entity:extend()
 local EntityTags = require("enumsGame.EntityTags")
 
-function LancaDardos:new(x, y)
+function LancaDardos:new(x, y, sensorDistance)
     local imagePath = "assets/lancaDardos.png"
-    LancaDardos.super.new(self, x, y, imagePath, World, ShapeTypes.CIRCLE, BodyTypes.DYNAMIC, EntityTags.LANCA_DARDOS)
+    LancaDardos.super.new(self, x, y, imagePath, World, ShapeTypes.CIRCLE, BodyTypes.STATIC, EntityTags.LANCA_DARDOS)
+    self.visao = VisaoLancaDardos(x, y, self.drawer:getHeight(), sensorDistance)
 end
 
 function LancaDardos:update(dt)
@@ -32,6 +34,7 @@ end
 
 function LancaDardos:destruir()
     self.toBeDestroyed = true
+    self.visao:destruir()
 end
 
 return LancaDardos
