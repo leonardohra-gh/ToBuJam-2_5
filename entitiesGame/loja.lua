@@ -5,21 +5,21 @@ local Items = require("core.enums.items")
 local Entity = require("core.entity")
 local Loja = Entity:extend()
 local EntityTags = require("enumsGame.EntityTags")
-local BotaoPadrao = require("entitiesGame.botaoPadrao")
+local BotaoLoja = require("entitiesGame.botaoLoja")
 
 function Loja:new(x, y)
     local imagePath = "assets/loja.png"
     Loja.super.new(self, x, y, imagePath, World, ShapeTypes.RECTANGLE, BodyTypes.STATIC, EntityTags.LOJA)
-    local botaoWidth, botaoHeight = 150, 60
+    local botaoWidth, botaoHeight = 64, 32
     local botoesX, botoesY = x + self.physics.width / 2 + botaoWidth / 2, y - self.physics.height / 2 + botaoHeight / 2
     self.aberta = false
     self.botoes = {
-        comprarPantufa = BotaoPadrao(botoesX, botoesY, "Comprar pantufa $" .. Items.PANTUFA.PRECO, self.venderPantufa),
-        comprarCobertor = BotaoPadrao(botoesX, botoesY + botaoHeight, "Comprar cobertor $" .. Items.COBERTOR.PRECO, self.venderCobertor),
-        comprarBotasNeve = BotaoPadrao(botoesX, botoesY + 2 * botaoHeight, "Comprar botas de neve $" .. Items.BOTASNEVE.PRECO, self.venderBotasNeve),
-        comprarEscudo = BotaoPadrao(botoesX, botoesY + 3 * botaoHeight, "Comprar escudo $" .. Items.ESCUDO.PRECO, self.venderEscudo),
-        comprarPatins = BotaoPadrao(botoesX, botoesY + 4 * botaoHeight, "Comprar patins $" .. Items.PATINS.PRECO, self.venderPatins),
-        comprarSuperCharger = BotaoPadrao(botoesX, botoesY + 5 * botaoHeight, "Comprar super charger $" .. Items.SUPERCHARGER.PRECO, self.venderSuperCharger)
+        comprarPantufa = BotaoLoja(botoesX, botoesY, Items.PANTUFA.NOME .. " $" .. Items.COBERTOR.PRECO, self.venderPantufa),
+        comprarCobertor = BotaoLoja(botoesX, botoesY + botaoHeight, Items.COBERTOR.NOME .. "$" .. Items.COBERTOR.PRECO, self.venderCobertor),
+        comprarBotasNeve = BotaoLoja(botoesX, botoesY + 2 * botaoHeight, Items.BOTASNEVE.NOME .. "$" .. Items.BOTASNEVE.PRECO, self.venderBotasNeve),
+        comprarEscudo = BotaoLoja(botoesX, botoesY + 3 * botaoHeight, Items.ESCUDO.NOME .. "$" .. Items.ESCUDO.PRECO, self.venderEscudo),
+        comprarPatins = BotaoLoja(botoesX, botoesY + 4 * botaoHeight, Items.PATINS.NOME .. "$" .. Items.PATINS.PRECO, self.venderPatins),
+        comprarSuperCharger = BotaoLoja(botoesX, botoesY + 5 * botaoHeight, Items.SUPERCHARGER.NOME .. "$" .. Items.SUPERCHARGER.PRECO, self.venderSuperCharger)
     }
     for i, botao in pairs(self.botoes) do
         botao:desativar()
