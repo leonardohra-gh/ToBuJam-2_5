@@ -6,30 +6,39 @@ local Entity = require("core.entity")
 local Tamagotchi = Entity:extend()
 local EntityTags = require("enumsGame.EntityTags")
 -- local BotaoPadrao = require("entitiesGame.botaoPadrao")
+local Drawer = require("core.drawer")
 local InterfaceTamagotchi = require("entitiesGame.interfaceTamagotchi")
 
+
+local imagePath = "assets/tamagotchi.png"
+local imageNecessidadeAgua = "assets/notification_drink.png"
+local imageNecessidadeBanho = "assets/notification_shower.png"
+local imageNecessidadeBrincar = "assets/notification_fun.png"
+local imageNecessidadeComida = "assets/notification_feed.png"
+local imageNecessidadeDormir = "assets/notification_sleep.png"
+
 function Tamagotchi:new(x, y)
-    local imagePath = "assets/tamagotchi.png"
     Tamagotchi.super.new(self, x, y, imagePath, World, ShapeTypes.CIRCLE, BodyTypes.DYNAMIC, EntityTags.TAMAGOCHI, true)
 
     self.estaVivo = true
     self.necessidadesValorInicial = {
-        AGUA = 10,
-        BANHO = 20,
-        BRINCAR = 5,
-        COMER = 10,
-        DORMIR = 10
+        AGUA_INICIAL = 10,
+        BANHO_INICIAL = 20,
+        BRINCAR_INICIAL = 5,
+        COMIDA_INICIAL = 10,
+        DORMIR_INICIAL = 10
     }
     self.necessidades = {
-        AGUA = (0.8 + 0.2 * math.random()) * self.necessidadesValorInicial.AGUA,
-        BANHO = (0.8 + 0.2 * math.random()) * self.necessidadesValorInicial.BANHO,
-        BRINCAR = (0.8 + 0.2 * math.random()) * self.necessidadesValorInicial.BRINCAR,
-        COMER = (0.8 + 0.2 * math.random()) * self.necessidadesValorInicial.COMER,
-        DORMIR = (0.8 + 0.2 * math.random()) * self.necessidadesValorInicial.DORMIR
+        AGUA = (0.8 + 0.2 * math.random()) * self.necessidadesValorInicial.AGUA_INICIAL,
+        BANHO = (0.8 + 0.2 * math.random()) * self.necessidadesValorInicial.BANHO_INICIAL,
+        BRINCAR = (0.8 + 0.2 * math.random()) * self.necessidadesValorInicial.BRINCAR_INICIAL,
+        COMIDA = (0.8 + 0.2 * math.random()) * self.necessidadesValorInicial.COMIDA_INICIAL,
+        DORMIR = (0.8 + 0.2 * math.random()) * self.necessidadesValorInicial.DORMIR_INICIAL
     }
     self.necessidadeAtual = NECESSIDADE:aleatoria()
     local botoesX, botoesY = self.physics:getPositionRounded()
     self.interface = InterfaceTamagotchi(botoesX, botoesY - 100)
+    self:updateImagem()
     -- self.botoes = {
     --     DARAGUA = BotaoPadrao(botoesX, botoesY - 20, "", self.darAgua),
         
@@ -60,10 +69,25 @@ function Tamagotchi:draw()
         Tamagotchi.super.draw(self)
         self.interface:draw()
     end
-    
 
-    -- self:desenharNecessidades()
+end
 
+function Tamagotchi:updateImagem()
+    if self.necessidadeAtual == NECESSIDADE.AGUA then
+        self.drawer = Drawer(imageNecessidadeAgua)
+    end
+    if self.necessidadeAtual == NECESSIDADE.BANHO then
+        self.drawer = Drawer(imageNecessidadeBanho)
+    end
+    if self.necessidadeAtual == NECESSIDADE.BRINCAR then
+        self.drawer = Drawer(imageNecessidadeBrincar)
+    end
+    if self.necessidadeAtual == NECESSIDADE.COMIDA then
+        self.drawer = Drawer(imageNecessidadeComida)
+    end
+    if self.necessidadeAtual == NECESSIDADE.DORMIR then
+        self.drawer = Drawer(imageNecessidadeDormir)
+    end
 end
 
 function Tamagotchi:aumentarNecessidade(qtd)
@@ -76,8 +100,8 @@ function Tamagotchi:aumentarNecessidade(qtd)
     if self.necessidadeAtual == NECESSIDADE.BRINCAR then
         self.necessidades.BRINCAR = self.necessidades.BRINCAR - qtd
     end
-    if self.necessidadeAtual == NECESSIDADE.COMER then
-        self.necessidades.COMER = self.necessidades.COMER - qtd
+    if self.necessidadeAtual == NECESSIDADE.COMIDA then
+        self.necessidades.COMIDA = self.necessidades.COMIDA - qtd
     end
     if self.necessidadeAtual == NECESSIDADE.DORMIR then
         self.necessidades.DORMIR = self.necessidades.DORMIR - qtd
@@ -88,19 +112,33 @@ function Tamagotchi:desenharNecessidades()
     if self.estaVivo then
         Tamagotchi.super.draw(self)
         local x, y = self.physics:getPositionRounded()
-        self:desenharBarraNecessidade(x - 20, y - 60, self.necessidades.AGUA, self.necessidadesValorInicial.AGUA)
-        self:desenharBarraNecessidade(x - 20, y - 80, self.necessidades.COMER, self.necessidadesValorInicial.COMER)
-        self:desenharBarraNecessidade(x - 20, y - 100, self.necessidades.BANHO, self.necessidadesValorInicial.BANHO)
-        self:desenharBarraNecessidade(x - 20, y - 120, self.necessidades.BRINCAR, self.necessidadesValorInicial.BRINCAR)
-        self:desenharBarraNecessidade(x - 20, y - 140, self.necessidades.DORMIR, self.necessidadesValorInicial.DORMIR)
+        local barX, barY = x - 50 / 2, y - 50
+        if self.necessidadeAtual == NECESSIDADE.AGUA then
+            self:desenharBarraNecessidade(barX, barY, self.necessidades.AGUA, self.necessidadesValorInicial.AGUA_INICIAL)
+        end
+        if self.necessidadeAtual == NECESSIDADE.BANHO then
+            self:desenharBarraNecessidade(barX, barY, self.necessidades.BANHO, self.necessidadesValorInicial.BANHO_INICIAL)
+        end
+        if self.necessidadeAtual == NECESSIDADE.BRINCAR then
+            self:desenharBarraNecessidade(barX, barY, self.necessidades.BRINCAR, self.necessidadesValorInicial.BRINCAR_INICIAL)
+        end
+        if self.necessidadeAtual == NECESSIDADE.COMIDA then
+            self:desenharBarraNecessidade(barX, barY, self.necessidades.COMIDA, self.necessidadesValorInicial.COMIDA_INICIAL)
+        end
+        if self.necessidadeAtual == NECESSIDADE.DORMIR then
+            self:desenharBarraNecessidade(barX, barY, self.necessidades.DORMIR, self.necessidadesValorInicial.DORMIR_INICIAL)
+        end
     end
 end
 
 function Tamagotchi:desenharBarraNecessidade(x, y, valor, max)
-    local width, height = 50, 5
-    love.graphics.setColor(0, 0, 1, 1)
+    local perc = valor / max
+    local width, height = 50, 15
+    love.graphics.setColor(1, 1, 1, 1)
+    love.graphics.rectangle("fill", x, y, width, height)
+    love.graphics.setColor(1 - perc, perc, 0, 1)
     love.graphics.rectangle("fill", x, y, width * valor / max, height)
-    love.graphics.setColor(0, 0, 0, 1)
+    love.graphics.setColor(0, 0.1, 0, 1)
     love.graphics.rectangle("line", x, y, width, height)
     love.graphics.setColor(1, 1, 1, 1)
 end
@@ -115,7 +153,7 @@ function Tamagotchi:checarVida()
     if self.necessidades.BRINCAR <= 0 then
         return false
     end
-    if self.necessidades.COMER <= 0 then
+    if self.necessidades.COMIDA <= 0 then
         return false
     end
     if self.necessidades.DORMIR <= 0 then
@@ -128,29 +166,30 @@ end
 function Tamagotchi:atenderNecessidade(necessidade)
     
     if necessidade == NECESSIDADE.AGUA then
-        self.necessidades.AGUA = self.necessidadesValorInicial.AGUA
+        self.necessidades.AGUA = self.necessidadesValorInicial.AGUA_INICIAL
     end
     if necessidade == NECESSIDADE.BANHO then
-        self.necessidades.BANHO = self.necessidadesValorInicial.BANHO
+        self.necessidades.BANHO = self.necessidadesValorInicial.BANHO_INICIAL
     end
     if necessidade == NECESSIDADE.BRINCAR then
-        self.necessidades.BRINCAR = self.necessidadesValorInicial.BRINCAR
+        self.necessidades.BRINCAR = self.necessidadesValorInicial.BRINCAR_INICIAL
     end
     if necessidade == NECESSIDADE.COMIDA then
-        self.necessidades.COMER = self.necessidadesValorInicial.COMER
+        self.necessidades.COMIDA = self.necessidadesValorInicial.COMIDA_INICIAL
     end
     if necessidade == NECESSIDADE.DORMIR then
-        self.necessidades.DORMIR = self.necessidadesValorInicial.DORMIR
+        self.necessidades.DORMIR = self.necessidadesValorInicial.DORMIR_INICIAL
     end
 
     self.necessidadeAtual = NECESSIDADE:aleatoria()
+    self:updateImagem()
 end
 
 function Tamagotchi:printarNecessidades()
     love.graphics.print("Água: " .. self.necessidades.AGUA, 10, 30)
     love.graphics.print("Banho: " .. self.necessidades.BANHO, 10, 40)
     love.graphics.print("Brincar: " .. self.necessidades.BRINCAR, 10, 50)
-    love.graphics.print("Comer: " .. self.necessidades.COMER, 10, 60)
+    love.graphics.print("Comer: " .. self.necessidades.COMIDA, 10, 60)
     love.graphics.print("Dormir: " .. self.necessidades.DORMIR, 10, 70)
 end
 

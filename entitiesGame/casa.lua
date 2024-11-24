@@ -30,7 +30,7 @@ end
 
 function Casa:criarTamagotchi()
     local casaX, casaY = self.physics:getPositionRounded()
-    self.tamagotchi = Tamagochi(casaX, casaY)
+    self.tamagotchi = Tamagochi(casaX, casaY - 20)
     
 end
 
