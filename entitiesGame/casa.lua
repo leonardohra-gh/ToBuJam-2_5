@@ -7,7 +7,7 @@ local Tamagochi = require("entitiesGame.tamagochi")
 
 function Casa:new(x, y)
     local imagePath = "assets/casa.png"
-    Casa.super.new(self, x, y, imagePath, World, ShapeTypes.RECTANGLE, BodyTypes.STATIC, EntityTags.CASA, true)
+    Casa.super.new(self, x, y, imagePath, World, ShapeTypes.RECTANGLE, BodyTypes.STATIC, EntityTags.CASA)
     local casaX, casaY = self.physics:getPositionRounded()
     if math.random() <= 1 then
         self.tamagotchi = Tamagochi(casaX, casaY)

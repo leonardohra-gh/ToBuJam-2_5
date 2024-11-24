@@ -158,6 +158,8 @@ end
 function Tamagotchi:checkInterfaceClick()
     if self.interface.ativa and self.interface:isHovered() then
         self:atenderNecessidade(NECESSIDADE.AGUA)
+        local jogador = GetWorldEntitiesByTag(EntityTags.JOGADOR)[1]
+        jogador:AddPontuacao(100)
     end
 end
 

@@ -9,7 +9,7 @@ local BotaoPadrao = require("entitiesGame.botaoPadrao")
 
 function Loja:new(x, y)
     local imagePath = "assets/lojaExterior.png"
-    Loja.super.new(self, x, y, imagePath, World, ShapeTypes.RECTANGLE, BodyTypes.STATIC, EntityTags.LOJA, true)
+    Loja.super.new(self, x, y, imagePath, World, ShapeTypes.RECTANGLE, BodyTypes.STATIC, EntityTags.LOJA)
     local botaoWidth, botaoHeight = 150, 60
     local botoesX, botoesY = x + self.physics.width / 2 + botaoWidth / 2, y - self.physics.height / 2 + botaoHeight / 2
     self.aberta = false
