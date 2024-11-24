@@ -6,10 +6,12 @@ Parede = require("entitiesGame.parede")
 Chao = require("entitiesGame.chao")
 ChaoCraquelado = require("entitiesGame.chaoCraquelado")
 ChaoEscorregadio = require("entitiesGame.chaoEscorregadio")
+LancaDardos = require("entitiesGame.lancaDardos")
+Robozinho = require("entitiesGame.robozinho")
 Rua = require("entitiesGame.rua")
 Casa = require("entitiesGame.casa")
-LancaDardos = require("entitiesGame.lancaDardos")
 local OrientacaoParede = require("enumsGame.OrientacaoParede")
+local EntityTags       = require("enumsGame.EntityTags")
 
 if arg[2] == "debug" then
     require("lldebugger").start()
@@ -97,7 +99,21 @@ function gerarCasaProceduralmente(qtdArmadilhas)
             end
         end
     end
+    math.randomseed(os.time())
+    math.random(); math.random(); math.random()
 
+    local armadilhas = {EntityTags.CHAO_CRAQUELADO, EntityTags.CHAO_ESCORREGADIO, EntityTags.LANCA_DARDOS, EntityTags.ROBOZINHO}
+    local keyset = {}
+    for k in pairs(armadilhas) do
+        table.insert(keyset, k)
+    end
+
+    for i = 1, qtdArmadilhas do
+        local random_elem = armadilhas[keyset[math.random(#keyset)]]
+        local random_i = math.random(2, width-1)
+        local random_j = math.random(2, height-1)
+        casa[random_i][random_j] = random_elem
+    end
 
 
     -- renderizar a casa
@@ -112,6 +128,19 @@ function gerarCasaProceduralmente(qtdArmadilhas)
             end
             if string.find(casa[i][j], "assets/paredes/") then
                 local parede = Parede(xAtual, yAtual, casa[i][j])
+            end
+
+            if casa[i][j] == EntityTags.CHAO_CRAQUELADO then
+                local chaoCraquelado = ChaoCraquelado(xAtual, yAtual)
+            end
+            if casa[i][j] == EntityTags.CHAO_ESCORREGADIO then
+                local ChaoEscorregadio = ChaoEscorregadio(xAtual, yAtual)
+            end
+            if casa[i][j] == EntityTags.LANCA_DARDOS then
+                local LancaDardos = LancaDardos(xAtual, yAtual, 300)
+            end
+            if casa[i][j] == EntityTags.ROBOZINHO then
+                local robozinho = Robozinho(xAtual, yAtual)
             end
         end
     end
