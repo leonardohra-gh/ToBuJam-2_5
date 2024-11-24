@@ -14,7 +14,8 @@ local EntityTags= {
     LANCA_DARDOS = "lancaDardos",
     MOEDAS = "moedas",
     TIRO = "tiro",
-    VISAO_LANCA_DARDOS = "visaoLancaDardos"
+    VISAO_LANCA_DARDOS = "visaoLancaDardos",
+    INTERIOR_CASA = "interiorCasa"
 }
 
 return EntityTags
