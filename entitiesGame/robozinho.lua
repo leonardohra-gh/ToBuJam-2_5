@@ -6,9 +6,10 @@ local ConeVisao = require("entitiesGame.coneVisao")
 local Robozinho = Entity:extend()
 local EntityTags = require("enumsGame.EntityTags")
 
-function Robozinho:new(x, y)
+function Robozinho:new(x, y, automaticDraw)
     local imagePath = "assets/robozinho.png"
-    Robozinho.super.new(self, x, y, imagePath, World, ShapeTypes.CIRCLE, BodyTypes.DYNAMIC, EntityTags.ROBOZINHO)
+    local atravessavel = false
+    Robozinho.super.new(self, x, y, imagePath, World, ShapeTypes.CIRCLE, BodyTypes.DYNAMIC, EntityTags.ROBOZINHO, atravessavel, automaticDraw)
     self.direcaoInicial = "x"
     self.initialPos = {x = x, y = y}
     self.vel = {x = 20, y = 0}

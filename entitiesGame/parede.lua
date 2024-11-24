@@ -6,9 +6,10 @@ local Parede = Entity:extend()
 local EntityTags = require("enumsGame.EntityTags")
 local OrientacaoParede = require("enumsGame.OrientacaoParede")
 
-function Parede:new(x, y, orientacao)
+function Parede:new(x, y, orientacao, automaticDraw)
     orientacao = orientacao or OrientacaoParede.SIMPLES_VERTICAL
-    Parede.super.new(self, x, y, orientacao, World, ShapeTypes.RECTANGLE, BodyTypes.STATIC, EntityTags.PAREDE)
+    local atravessavel = false
+    Parede.super.new(self, x, y, orientacao, World, ShapeTypes.RECTANGLE, BodyTypes.STATIC, EntityTags.PAREDE, atravessavel, automaticDraw)
 end
 
 function Parede:update(dt)

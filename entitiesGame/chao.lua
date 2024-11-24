@@ -5,10 +5,10 @@ local Entity = require("core.entity")
 local Chao = Entity:extend()
 local EntityTags = require("enumsGame.EntityTags")
 
-function Chao:new(x, y)
+function Chao:new(x, y, automaticDraw)
     local imagePath = "assets/chao.png"
     local atravessavel = true
-    Chao.super.new(self, x, y, imagePath, World, ShapeTypes.RECTANGLE, BodyTypes.STATIC, EntityTags.CHAO, atravessavel)
+    Chao.super.new(self, x, y, imagePath, World, ShapeTypes.RECTANGLE, BodyTypes.STATIC, EntityTags.CHAO, atravessavel, automaticDraw)
 end
 
 function Chao:update(dt)
