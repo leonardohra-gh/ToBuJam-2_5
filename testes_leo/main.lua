@@ -36,7 +36,7 @@ function love.load()
     -- for i = 1, 6*mult do
     --     local rua = Rua(xi, ruaSize*(i-1), math.pi/2)
     -- end
-    criarCasasAleatorias()
+    criarCasasMapa1()
 end
 function love.update(dt)
     UpdateWorldEntities(dt)
@@ -55,7 +55,7 @@ function gerarCasaProceduralmente()
     
 end
 
-function criarCasasAleatorias()
+function criarCasasMapa1()
     positions = {
         {x = 100, y = 100},
         {x = 1000, y = 150},

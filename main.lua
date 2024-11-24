@@ -31,6 +31,7 @@ local TEMPOCRIACAOTAMAGOTCHI = 1000
 local contadorCriarTamagotchi = 0
 
 function love.load()
+    love.window.setMode(1366, 768)
     CreateWorld()
     love.graphics.setFont(love.graphics.newFont(18))
     botaoStart = Botao(300, 500, "assets/botaoRect.png", "assets/botaoRectHovered.png", "Start", SHAPE.RECTANGLE, iniciarJogo)
@@ -84,7 +85,7 @@ function iniciarJogo()
     botaoStart:desativar()
     criarJogador()
     criarLoja()
-    criarCasasAleatorias()
+    criarCasasMapa1()
     criarTamagotchiEmUmaCasa()
     telaSelecionada = TELA.JOGO
 end
@@ -116,7 +117,7 @@ function criarLoja()
     Loja(150, 480)
 end
 
-function criarCasasAleatorias()
+function criarCasasMapa1()
     positions = {
         {x = 100, y = 100},
         {x = 100, y = 300},

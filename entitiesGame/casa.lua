@@ -6,9 +6,10 @@ local EntityTags = require("enumsGame.EntityTags")
 local Tamagochi = require("entitiesGame.tamagochi")
 
 function Casa:new(x, y)
+    math.randomseed(os.time() + math.random())
     local corCasa = math.random(5)
     local imagePath = "assets/casa_" .. corCasa .. ".png"
-    Casa.super.new(self, x, y, imagePath, World, ShapeTypes.RECTANGLE, BodyTypes.STATIC, EntityTags.CASA)    
+    Casa.super.new(self, x, y, imagePath, World, ShapeTypes.RECTANGLE, BodyTypes.STATIC, EntityTags.CASA)
     self.tamagotchi = nil
     -- if math.random() <= 1 then
     --     self:criarTamagotchi()
@@ -34,7 +35,9 @@ function Casa:criarTamagotchi()
 end
 
 function Casa:destruir()
-    self.tamagotchi:destruir()
+    if not self.tamagotchi == nil then
+        self.tamagotchi:destruir()
+    end
     self.toBeDestroyed = true
 end
 

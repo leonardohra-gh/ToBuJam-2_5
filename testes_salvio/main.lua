@@ -6,11 +6,8 @@ local TELA = require("core.enums.telas")
 local SHAPE = require("core.enums.shape_types")
 local Botao = require("entitiesGame.botao")
 local Jogador = require("entitiesGame.jogador")
-local Robozinho = require("entitiesGame.robozinho")
-local Parede = require("entitiesGame.parede")
 local Loja = require("entitiesGame.loja")
 local Casa = require("entitiesGame.casa")
-local Moedas = require("entitiesGame.moedas")
 
 if arg[2] == "debug" then
     require("lldebugger").start()
@@ -21,16 +18,17 @@ end
 
 local tela = {
     inicio = love.graphics.newImage("assets/telaInicial.png"),
-    jogo = love.graphics.newImage("assets/telaJogo.png"),
+    jogo = love.graphics.newImage("assets/mapa_1.png"),
     pausa = love.graphics.newImage("assets/telaPausa.png"),
     fim = love.graphics.newImage("assets/telaFim.png")
 }
 
 local telaSelecionada = TELA.INICIO
-local TEMPOCRIACAOTAMAGOTCHI = 1000
+local TEMPOCRIACAOTAMAGOTCHI = 100
 local contadorCriarTamagotchi = 0
 
 function love.load()
+    love.window.setMode(1366, 768)
     CreateWorld()
     love.graphics.setFont(love.graphics.newFont(18))
     botaoStart = Botao(300, 500, "assets/botaoRect.png", "assets/botaoRectHovered.png", "Start", SHAPE.RECTANGLE, iniciarJogo)
@@ -84,7 +82,7 @@ function iniciarJogo()
     botaoStart:desativar()
     criarJogador()
     criarLoja()
-    criarCasasAleatorias()
+    criarCasasMapa1()
     criarTamagotchiEmUmaCasa()
     telaSelecionada = TELA.JOGO
 end
@@ -107,27 +105,30 @@ function criarTamagotchiEmUmaCasa()
 end
 
 
-function criarJogador()    
+function criarJogador()
     jogador = Jogador(600, 500)
 end
 
 
-function criarLoja()    
-    Loja(150, 480)
+function criarLoja()
+    Loja(480 + 96 / 2, 0 + 96 / 2)
 end
 
-function criarCasasAleatorias()
+function criarCasasMapa1()
     positions = {
-        {x = 100, y = 100},
-        {x = 100, y = 300},
-        {x = 300, y = 100},
-        {x = 300, y = 300},
-        {x = 500, y = 100},
-        {x = 500, y = 300},
+        {x = 192, y = 192},
+        {x = 192, y = 448},
+        {x = 352, y = 448},
+        {x = 592, y = 224},
+        {x = 608, y = 416},
+        {x = 864, y = 208},
+        {x = 880, y = 416},
+        {x = 1018, y = 320}
     }
 
+    local casaWidth, casaHeight = 128, 128
     for i = 1, #positions do
-        Casa(positions[i].x, positions[i].y)
+        Casa(positions[i].x + casaWidth / 2, positions[i].y + casaHeight / 2)
     end
 end
 
