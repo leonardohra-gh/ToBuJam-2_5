@@ -18,17 +18,19 @@ local imageNecessidadeBrincar = "assets/notification_fun.png"
 local imageNecessidadeComida = "assets/notification_feed.png"
 local imageNecessidadeDormir = "assets/notification_sleep.png"
 
+local superCharge = 1
+
 function Tamagotchi:new(x, y)
     local atravessavel, size, drawPriority = true, nil, PrioridadeDesenho.TAMAGOCHI
     Tamagotchi.super.new(self, x, y, imagePath, World, ShapeTypes.CIRCLE, BodyTypes.DYNAMIC, EntityTags.TAMAGOCHI, atravessavel, size, drawPriority)
 
     self.estaVivo = true
     self.necessidadesValorInicial = {
-        AGUA_INICIAL = 10,
-        BANHO_INICIAL = 20,
-        BRINCAR_INICIAL = 5,
-        COMIDA_INICIAL = 10,
-        DORMIR_INICIAL = 10
+        AGUA_INICIAL = 10 * superCharge,
+        BANHO_INICIAL = 20 * superCharge,
+        BRINCAR_INICIAL = 5 * superCharge,
+        COMIDA_INICIAL = 10 * superCharge,
+        DORMIR_INICIAL = 1 * superCharge
     }
     self.necessidades = {
         AGUA = (0.8 + 0.2 * math.random()) * self.necessidadesValorInicial.AGUA_INICIAL,
@@ -41,7 +43,6 @@ function Tamagotchi:new(x, y)
     local botoesX, botoesY = self.physics:getPositionRounded()
     self.interface = InterfaceTamagotchi(botoesX, botoesY - 100)
     self:updateImagem()
-    self.physics.body:setActive(false)
     -- self.botoes = {
     --     DARAGUA = BotaoPadrao(botoesX, botoesY - 20, "", self.darAgua),
         
@@ -224,6 +225,16 @@ function Tamagotchi:checkInterfaceClick()
         local jogador = GetWorldEntitiesByTag(EntityTags.JOGADOR)[1]
         jogador:AddPontuacao(100)
     end
+end
+
+function Tamagotchi:chargeUp()
+    if not Tamagotchi:chargeAtMax() then
+        superCharge = superCharge + 0.1
+    end
+end
+
+function Tamagotchi:chargeAtMax()
+    return 1.3 <= superCharge
 end
 
 function Tamagotchi:destruir()

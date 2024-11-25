@@ -51,12 +51,12 @@ function Casa:Entrar()
     local jogador = GetWorldEntitiesByTag(EntityTags.JOGADOR)[1]
     local x, y = self.interior:getPositionStart()
     jogador:moverPara(x, y)
-    InactivateEntities({EntityTags.CASA, EntityTags.LOJA})
+    InactivateEntities({EntityTags.TAMAGOCHI, EntityTags.CASA, EntityTags.LOJA})
 end
 
 function Casa:Sair()
     self.interior:destruir()
-    ActivateEntities({EntityTags.CASA, EntityTags.LOJA})
+    ActivateEntities({EntityTags.TAMAGOCHI, EntityTags.CASA, EntityTags.LOJA})
 end
 
 function Casa:criarTamagotchi()

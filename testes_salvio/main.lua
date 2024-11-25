@@ -59,7 +59,7 @@ function love.update(dt)
         if telaSelecionada == TELA.INTRO then
             telaIntro:update(dt)
         end
-        if TEMPOCRIACAOTAMAGOTCHI <= contadorCriarTamagotchi then
+        if TEMPOCRIACAOTAMAGOTCHI <= contadorCriarTamagotchi then -- TODO Leo and not player está no interior da casa
             contadorCriarTamagotchi = 0
             criarTamagotchiEmUmaCasa()
         end

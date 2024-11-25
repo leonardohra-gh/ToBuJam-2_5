@@ -7,6 +7,7 @@ local PrioridadeDesenho = require("enumsGame.PrioridadeDesenho")
 local Loja = Entity:extend()
 local EntityTags = require("enumsGame.EntityTags")
 local BotaoLoja = require("entitiesGame.botaoLoja")
+local Tamagotchi = require("entitiesGame.tamagochi")
 
 function Loja:new(x, y)
     local imagePath = "assets/loja.png"
@@ -93,6 +94,7 @@ end
 
 function Loja:venderSuperCharger()
     venderItem(Items.SUPERCHARGER)
+    Tamagotchi:chargeUp()
 end
 
 function Loja:destruir()
