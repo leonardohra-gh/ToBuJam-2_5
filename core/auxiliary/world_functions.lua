@@ -91,7 +91,9 @@ function DrawWorldEntities()
         worldEntities[i]:draw()
     end
     local player = GetWorldEntitiesByTag(EntityTags.JOGADOR)[1]
-    player:draw()
+    if not player == nil then
+        player:draw()
+    end
 end
 
 function CreateWorld()

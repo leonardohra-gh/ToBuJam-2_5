@@ -5,8 +5,9 @@ local Entity = require("core.entity")
 local Moedas = Entity:extend()
 local EntityTags = require("enumsGame.EntityTags")
 
+local imagePath = "assets/moedas.png"
+
 function Moedas:new(x, y)
-    local imagePath = "assets/moedas.png"
     Moedas.super.new(self, x, y, imagePath, World, ShapeTypes.CIRCLE, BodyTypes.STATIC, "moedas")
 end
 
@@ -30,13 +31,8 @@ function Moedas:destruir()
     self.toBeDestroyed = true
 end
 
--- function MyEntity:endContact(entidade_colisora, b, coll)
--- end
-
--- function MyEntity:preSolve(entidade_colisora, b, coll)
--- end
-
--- function MyEntity:postSolve(entidade_colisora, b, coll, normalimpulse, tangentimpulse)
--- end
+function Moedas:GetImagem()
+    return love.graphics.newImage(imagePath)
+end
 
 return Moedas

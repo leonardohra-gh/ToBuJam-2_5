@@ -28,6 +28,7 @@ local telaSelecionada = TELA.INICIO
 local TEMPOCRIACAOTAMAGOTCHI = 100
 local contadorCriarTamagotchi = 0
 local pausado = false
+local pontuacaoFinal = 0
 
 function love.load()
     love.window.setMode(1366, 768)
@@ -60,6 +61,12 @@ function love.draw()
     end
     if telaSelecionada == TELA.JOGO then
         love.graphics.draw(filtroNoite)
+    end
+    if telaSelecionada == TELA.FIM then
+        local texto = "Pontuação total: "
+        local textWidth  = love.graphics.getFont():getWidth(texto)
+	    local textHeight = love.graphics.getFont():getHeight()
+        love.graphics.print(texto .. pontuacaoFinal, 1366 / 2 - textWidth / 2, 768 / 2 - textHeight / 2)
     end
     if pausado then
         
@@ -211,6 +218,7 @@ function destruirJogador()
 end
 
 function finalizarJogo()
+    pontuacaoFinal = jogador.pontuacao
     destruirMoedas()
     destruirLoja()
     destruirCasas()
