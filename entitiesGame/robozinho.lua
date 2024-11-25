@@ -24,7 +24,9 @@ end
 function Robozinho:update(dt)
     self:mover()
     local x, y = self.physics:getPositionRounded()
-    self.coneVisao:moverPara(x + self.physics.width, y)
+    if self.coneVisao then
+        self.coneVisao:moverPara(x + self.physics.width, y)
+    end
     Robozinho.super.update(self, dt)
 end
 
