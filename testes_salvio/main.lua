@@ -4,6 +4,7 @@ require("core.auxiliary.debug")
 local TELA = require("core.enums.telas")
 local SHAPE = require("core.enums.shape_types")
 local EntityTags = require("enumsGame.EntityTags")
+local CasasPos = require("enumsGame.CasasPos")
 local Botao = require("entitiesGame.botao")
 local Jogador = require("entitiesGame.jogador")
 local Loja = require("entitiesGame.loja")
@@ -22,11 +23,22 @@ end
 
 local tamanhoTela = {x = 1366, y = 768}
 local centroTela = {x = tamanhoTela.x / 2, y = tamanhoTela.y / 2}
+local MAPA = {
+    tipo1 = {
+        IMAGEPATH = "assets/mapa_1.png",
+        CASAS = CasasPos.mapa1
+    },
+    tipo2 = {
+        IMAGEPATH = "assets/mapa_2.png",
+        CASAS = CasasPos.mapa2
+    }
+}
+local mapaSelecionado = MAPA.tipo2
 
 local tela = {
     inicio = love.graphics.newImage("assets/telaInicial.png"),
     intro = love.graphics.newImage("assets/telaIntro.png"),
-    jogo = love.graphics.newImage("assets/mapa_2.png"),
+    jogo = love.graphics.newImage(mapaSelecionado.IMAGEPATH),
     pausa = love.graphics.newImage("assets/telaPausa.png"),
     fim = love.graphics.newImage("assets/telaFim.png")
 }
@@ -127,7 +139,7 @@ function iniciarJogo()
     botaoStartIntro:desativar()
     criarJogador()
     criarLoja()
-    criarCasasMapa1()
+    criarCasas()
     criarTamagotchiEmUmaCasa()
     telaSelecionada = TELA.JOGO
 end
@@ -171,7 +183,7 @@ end
 
 
 function criarJogador()
-    jogador = Jogador(550, 200)
+    jogador = Jogador(0, 200)
 end
 
 
@@ -179,17 +191,26 @@ function criarLoja()
     Loja(480 + 96 / 2, 0 + 96 / 2)
 end
 
-function criarCasasMapa1()
-    positions = {
-        {x = 192, y = 192},
-        {x = 192, y = 448},
-        {x = 352, y = 448},
-        {x = 592, y = 224},
-        {x = 608, y = 416},
-        {x = 864, y = 208},
-        {x = 880, y = 416},
-        {x = 1018, y = 320}
-    }
+-- function criarCasasMapa1()
+--     positions = CasasPos.mapa1
+
+--     local casaWidth, casaHeight = 128, 128
+--     for i = 1, #positions do
+--         Casa(positions[i].x + casaWidth / 2, positions[i].y + casaHeight / 2)
+--     end
+-- end
+
+-- function criarCasasMapa2()
+--     positions = mapaSelecionado.CASAS
+
+--     local casaWidth, casaHeight = 128, 128
+--     for i = 1, #positions do
+--         Casa(positions[i].x + casaWidth / 2, positions[i].y + casaHeight / 2)
+--     end
+-- end
+
+function criarCasas()
+    local positions = mapaSelecionado.CASAS
 
     local casaWidth, casaHeight = 128, 128
     for i = 1, #positions do
