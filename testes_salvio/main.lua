@@ -183,7 +183,7 @@ end
 
 
 function criarJogador()
-    jogador = Jogador(1000, 600)
+    jogador = Jogador(0, 0)
 end
 
 
