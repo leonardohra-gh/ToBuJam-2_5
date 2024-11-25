@@ -35,7 +35,14 @@ local MAPA = {
         CASAS = CasasPos.mapa2
     }
 }
-local mapaSelecionado = MAPA.tipo2
+
+local mapaSelecionado
+
+if math.random() <= 0.5 then
+    mapaSelecionado = MAPA.tipo1
+else
+    mapaSelecionado = MAPA.tipo2
+end
 
 local tela = {
     inicio = love.graphics.newImage("assets/telaInicial.png"),
@@ -164,7 +171,8 @@ function carregarTelaInicial()
     telaSelecionada = TELA.INICIO
 end
 
-function finalizarJogo()
+function finalizarJogo()    
+    love.graphics.setFont(love.graphics.newFont(18))
     pontuacaoFinal = jogador.pontuacao
     destruirMoedas()
     destruirLoja()

@@ -11,7 +11,7 @@ local Tamagotchi = require("entitiesGame.tamagochi")
 
 local imagePath = "assets/loja.png"
 local imageBalcao = love.graphics.newImage("assets/lojaBalcao.png")
-local balcaoX, balcaoY = 600, 300
+local balcaoX, balcaoY = 550, 200
 
 function Loja:new(x, y)
     local atravessavel, size, drawPriority = nil, nil, PrioridadeDesenho.LOJA
