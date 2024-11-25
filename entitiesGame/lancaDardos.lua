@@ -10,7 +10,7 @@ local EntityTags = require("enumsGame.EntityTags")
 function LancaDardos:new(x, y, sensorDistance)
     local imagePath = "assets/lancaDardos.png"
     local atravessavel, size, drawPriority = false, nil, PrioridadeDesenho.LANCA_DARDOS
-    LancaDardos.super.new(self, x, y, imagePath, World, ShapeTypes.CIRCLE, BodyTypes.STATIC, EntityTags.LANCA_DARDOS, atravessavel)
+    LancaDardos.super.new(self, x, y, imagePath, World, ShapeTypes.CIRCLE, BodyTypes.STATIC, EntityTags.LANCA_DARDOS, atravessavel, size, drawPriority)
     self.visao = VisaoLancaDardos(x, y, self.drawer:getHeight(), sensorDistance)
 end
 

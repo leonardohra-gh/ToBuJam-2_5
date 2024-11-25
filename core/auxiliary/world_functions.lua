@@ -61,6 +61,22 @@ function GetWorldEntities()
     return worldEntities
 end
 
+function GetWorldEntitiesByDrawPriority()
+    local worldEntities = {}
+    local worldBodies = World:getBodies()
+    for i = 1, #worldBodies do
+        local possibleEntity = worldBodies[i]:getFixtures()[1]:getUserData()
+        if possibleEntity ~= nil and possibleEntity:is(Entity) then
+            local drawPriority = possibleEntity.drawPriority
+            if not worldEntities[drawPriority] then
+                worldEntities[drawPriority] = {}
+            end
+            table.insert(worldEntities[drawPriority], possibleEntity)
+        end
+    end
+    return worldEntities
+end
+
 function GetWorldEntitiesByTag(tag)
     local WorldEntitiesWithTag = {}
     local worldBodies = World:getBodies()
@@ -85,15 +101,25 @@ function UpdateWorldEntities(dt)
 end
 
 function DrawWorldEntities()
-    local worldEntities = GetWorldEntities()
+    local worldEntities = GetWorldEntitiesByDrawPriority()
+    local sKeys = SortedKeys(worldEntities)
+    for i=1, #sKeys do
+        local key = sKeys[i]
+        for j = 1, #worldEntities[key] do
+            worldEntities[key][j]:draw()
+        end
+    end
+end
 
-    for i=1, #worldEntities do
-        worldEntities[i]:draw()
-    end
-    local player = GetWorldEntitiesByTag(EntityTags.JOGADOR)[1]
-    if player then
-        player:draw()
-    end
+function SortedKeys(tablePassed)
+
+    local tkeys = {}
+    -- populate the table that holds the keys
+    for k in pairs(tablePassed) do table.insert(tkeys, k) end
+    -- sort the keys
+    table.sort(tkeys, function(a,b) return a > b end)
+
+    return tkeys
 end
 
 function CreateWorld()

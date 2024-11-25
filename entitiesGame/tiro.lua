@@ -9,7 +9,7 @@ local EntityTags = require("enumsGame.EntityTags")
 function Tiro:new(x, y, velocityX, velocityY)
     local imagePath = "assets/tiro.png"
     local atravessavel, size, drawPriority = true, nil, PrioridadeDesenho.TIRO
-    Tiro.super.new(self, x, y, imagePath, World, ShapeTypes.RECTANGLE, BodyTypes.DYNAMIC, EntityTags.TIRO, atravessavel)
+    Tiro.super.new(self, x, y, imagePath, World, ShapeTypes.RECTANGLE, BodyTypes.DYNAMIC, EntityTags.TIRO, atravessavel, size, drawPriority)
     self.physics:setVelocity(velocityX, velocityY)
 end
 

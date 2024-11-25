@@ -15,7 +15,7 @@ local SPEED_INC = 50
 function Jogador:new(x, y)
     local imagePath = "assets/jogador.png"
     local atravessavel, size, drawPiority = nil, nil, PrioridadeDesenho.JOGADOR
-    Jogador.super.new(self, x, y, imagePath, World, ShapeTypes.RECTANGLE, BodyTypes.DYNAMIC, EntityTags.JOGADOR)
+    Jogador.super.new(self, x, y, imagePath, World, ShapeTypes.RECTANGLE, BodyTypes.DYNAMIC, EntityTags.JOGADOR, atravessavel, size, drawPiority)
     self.speed = 150
     self.mochila = Mochila()
     self.pontuacao = 0
