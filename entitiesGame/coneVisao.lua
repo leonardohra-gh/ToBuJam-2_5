@@ -31,4 +31,9 @@ function ConeVisao:destruir()
     self.toBeDestroyed = true
 end
 
+function ConeVisao:moverPara(x, y)
+    self.physics:moveTo(x, y)
+end
+
+
 return ConeVisao
