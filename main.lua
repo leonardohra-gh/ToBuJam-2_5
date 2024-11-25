@@ -19,6 +19,8 @@ end
 
 -- love.load -> love.update -> love.draw -> love.update -> love.draw -> love.update (...)
 
+jogadorDentroDaCasa = false
+
 local tela = {
     inicio = love.graphics.newImage("assets/telaInicial.png"),
     jogo = love.graphics.newImage("assets/mapa_1.png"),

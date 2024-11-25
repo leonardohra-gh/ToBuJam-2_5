@@ -56,11 +56,13 @@ function Casa:Entrar()
     if self.tamagotchi then
         self.tamagotchi.physics.body:setActive(true)
     end
+    jogadorDentroDaCasa = true
 end
 
 function Casa:Sair()
     self.interior:destruir()
     ActivateEntities({EntityTags.TAMAGOCHI, EntityTags.CASA, EntityTags.LOJA})
+    jogadorDentroDaCasa = false
 end
 
 function Casa:criarTamagotchi()

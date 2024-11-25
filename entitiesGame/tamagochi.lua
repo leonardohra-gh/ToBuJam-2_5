@@ -74,7 +74,9 @@ end
 function Tamagotchi:draw()
 
     if self.estaVivo and self.physics.body:isActive() then
-        Tamagotchi.super.draw(self)
+        if not jogadorDentroDaCasa then
+            Tamagotchi.super.draw(self)
+        end
         self.interface:draw()
     end
 
