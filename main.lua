@@ -30,7 +30,7 @@ local telaSelecionada = TELA.INICIO
 local TEMPOCRIACAOTAMAGOTCHI = 100
 local contadorCriarTamagotchi = 0
 local musicIntro = love.audio.newSource("music/Intro.ogg", "stream")
-local musicJogo = love.audio.newSource("music/Jogo.ogg", "stream")
+local musicJogo = love.audio.newSource("music/Jogo.wav", "stream")
 local pausado = false
 
 function love.load()
