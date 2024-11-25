@@ -73,11 +73,23 @@ end
 
 function Tamagotchi:draw()
 
+    local excecao = nil
+    local todasCasas = GetWorldEntitiesByTag(EntityTags.CASA)
+    for i, casa in ipairs(todasCasas) do
+        if not casa.interior == nil then
+            excecao = casa.tamagotchi
+        end
+    end
+
     if self.estaVivo and self.physics.body:isActive() then
         if not jogadorDentroDaCasa then
             Tamagotchi.super.draw(self)
+            self.interface:draw()
         end
-        self.interface:draw()
+        if self == excecao then
+            Tamagotchi.super.draw(self)
+            self.interface:draw()
+        end
     end
 
 end
