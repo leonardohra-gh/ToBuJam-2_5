@@ -10,7 +10,6 @@ local Jogador = require("entitiesGame.jogador")
 local Loja = require("entitiesGame.loja")
 local Casa = require("entitiesGame.casa")
 local TelaIntro = require("telas.telaIntro")
-local InteriorCasa = require("entitiesGame.interiorCasa")
 
 interiorCasa = nil
 
