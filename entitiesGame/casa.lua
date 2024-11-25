@@ -37,6 +37,7 @@ function Casa:draw()
     Casa.super.draw(self)
     if not (self.tamagotchi == nil) then
         self.tamagotchi:desenharNecessidades()
+        self.tamagotchi:draw()
     end    
 end
 

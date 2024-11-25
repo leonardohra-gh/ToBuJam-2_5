@@ -76,7 +76,7 @@ function Tamagotchi:draw()
     local excecao = nil
     local todasCasas = GetWorldEntitiesByTag(EntityTags.CASA)
     for i, casa in ipairs(todasCasas) do
-        if not casa.interior == nil then
+        if not (casa.interior == nil) then
             excecao = casa.tamagotchi
         end
     end
