@@ -21,6 +21,11 @@ function Parede:draw()
     Parede.super.draw(self)
 end
 
+function Parede:destruir()
+    self.toBeDestroyed = true
+end
+
+
 -- function MyEntity:beginContact(entidade_colisora, coll)
 -- end
 

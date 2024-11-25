@@ -111,6 +111,40 @@ function DrawWorldEntities()
     end
 end
 
+function ActivateEntities(entityTags)
+    local worldEntities = GetWorldEntities()
+    for i=1, #worldEntities do
+        for j, tag in pairs(entityTags) do
+            if worldEntities[i].tag == tag then
+                worldEntities[i].physics.body:setActive(true)
+            end
+        end
+    end
+end
+
+function InactivateEntities(entityTags)
+    local worldEntities = GetWorldEntities()
+    for i=1, #worldEntities do
+        for j, tag in pairs(entityTags) do
+            if worldEntities[i].tag == tag then
+                worldEntities[i].physics.body:setActive(false)
+            end
+        end
+    end
+end
+
+-- function SleepAllExcept(tagsExceptions)
+--     local worldEntities = GetWorldEntities()
+--     for i=1, #worldEntities do
+--         for j, tag in pairs(tagsExceptions) do
+--             if not worldEntities[i].tag == tag then
+                
+--             end
+
+--         end
+--     end
+-- end
+
 function SortedKeys(tablePassed)
 
     local tkeys = {}

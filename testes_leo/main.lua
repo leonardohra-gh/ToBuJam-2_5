@@ -13,7 +13,7 @@ Casa = require("entitiesGame.casa")
 local InteriorCasa = require("entitiesGame.interiorCasa")
 
 
-CasaCriada = nil
+interiorCasa = nil
 if arg[2] == "debug" then
     require("lldebugger").start()
     DEBUG_MODE = true
@@ -42,8 +42,8 @@ function love.load()
     --     local rua = Rua(xi, ruaSize*(i-1), math.pi/2)
     -- end
     --criarCasasAleatorias()
-    CasaCriada = InteriorCasa(10)
-    local xStart, yStart = CasaCriada:getPositionStart()
+    interiorCasa = InteriorCasa(10)
+    local xStart, yStart = interiorCasa:getPositionStart()
     player:moverPara(xStart, yStart)
 end
 function love.update(dt)

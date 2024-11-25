@@ -161,4 +161,8 @@ function InteriorCasa:popularArmadilhas()
     end
 end
 
+function InteriorCasa:destruir()
+    -- TODO destruir filhas
+end
+
 return InteriorCasa

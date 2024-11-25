@@ -33,6 +33,11 @@ function Loja:update(dt)
 end
 
 function Loja:draw()
+    
+    if not self.physics.body:isActive() then
+        return
+    end
+    
     Loja.super.draw(self)
 end
 

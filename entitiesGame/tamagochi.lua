@@ -41,6 +41,7 @@ function Tamagotchi:new(x, y)
     local botoesX, botoesY = self.physics:getPositionRounded()
     self.interface = InterfaceTamagotchi(botoesX, botoesY - 100)
     self:updateImagem()
+    self.physics.body:setActive(false)
     -- self.botoes = {
     --     DARAGUA = BotaoPadrao(botoesX, botoesY - 20, "", self.darAgua),
         
@@ -67,7 +68,7 @@ end
 
 function Tamagotchi:draw()
 
-    if self.estaVivo then
+    if self.estaVivo and self.physics.body:isActive() then
         Tamagotchi.super.draw(self)
         self.interface:draw()
     end
@@ -111,7 +112,7 @@ function Tamagotchi:aumentarNecessidade(qtd)
 end
 
 function Tamagotchi:desenharNecessidades()
-    if self.estaVivo then
+    if self.estaVivo and self.physics.body:isActive() then
         Tamagotchi.super.draw(self)
         local x, y = self.physics:getPositionRounded()
         local barX, barY = x - 50 / 2, y - 50

@@ -20,6 +20,10 @@ function Chao:draw()
     Chao.super.draw(self)
 end
 
+function Chao:destruir()
+    self.toBeDestroyed = true
+end
+
 -- function MyEntity:beginContact(entidade_colisora, coll)
 -- end
 

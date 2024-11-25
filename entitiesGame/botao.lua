@@ -7,7 +7,7 @@ local Botao = Entity:extend()
 local PrioridadeDesenho = require("enumsGame.PrioridadeDesenho")
 
 function Botao:new(x, y, imagePath, imageHoveredPath, texto, shapeType, action)
-    local atravessavel, size, drawPriority = nil, nil, PrioridadeDesenho.BOTAO
+    local atravessavel, size, drawPriority = true, nil, PrioridadeDesenho.BOTAO
     Botao.super.new(self, x, y, imagePath, World, shapeType, BodyTypes.STATIC, EntityTags.BOTAO, atravessavel, size, drawPriority)
     self.ativo = true
     self.action = action

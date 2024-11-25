@@ -53,7 +53,9 @@ function Robozinho:mover()
     end
 
     self.physics:setVelocity(self.vel.x, self.vel.y)
-    self.coneVisao.physics:setVelocity(self.vel.x, self.vel.y)
+    if not self.coneVisao == nil then
+        self.coneVisao.physics:setVelocity(self.vel.x, self.vel.y)
+    end
 end
 
 function CalcDist(x1, x2)

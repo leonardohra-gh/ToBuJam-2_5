@@ -9,6 +9,9 @@ local Jogador = require("entitiesGame.jogador")
 local Loja = require("entitiesGame.loja")
 local Casa = require("entitiesGame.casa")
 local TelaIntro = require("telas.telaIntro")
+local InteriorCasa = require("entitiesGame.interiorCasa")
+
+interiorCasa = nil
 
 if arg[2] == "debug" then
     require("lldebugger").start()
@@ -143,6 +146,18 @@ function carregarTelaInicial()
     telaSelecionada = TELA.INICIO
 end
 
+function finalizarJogo()
+    pontuacaoFinal = jogador.pontuacao
+    destruirMoedas()
+    destruirLoja()
+    destruirCasas()
+    destruirInteriorCasa()
+    destruirTamagotchis()
+    destruirJogador()
+    telaSelecionada = TELA.FIM
+    botaoJogarNovamente:ativar()
+end
+
 function criarTamagotchiEmUmaCasa()
     
     local todasCasas = GetWorldEntitiesByTag(EntityTags.CASA)
@@ -156,7 +171,7 @@ end
 
 
 function criarJogador()
-    jogador = Jogador(600, 500)
+    jogador = Jogador(600, 800)
 end
 
 
@@ -187,6 +202,20 @@ function destruirMoedas()
     local todasMoedas = GetWorldEntitiesByTag(EntityTags.MOEDAS)
     for i, moeda in ipairs(todasMoedas) do
         moeda:destruir()
+    end
+end
+
+function destruirInteriorCasa()
+    destruirArmadilhas()
+    
+    local todosChao = GetWorldEntitiesByTag(EntityTags.CHAO)
+    for i, chao in ipairs(todosChao) do
+        chao:destruir()
+    end
+    
+    local todosParede = GetWorldEntitiesByTag(EntityTags.PAREDE)
+    for i, parede in ipairs(todosParede) do
+        parede:destruir()
     end
 end
 
@@ -239,18 +268,6 @@ function destruirJogador()
     if not (jogador == nil) then
         jogador:destruir()
     end
-end
-
-function finalizarJogo()
-    pontuacaoFinal = jogador.pontuacao
-    destruirMoedas()
-    destruirLoja()
-    destruirCasas()
-    destruirArmadilhas()
-    destruirTamagotchis()
-    destruirJogador()
-    telaSelecionada = TELA.FIM
-    botaoJogarNovamente:ativar()
 end
 
 local love_errorhandler = love.errorhandler
