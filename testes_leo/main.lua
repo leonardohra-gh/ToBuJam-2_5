@@ -55,7 +55,7 @@ function love.draw()
 
     if DEBUG_MODE then
         DrawWorldEntityCountTopLeft()
-        -- DrawColliders()
+        DrawColliders()
         DrawTester("Leo")
     end
 end
