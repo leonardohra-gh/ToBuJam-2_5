@@ -4,8 +4,8 @@ local Drawer = require("core.drawer")
 local Size = require("core.structures.size")
 local Physics = require("core.physics")
 
-function Entity:new(x, y, imagePath, world, shapeType, bodyType, tag, atravessavel, automaticDraw, size)
-    self.automaticDraw = automaticDraw or true
+function Entity:new(x, y, imagePath, world, shapeType, bodyType, tag, atravessavel, size, drawPriority)
+    self.drawPriority = drawPriority or 99
     if imagePath == nil then
         self.drawer = nil
         self.size = nil
@@ -38,16 +38,14 @@ function Entity:update(dt)
 end
 
 function Entity:draw(rotation, scaleX, scaleY)
-    if self.automaticDraw then
-        local x, y = self.physics:getPositionRounded()
-        self.drawer:draw(
-            x,
-            y,
-            rotation or 0,
-            scaleX or 1,
-            scaleY or 1
-        )
-    end
+    local x, y = self.physics:getPositionRounded()
+    self.drawer:draw(
+        x,
+        y,
+        rotation or 0,
+        scaleX or 1,
+        scaleY or 1
+    )
 end
 
 function Entity:isOutOfScreen()

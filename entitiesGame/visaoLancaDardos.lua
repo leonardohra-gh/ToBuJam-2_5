@@ -2,6 +2,7 @@
 local BodyTypes = require("core.enums.body_types")
 local ShapeTypes = require("core.enums.shape_types")
 local Entity = require("core.entity")
+local PrioridadeDesenho = require("enumsGame.PrioridadeDesenho")
 local VisaoLancaDardos = Entity:extend()
 local EntityTags = require("enumsGame.EntityTags")
 local Size = require("core.structures.size")
@@ -10,8 +11,9 @@ local Tiro = require("entitiesGame.tiro")
 function VisaoLancaDardos:new(x, y, height, width)
     local imagePath = "assets/lancaDardos.png"
     local atravessavel = true
+    local size = Size(width, height)
     local xReposicionado = x + width/2
-    local automaticDraw = true
+    local drawPriority = PrioridadeDesenho.VISAO_LANCA_DARDOS
     VisaoLancaDardos.super.new(self,
                                     xReposicionado,
                                     y,
@@ -21,8 +23,8 @@ function VisaoLancaDardos:new(x, y, height, width)
                                     BodyTypes.STATIC,
                                     EntityTags.VISAO_LANCA_DARDOS,
                                     atravessavel,
-                                    automaticDraw,
-                                    Size(width, height)
+                                    size,
+                                    drawPriority
                                 )
     self.shootingCooldown = 0.5
     self.cooldownTimer = 0

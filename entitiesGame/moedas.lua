@@ -2,12 +2,14 @@
 local BodyTypes = require("core.enums.body_types")
 local ShapeTypes = require("core.enums.shape_types")
 local Entity = require("core.entity")
+local PrioridadeDesenho = require("enumsGame.PrioridadeDesenho")
 local Moedas = Entity:extend()
 local EntityTags = require("enumsGame.EntityTags")
 
 function Moedas:new(x, y)
     local imagePath = "assets/moedas.png"
-    Moedas.super.new(self, x, y, imagePath, World, ShapeTypes.CIRCLE, BodyTypes.STATIC, "moedas")
+    local atravessavel, size, drawPriority = nil, nil, PrioridadeDesenho.MOEDAS
+    Moedas.super.new(self, x, y, imagePath, World, ShapeTypes.CIRCLE, BodyTypes.STATIC, EntityTags.MOEDAS, atravessavel, size, drawPriority)
 end
 
 function Moedas:update(dt)

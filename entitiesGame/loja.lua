@@ -3,13 +3,15 @@ local BodyTypes = require("core.enums.body_types")
 local ShapeTypes = require("core.enums.shape_types")
 local Items = require("core.enums.items")
 local Entity = require("core.entity")
+local PrioridadeDesenho = require("enumsGame.PrioridadeDesenho")
 local Loja = Entity:extend()
 local EntityTags = require("enumsGame.EntityTags")
 local BotaoLoja = require("entitiesGame.botaoLoja")
 
 function Loja:new(x, y)
     local imagePath = "assets/loja.png"
-    Loja.super.new(self, x, y, imagePath, World, ShapeTypes.RECTANGLE, BodyTypes.STATIC, EntityTags.LOJA)
+    local atravessavel, size, drawPriority = nil, nil, PrioridadeDesenho.LOJA
+    Loja.super.new(self, x, y, imagePath, World, ShapeTypes.RECTANGLE, BodyTypes.STATIC, EntityTags.LOJA, atravessavel, size, drawPriority)
     local botaoWidth, botaoHeight = 64, 32
     local botoesX, botoesY = x + self.physics.width / 2 + botaoWidth / 2, y - self.physics.height / 2 + botaoHeight / 2
     self.aberta = false

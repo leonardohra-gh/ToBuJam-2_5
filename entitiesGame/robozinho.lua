@@ -3,15 +3,15 @@ local BodyTypes = require("core.enums.body_types")
 local ShapeTypes = require("core.enums.shape_types")
 local Entity = require("core.entity")
 local ConeVisao = require("entitiesGame.coneVisao")
+local PrioridadeDesenho = require("enumsGame.PrioridadeDesenho")
 local Robozinho = Entity:extend()
 local EntityTags = require("enumsGame.EntityTags")
 local Size = require("core.structures.size")
 
-function Robozinho:new(x, y, automaticDraw)
+function Robozinho:new(x, y)
     local imagePath = "assets/robozinho.png"
-    local atravessavel = false
-    local size = Size(48, 48)
-    Robozinho.super.new(self, x, y, imagePath, World, ShapeTypes.CIRCLE, BodyTypes.DYNAMIC, EntityTags.ROBOZINHO, atravessavel, automaticDraw, size)
+    local atravessavel, size, drawPriority = false, Size(48, 48), PrioridadeDesenho.ROBOZINHO
+    Robozinho.super.new(self, x, y, imagePath, World, ShapeTypes.CIRCLE, BodyTypes.DYNAMIC, EntityTags.ROBOZINHO, atravessavel, size, drawPriority)
     self.direcaoInicial = "x"
     self.initialPos = {x = x, y = y}
     self.vel = {x = 20, y = 0}

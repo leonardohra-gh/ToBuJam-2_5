@@ -138,11 +138,11 @@ function InteriorCasa:popularEstruturas()
         for j = 1, self.height do
             local xAtual, yAtual = offsetX + ((i-1)*self.tileWidth) + halfTileWidth, ((j-1)*self.tileWidth) + halfTileHeight
             if self.estruturaCasa[i][j] == EntityTags.CHAO then
-                local chao = Chao(xAtual, yAtual, false)
+                local chao = Chao(xAtual, yAtual)
                 table.insert(self.estruturaCasaEntities, chao)
             end
             if string.find(self.estruturaCasa[i][j], "assets/paredes/") then
-                local parede = Parede(xAtual, yAtual, self.estruturaCasa[i][j], false)
+                local parede = Parede(xAtual, yAtual, self.estruturaCasa[i][j])
                 table.insert(self.estruturaCasaEntities, parede)
             end
         end
@@ -160,19 +160,19 @@ function InteriorCasa:popularArmadilhas()
             local xAtual, yAtual = offsetX + ((i-1)*self.tileWidth) + halfTileWidth, ((j-1)*self.tileWidth) + halfTileHeight
 
             if self.armadilhasCasa[i][j] == EntityTags.CHAO_CRAQUELADO then
-                local chaoCraquelado = ChaoCraquelado(xAtual, yAtual, false)
+                local chaoCraquelado = ChaoCraquelado(xAtual, yAtual)
                 table.insert(self.armadilhasCasaEntities, chaoCraquelado)
             end
             if self.armadilhasCasa[i][j] == EntityTags.CHAO_ESCORREGADIO then
-                local chaoEscorregadio = ChaoEscorregadio(xAtual, yAtual, false)
+                local chaoEscorregadio = ChaoEscorregadio(xAtual, yAtual)
                 table.insert(self.armadilhasCasaEntities, chaoEscorregadio)
             end
             if self.armadilhasCasa[i][j] == EntityTags.LANCA_DARDOS then
-                local lancaDardos = LancaDardos(xAtual, yAtual, 300, false)
+                local lancaDardos = LancaDardos(xAtual, yAtual, 300)
                 table.insert(self.armadilhasCasaEntities, lancaDardos)
             end
             if self.armadilhasCasa[i][j] == EntityTags.ROBOZINHO then
-                local robozinho = Robozinho(xAtual, yAtual, false)
+                local robozinho = Robozinho(xAtual, yAtual)
                 table.insert(self.armadilhasCasaEntities, robozinho)
             end
         end

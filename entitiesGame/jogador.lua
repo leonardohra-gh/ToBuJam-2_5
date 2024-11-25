@@ -1,4 +1,5 @@
 local Entity = require('core.entity')
+local PrioridadeDesenho = require('enumsGame.PrioridadeDesenho')
 local Jogador = Entity:extend()
 local ShapeTypes = require("core.enums.shape_types")
 local BodyTypes = require("core.enums.body_types")
@@ -13,6 +14,7 @@ local SPEED_INC = 50
 
 function Jogador:new(x, y)
     local imagePath = "assets/jogador.png"
+    local atravessavel, size, drawPiority = nil, nil, PrioridadeDesenho.JOGADOR
     Jogador.super.new(self, x, y, imagePath, World, ShapeTypes.RECTANGLE, BodyTypes.DYNAMIC, EntityTags.JOGADOR)
     self.speed = 150
     self.mochila = Mochila()
