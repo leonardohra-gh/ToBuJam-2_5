@@ -42,9 +42,9 @@ function love.load()
     --     local rua = Rua(xi, ruaSize*(i-1), math.pi/2)
     -- end
     --criarCasasAleatorias()
-    interiorCasa = InteriorCasa(10)
-    local xStart, yStart = interiorCasa:getPositionStart()
-    player:moverPara(xStart, yStart)
+    local casa = Casa(500, 500)
+    -- local xStart, yStart = interiorCasa:getPositionStart()
+    -- player:moverPara(xStart, yStart)
 end
 function love.update(dt)
     UpdateWorldEntities(dt)

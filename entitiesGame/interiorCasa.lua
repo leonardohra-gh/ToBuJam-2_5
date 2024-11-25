@@ -2,6 +2,7 @@
 local BodyTypes = require("core.enums.body_types")
 local ShapeTypes = require("core.enums.shape_types")
 local Object = require("libs.classic")
+local SaidaCasa = require("entitiesGame.saidaCasa")
 local InteriorCasa = Object:extend()
 local OrientacaoParede = require("enumsGame.OrientacaoParede")
 local EntityTags       = require("enumsGame.EntityTags")
@@ -13,14 +14,16 @@ local LancaDardos = require("entitiesGame.lancaDardos")
 local Robozinho = require("entitiesGame.robozinho")
 local Tamagochi = require("entitiesGame.tamagochi")
 
-function InteriorCasa:new(qtdArmadilhas)
+function InteriorCasa:new(qtdArmadilhas, casaOwner)
     self.width, self.height = 21, 12
     self.tileWidth, self.tileHeight = 64, 64
     self.estruturaCasa, self.armadilhasCasa = {}, {}
-    self.estruturaCasaEntities, self.armadilhasCasaEntities, self.tamagochi = {}, {}, {}
+    self.estruturaCasaEntities, self.armadilhasCasaEntities = {}, {}
     self.tamagochi = nil
     self.start = {i = 0, j = 0}
+    self.startDoor = {i = 0, j = 0}
     self.goal = {i = 0, j = 0}
+    self.casaOwner = casaOwner
     self:gerarCasaProcedural(qtdArmadilhas)
 end
 
@@ -67,6 +70,7 @@ function InteriorCasa:gerarCasaProcedural(qtdArmadilhas)
     end
 
     self:generateRandomStart()
+    self:generateDoorStart()
     self:generateGoal()
 
     self:popularEstruturas()
@@ -140,6 +144,20 @@ function InteriorCasa:generateGoal()
     self.tamagochi = Tamagochi(x, y)
 end
 
+function InteriorCasa:generateDoorStart()
+    local i, j = self.start.i, self.start.j
+    local doorI, doorJ = 1, 1
+    if i == 2 then
+        doorI = 1
+    else
+        doorI = i + 1
+    end
+    doorJ = j
+
+    self.estruturaCasa[doorI][doorJ] = EntityTags.SAIDA_CASA
+end
+
+
 function InteriorCasa:popularEstruturas()
     -- renderizar a casa
 
@@ -155,6 +173,11 @@ function InteriorCasa:popularEstruturas()
             if string.find(self.estruturaCasa[i][j], "assets/paredes/") then
                 local parede = Parede(xAtual, yAtual, self.estruturaCasa[i][j])
                 table.insert(self.estruturaCasaEntities, parede)
+            end
+            
+            if self.estruturaCasa[i][j] == EntityTags.SAIDA_CASA then
+                local saida = SaidaCasa(xAtual, yAtual, self.casaOwner)
+                table.insert(self.estruturaCasaEntities, saida)
             end
         end
     end
@@ -193,7 +216,12 @@ function InteriorCasa:popularArmadilhas()
 end
 
 function InteriorCasa:destruir()
-    -- TODO destruir filhas
+    for i = 1, #self.estruturaCasaEntities do
+        self.estruturaCasaEntities[i]:destruir()
+    end
+    for i = 1, #self.armadilhasCasaEntities do
+        self.armadilhasCasaEntities[i]:destruir()
+    end
 end
 
 return InteriorCasa

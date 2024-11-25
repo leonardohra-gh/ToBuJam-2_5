@@ -52,6 +52,10 @@ function Tamagotchi:new(x, y)
     -- end
 end
 
+function Tamagotchi:moverPara(x, y)
+    self.physics:moveTo(x, y)
+end
+
 function Tamagotchi:update(dt)
     
     if self.estaVivo then

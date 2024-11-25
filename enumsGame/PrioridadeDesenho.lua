@@ -14,7 +14,8 @@ local PrioridadeDesenho= {
     LANCA_DARDOS = 2,
     MOEDAS = 1,
     TIRO = 2,
-    VISAO_LANCA_DARDOS = 99
+    VISAO_LANCA_DARDOS = 99,
+    SAIDA_CASA = 99
 }
 
 return PrioridadeDesenho
