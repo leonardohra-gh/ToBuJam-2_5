@@ -175,24 +175,26 @@ end
 
 function Tamagotchi:atenderNecessidade(necessidade)
     
-    if necessidade == NECESSIDADE.AGUA then
-        self.necessidades.AGUA = self.necessidadesValorInicial.AGUA_INICIAL
+    if self.necessidadeAtual == necessidade then
+        if necessidade == NECESSIDADE.AGUA then
+            self.necessidades.AGUA = self.necessidadesValorInicial.AGUA_INICIAL
+        end
+        if necessidade == NECESSIDADE.BANHO then
+            self.necessidades.BANHO = self.necessidadesValorInicial.BANHO_INICIAL
+        end
+        if necessidade == NECESSIDADE.BRINCAR then
+            self.necessidades.BRINCAR = self.necessidadesValorInicial.BRINCAR_INICIAL
+        end
+        if necessidade == NECESSIDADE.COMIDA then
+            self.necessidades.COMIDA = self.necessidadesValorInicial.COMIDA_INICIAL
+        end
+        if necessidade == NECESSIDADE.DORMIR then
+            self.necessidades.DORMIR = self.necessidadesValorInicial.DORMIR_INICIAL
+        end
+    
+        self.necessidadeAtual = NECESSIDADE:aleatoria()
+        self:updateImagem()
     end
-    if necessidade == NECESSIDADE.BANHO then
-        self.necessidades.BANHO = self.necessidadesValorInicial.BANHO_INICIAL
-    end
-    if necessidade == NECESSIDADE.BRINCAR then
-        self.necessidades.BRINCAR = self.necessidadesValorInicial.BRINCAR_INICIAL
-    end
-    if necessidade == NECESSIDADE.COMIDA then
-        self.necessidades.COMIDA = self.necessidadesValorInicial.COMIDA_INICIAL
-    end
-    if necessidade == NECESSIDADE.DORMIR then
-        self.necessidades.DORMIR = self.necessidadesValorInicial.DORMIR_INICIAL
-    end
-
-    self.necessidadeAtual = NECESSIDADE:aleatoria()
-    self:updateImagem()
 end
 
 function Tamagotchi:darAgua()
