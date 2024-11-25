@@ -35,8 +35,8 @@ function BotaoMochila:draw()
             Botao.super.draw(self)
         end
 
-        love.graphics.draw(self.itemImage, centroX + width / 2 - itemWidth / 2 - 20, centroY - height / 2 + itemHeight / 2)
-        love.graphics.print(self.qtdItens, centroX - textWidth - width / 2 + 20, centroY - textHeight / 2)
+        love.graphics.draw(self.itemImage, centroX - width / 2, centroY - height / 2)
+        -- love.graphics.print(self.qtdItens, centroX - textWidth - width / 2 + 20, centroY - textHeight / 2)
     end
 end
 

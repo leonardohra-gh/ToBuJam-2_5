@@ -4,7 +4,11 @@ local Object = require("libs.classic")
 local Mochila = Object:extend()
 local BotaoMochila = require("entitiesGame.botaoMochila")
 local Moedas = require("entitiesGame.moedas")
-local botaoWidth, botaoHeight = 64, 32
+
+local botaoWidth, botaoHeight = 32, 32
+local botaoX, botaoY = 25, 25
+local botaoSx, botaoSy = 46, 40
+local mochilaInterface = love.graphics.newImage("assets/mochilaInterface.png")
 
 function Mochila:new()
     self.pos = {x = 1250, y = 130}
@@ -24,10 +28,10 @@ function Mochila:new()
         escudo = false
     }
     self.botoes = {
-        pantufa = BotaoMochila(self.pos.x + botaoWidth / 2, self.pos.y + botaoHeight / 2, self.itens.pantufa, ITEM.PANTUFA.IMAGEM_PATH),
-        cobertor = BotaoMochila(self.pos.x + botaoWidth / 2, self.pos.y + botaoHeight / 2 + botaoHeight, self.itens.cobertor, ITEM.COBERTOR.IMAGEM_PATH),
-        botasDeNeve = BotaoMochila(self.pos.x + botaoWidth / 2, self.pos.y + botaoHeight / 2 + 2 * botaoHeight, self.itens.botasDeNeve, ITEM.BOTASNEVE.IMAGEM_PATH),
-        escudo = BotaoMochila(self.pos.x + botaoWidth / 2, self.pos.y + botaoHeight / 2 + 3 * botaoHeight, self.itens.escudo, ITEM.ESCUDO.IMAGEM_PATH),
+        pantufa = BotaoMochila(self.pos.x + botaoX, self.pos.y + botaoY, self.itens.pantufa, ITEM.PANTUFA.IMAGEM_PATH),
+        cobertor = BotaoMochila(self.pos.x + botaoX, self.pos.y + botaoY + botaoSy, self.itens.cobertor, ITEM.COBERTOR.IMAGEM_PATH),
+        botasDeNeve = BotaoMochila(self.pos.x + botaoX, self.pos.y + botaoY + 2 * botaoSy, self.itens.botasDeNeve, ITEM.BOTASNEVE.IMAGEM_PATH),
+        escudo = BotaoMochila(self.pos.x + botaoX + botaoSx, self.pos.y + botaoY, self.itens.escudo, ITEM.ESCUDO.IMAGEM_PATH),
     }
 end
 
@@ -35,9 +39,10 @@ function Mochila:update(dt)
 end
 
 function Mochila:draw()
-    love.graphics.draw(ITEM.PATINS.IMAGEM, self.pos.x, self.pos.y + 4 * botaoHeight)
-    love.graphics.draw(ITEM.SUPERCHARGER.IMAGEM, self.pos.x, self.pos.y + 5 * botaoHeight)
-    love.graphics.draw(Moedas:GetImagem(), self.pos.x, self.pos.y + 5 * botaoHeight)
+    love.graphics.draw(mochilaInterface, self.pos.x, self.pos.y)
+    love.graphics.draw(ITEM.PATINS.IMAGEM, self.pos.x - botaoWidth / 2 + botaoX + botaoSx, self.pos.y - botaoHeight / 2 + botaoY + botaoSy)
+    love.graphics.draw(ITEM.SUPERCHARGER.IMAGEM, self.pos.x - botaoWidth / 2 + botaoX + botaoSx, self.pos.y - botaoHeight / 2 + botaoY + 2 * botaoSy)
+    love.graphics.draw(Moedas:GetImagem(), self.pos.x + botaoX - botaoWidth / 2, self.pos.y + botaoY + 2 * botaoSy + 20)
 end
 
 function Mochila:selecionarItem(item)
