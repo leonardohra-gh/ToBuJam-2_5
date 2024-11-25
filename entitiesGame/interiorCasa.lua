@@ -111,24 +111,6 @@ function InteriorCasa:getPositionStart()
     return xStart, ystart
 end
 
-function InteriorCasa:draw()
-    self:renderizarEstrutura()
-    self:renderizarArmadilhas()
-end
-
-function InteriorCasa:renderizarEstrutura()
-    for i = 1, #self.estruturaCasaEntities do
-        self.estruturaCasaEntities[i]:draw()
-    end
-end
-
-function InteriorCasa:renderizarArmadilhas()
-    for i = 1, #self.armadilhasCasaEntities do
-        self.armadilhasCasaEntities[i]:draw()
-    end
-end
-
-
 function InteriorCasa:popularEstruturas()
     -- renderizar a casa
 
