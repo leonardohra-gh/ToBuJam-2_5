@@ -13,6 +13,7 @@ local ChaoEscorregadio = require("entitiesGame.chaoEscorregadio")
 local LancaDardos = require("entitiesGame.lancaDardos")
 local Robozinho = require("entitiesGame.robozinho")
 local Tamagochi = require("entitiesGame.tamagochi")
+local Moeda = require("entitiesGame.moedas")
 
 function InteriorCasa:new(qtdArmadilhas, casaOwner)
     self.width, self.height = 21, 12
@@ -23,6 +24,8 @@ function InteriorCasa:new(qtdArmadilhas, casaOwner)
     self.start = {i = 0, j = 0}
     self.startDoor = {i = 0, j = 0}
     self.goal = {i = 0, j = 0}
+    self.coinIJ = {i= 0, j = 0}
+    self.coin = nil
     self.casaOwner = casaOwner
     self:gerarCasaProcedural(qtdArmadilhas)
 end
@@ -68,7 +71,8 @@ function InteriorCasa:gerarCasaProcedural(qtdArmadilhas)
             end
         end
     end
-
+    
+    self:generateRooms()
     self:generateRandomStart()
     self:generateDoorStart()
     self:generateGoal()
@@ -95,7 +99,7 @@ function InteriorCasa:gerarCasaProcedural(qtdArmadilhas)
         local random_elem = armadilhas[keyset[math.random(#keyset)]]
         local random_i = math.random(2, self.width-1)
         local random_j = math.random(2, self.height-1)
-        if self:distanceToStart(random_i, random_j) > 2 and #self.armadilhasCasa[random_i][random_j] == 0 then
+        if self:distanceToStart(random_i, random_j) > 2 and #self.armadilhasCasa[random_i][random_j] == 0 and (not string.find(self.estruturaCasa[random_i][random_j], "assets/paredes/")) then
             self.armadilhasCasa[random_i][random_j] = random_elem
             i = i + 1
         end
@@ -104,8 +108,15 @@ function InteriorCasa:gerarCasaProcedural(qtdArmadilhas)
     self:popularArmadilhas()
 end
 
+function InteriorCasa:generateRooms()
+end
+
 function InteriorCasa:distanceToStart(i, j)
-    local distance = math.sqrt(math.pow((i - self.start.i), 2) + math.pow((j - self.start.j), 2))
+    return self:distanceBetween(i, j, self.start.i, self.start.j)
+end
+
+function InteriorCasa:distanceBetween(i0, j0, i1, j1)
+    local distance = math.sqrt(math.pow((i0 - i1), 2) + math.pow((j0 - j1), 2))
     return distance
 end
 
@@ -142,6 +153,19 @@ function InteriorCasa:generateGoal()
     end
     local x, y = self:getPositionFromIJ(self.goal.i, self.goal.j)
     self.tamagochi = Tamagochi(x, y)
+
+    local moedaI, moedaJ = math.random(self.width), math.random(self.height)
+    while 
+        self:distanceBetween(moedaI, moedaJ, self.goal.i, self.goal.j) > 3 or
+        self:distanceBetween(moedaI, moedaJ, self.goal.i, self.goal.j) == 0 or
+        self:isWall(moedaI, moedaJ) do
+        moedaI, moedaJ = math.random(self.width), math.random(self.height)
+    end
+
+    self.moedaIJ = {i = moedaI, j = moedaJ}
+    x, y = self:getPositionFromIJ(self.moedaIJ.i, self.moedaIJ.j)
+    self.moeda = Moeda(x, y)
+
 end
 
 function InteriorCasa:generateDoorStart()
@@ -170,7 +194,9 @@ function InteriorCasa:popularEstruturas()
                 local chao = Chao(xAtual, yAtual)
                 table.insert(self.estruturaCasaEntities, chao)
             end
-            if string.find(self.estruturaCasa[i][j], "assets/paredes/") then
+            if self:isWall(i, j) then
+                local chao = Chao(xAtual, yAtual)
+                table.insert(self.estruturaCasaEntities, chao)
                 local parede = Parede(xAtual, yAtual, self.estruturaCasa[i][j])
                 table.insert(self.estruturaCasaEntities, parede)
             end
@@ -183,6 +209,9 @@ function InteriorCasa:popularEstruturas()
     end
 end
 
+function InteriorCasa:isWall(i, j)
+    return string.find(self.estruturaCasa[i][j], "assets/paredes/")
+end
 
 
 function InteriorCasa:popularArmadilhas()
@@ -221,6 +250,10 @@ function InteriorCasa:destruir()
     end
     for i = 1, #self.armadilhasCasaEntities do
         self.armadilhasCasaEntities[i]:destruir()
+    end
+
+    if self.coin then
+        self.coin:destruir()
     end
 end
 
