@@ -1,13 +1,14 @@
 require("core.auxiliary.world_functions")
 require("core.auxiliary.utils")
 require("core.auxiliary.debug")
-local EntityTags = require("enumsGame.EntityTags")
 local TELA = require("core.enums.telas")
 local SHAPE = require("core.enums.shape_types")
+local EntityTags = require("enumsGame.EntityTags")
 local Botao = require("entitiesGame.botao")
 local Jogador = require("entitiesGame.jogador")
 local Loja = require("entitiesGame.loja")
 local Casa = require("entitiesGame.casa")
+local TelaIntro = require("telas.telaIntro")
 
 if arg[2] == "debug" then
     require("lldebugger").start()
@@ -16,9 +17,13 @@ end
 
 -- love.load -> love.update -> love.draw -> love.update -> love.draw -> love.update (...)
 
+local tamanhoTela = {x = 1366, y = 768}
+local centroTela = {x = tamanhoTela.x / 2, y = tamanhoTela.y / 2}
+
 local tela = {
     inicio = love.graphics.newImage("assets/telaInicial.png"),
-    jogo = love.graphics.newImage("assets/mapa_1.png"),
+    intro = love.graphics.newImage("assets/telaIntro.png"),
+    jogo = love.graphics.newImage("assets/mapa_2.png"),
     pausa = love.graphics.newImage("assets/telaPausa.png"),
     fim = love.graphics.newImage("assets/telaFim.png")
 }
@@ -28,13 +33,17 @@ local telaSelecionada = TELA.INICIO
 local TEMPOCRIACAOTAMAGOTCHI = 100
 local contadorCriarTamagotchi = 0
 local pausado = false
+local pontuacaoFinal = 0
 
 function love.load()
-    love.window.setMode(1366, 768)
+    love.window.setMode(tamanhoTela.x, tamanhoTela.y)
     CreateWorld()
     love.graphics.setFont(love.graphics.newFont(18))
-    botaoStart = Botao(300, 500, "assets/botaoRect.png", "assets/botaoRectHovered.png", "Start", SHAPE.RECTANGLE, iniciarJogo)
-    botaoJogarNovamente = Botao(500, 500, "assets/botaoRect.png", "assets/botaoRectHovered.png", "Jogar novamente", SHAPE.RECTANGLE, carregarTelaInicial)
+    telaIntro = TelaIntro()
+    botaoStart = Botao(centroTela.x - 200, centroTela.y, "assets/botaoRect.png", "assets/botaoRectHovered.png", "Start", SHAPE.RECTANGLE, iniciarJogo)
+    botaoStartIntro = Botao(centroTela.x + 200, centroTela.y, "assets/botaoRect.png", "assets/botaoRectHovered.png", "Start intro", SHAPE.RECTANGLE, carregarIntro)
+    botaoJogarNovamente = Botao(centroTela.x - 100, centroTela.y + 100, "assets/botaoRect.png", "assets/botaoRectHovered.png", "Jogar novamente", SHAPE.RECTANGLE, carregarTelaInicial)
+    love.graphics.setFont(love.graphics.newFont(14))
     carregarTelaInicial()
 end
 
@@ -43,6 +52,9 @@ function love.update(dt)
         UpdateWorldEntities(dt)
         if telaSelecionada == TELA.JOGO then
             contadorCriarTamagotchi = contadorCriarTamagotchi + 1
+        end
+        if telaSelecionada == TELA.INTRO then
+            telaIntro:update(dt)
         end
         if TEMPOCRIACAOTAMAGOTCHI <= contadorCriarTamagotchi then
             contadorCriarTamagotchi = 0
@@ -60,6 +72,16 @@ function love.draw()
     end
     if telaSelecionada == TELA.JOGO then
         love.graphics.draw(filtroNoite)
+    end
+    
+    if telaSelecionada == TELA.INTRO then
+        telaIntro:draw()
+    end
+    if telaSelecionada == TELA.FIM then
+        local texto = "Pontuação total: "
+        local textWidth  = love.graphics.getFont():getWidth(texto)
+	    local textHeight = love.graphics.getFont():getHeight()
+        love.graphics.print(texto .. pontuacaoFinal, 1366 / 2 - textWidth / 2, 768 / 2 - textHeight / 2)
     end
     if pausado then
         
@@ -99,6 +121,7 @@ end
 function iniciarJogo()
     botaoJogarNovamente:desativar()
     botaoStart:desativar()
+    botaoStartIntro:desativar()
     criarJogador()
     criarLoja()
     criarCasasMapa1()
@@ -106,10 +129,18 @@ function iniciarJogo()
     telaSelecionada = TELA.JOGO
 end
 
-function carregarTelaInicial()
-    telaSelecionada = TELA.INICIO
-    botaoStart:ativar()
+function carregarIntro()
     botaoJogarNovamente:desativar()
+    botaoStart:desativar()
+    botaoStartIntro:desativar()
+    telaSelecionada = TELA.INTRO
+end
+
+function carregarTelaInicial()
+    botaoStart:ativar()
+    botaoStartIntro:ativar()
+    botaoJogarNovamente:desativar()
+    telaSelecionada = TELA.INICIO
 end
 
 function criarTamagotchiEmUmaCasa()
@@ -211,6 +242,7 @@ function destruirJogador()
 end
 
 function finalizarJogo()
+    pontuacaoFinal = jogador.pontuacao
     destruirMoedas()
     destruirLoja()
     destruirCasas()

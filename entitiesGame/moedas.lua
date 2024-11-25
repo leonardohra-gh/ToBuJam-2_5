@@ -6,6 +6,8 @@ local PrioridadeDesenho = require("enumsGame.PrioridadeDesenho")
 local Moedas = Entity:extend()
 local EntityTags = require("enumsGame.EntityTags")
 
+local imagePath = "assets/moedas.png"
+
 function Moedas:new(x, y)
     local imagePath = "assets/moedas.png"
     local atravessavel, size, drawPriority = nil, nil, PrioridadeDesenho.MOEDAS
@@ -32,13 +34,8 @@ function Moedas:destruir()
     self.toBeDestroyed = true
 end
 
--- function MyEntity:endContact(entidade_colisora, b, coll)
--- end
-
--- function MyEntity:preSolve(entidade_colisora, b, coll)
--- end
-
--- function MyEntity:postSolve(entidade_colisora, b, coll, normalimpulse, tangentimpulse)
--- end
+function Moedas:GetImagem()
+    return love.graphics.newImage(imagePath)
+end
 
 return Moedas

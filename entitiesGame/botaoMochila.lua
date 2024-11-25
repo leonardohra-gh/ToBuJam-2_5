@@ -5,11 +5,11 @@ local BotaoMochila = Botao:extend()
 
 local imageSelecionada = love.graphics.newImage("assets/botaoMochilaSelecionado.png")
 
-function BotaoMochila:new(x, y, qtdItens)
+function BotaoMochila:new(x, y, qtdItens, imageItem)
     BotaoMochila.super.new(self, x, y, "assets/botaoMochila.png", "assets/botaoMochilaHovered.png", qtdItens, ShapeTypes.RECTANGLE, self.alternarSelecao)
     self.qtdItens = qtdItens
     self.selecionado = false
-    self.itemImage = love.graphics.newImage("assets/pantufa.png")
+    self.itemImage = love.graphics.newImage(imageItem)
 end
 
 function BotaoMochila:update(dt)
