@@ -1,16 +1,18 @@
+
 require("core.auxiliary.world_functions")
 require("core.auxiliary.utils")
 require("core.auxiliary.debug")
-local EntityTags = require("enumsGame.EntityTags")
 local TELA = require("core.enums.telas")
 local SHAPE = require("core.enums.shape_types")
+local EntityTags = require("enumsGame.EntityTags")
+local CasasPos = require("enumsGame.CasasPos")
 local Botao = require("entitiesGame.botao")
 local Jogador = require("entitiesGame.jogador")
-local Robozinho = require("entitiesGame.robozinho")
-local Parede = require("entitiesGame.parede")
 local Loja = require("entitiesGame.loja")
 local Casa = require("entitiesGame.casa")
-local Moedas = require("entitiesGame.moedas")
+local TelaIntro = require("telas.telaIntro")
+
+interiorCasa = nil
 
 if arg[2] == "debug" then
     require("lldebugger").start()
@@ -19,44 +21,63 @@ end
 
 -- love.load -> love.update -> love.draw -> love.update -> love.draw -> love.update (...)
 
-jogadorDentroDaCasa = false
+local musicIntro = love.audio.newSource("music/Intro.ogg", "stream")
+local musicJogo = love.audio.newSource("music/Jogo.wav", "stream")
+local tamanhoTela = {x = 1366, y = 768}
+local centroTela = {x = tamanhoTela.x / 2, y = tamanhoTela.y / 2}
+local MAPA = {
+    tipo1 = {
+        IMAGEPATH = "assets/mapa_1.png",
+        CASAS = CasasPos.mapa1
+    },
+    tipo2 = {
+        IMAGEPATH = "assets/mapa_2.png",
+        CASAS = CasasPos.mapa2
+    }
+}
+local mapaSelecionado = MAPA.tipo2
 
 local tela = {
     inicio = love.graphics.newImage("assets/telaInicial.png"),
-    jogo = love.graphics.newImage("assets/mapa_1.png"),
+    intro = love.graphics.newImage("assets/telaIntro.png"),
+    jogo = love.graphics.newImage(mapaSelecionado.IMAGEPATH),
     pausa = love.graphics.newImage("assets/telaPausa.png"),
     fim = love.graphics.newImage("assets/telaFim.png")
 }
 
+local filtroNoite = love.graphics.newImage("assets/filtroNoite.png")
 local telaSelecionada = TELA.INICIO
 local TEMPOCRIACAOTAMAGOTCHI = 100
 local contadorCriarTamagotchi = 0
-local musicIntro = love.audio.newSource("music/Intro.ogg", "stream")
-local musicJogo = love.audio.newSource("music/Jogo.wav", "stream")
 local pausado = false
+local pontuacaoFinal = 0
 
 function love.load()
-    love.window.setMode(1366, 768)
+    love.window.setMode(tamanhoTela.x, tamanhoTela.y)
     CreateWorld()
     love.graphics.setFont(love.graphics.newFont(18))
-    botaoStart = Botao(300, 500, "assets/botaoRect.png", "assets/botaoRectHovered.png", "Start", SHAPE.RECTANGLE, iniciarJogo)
-    botaoJogarNovamente = Botao(500, 500, "assets/botaoRect.png", "assets/botaoRectHovered.png", "Jogar novamente", SHAPE.RECTANGLE, carregarTelaInicial)
+    telaIntro = TelaIntro()
+    botaoStart = Botao(centroTela.x - 200, centroTela.y, "assets/botaoRect.png", "assets/botaoRectHovered.png", "Start", SHAPE.RECTANGLE, iniciarJogo)
+    botaoStartIntro = Botao(centroTela.x + 200, centroTela.y, "assets/botaoRect.png", "assets/botaoRectHovered.png", "Start intro", SHAPE.RECTANGLE, carregarIntro)
+    botaoJogarNovamente = Botao(centroTela.x - 100, centroTela.y + 100, "assets/botaoRect.png", "assets/botaoRectHovered.png", "Jogar novamente", SHAPE.RECTANGLE, carregarTelaInicial)
+    love.graphics.setFont(love.graphics.newFont(14))
     carregarTelaInicial()
 end
 
 function love.update(dt)
-
     if not pausado then
         UpdateWorldEntities(dt)
         if telaSelecionada == TELA.JOGO then
             contadorCriarTamagotchi = contadorCriarTamagotchi + 1
         end
-        if TEMPOCRIACAOTAMAGOTCHI <= contadorCriarTamagotchi then
+        if telaSelecionada == TELA.INTRO then
+            telaIntro:update(dt)
+        end
+        if TEMPOCRIACAOTAMAGOTCHI <= contadorCriarTamagotchi then -- TODO Leo and not player está no interior da casa
             contadorCriarTamagotchi = 0
             criarTamagotchiEmUmaCasa()
         end
     end
-
 end
 
 function love.draw()
@@ -66,8 +87,26 @@ function love.draw()
         DrawWorldEntityCountTopLeft()
         -- DrawColliders()
     end
+    if telaSelecionada == TELA.JOGO then
+        love.graphics.draw(filtroNoite)
+    end
+    
+    if telaSelecionada == TELA.INTRO then
+        telaIntro:draw()
+    end
+    if telaSelecionada == TELA.FIM then
+        local texto = "Pontuação total: "
+        local textWidth  = love.graphics.getFont():getWidth(texto)
+	    local textHeight = love.graphics.getFont():getHeight()
+        love.graphics.print(texto .. pontuacaoFinal, 1366 / 2 - textWidth / 2, 768 / 2 - textHeight / 2)
+    end
     if pausado then
+        
         love.graphics.draw(tela[TELA.PAUSA])
+        local texto = "Jogo pausado"
+        local textWidth  = love.graphics.getFont():getWidth(texto)
+	    local textHeight = love.graphics.getFont():getHeight()
+        love.graphics.print(texto, 1366 / 2 - textWidth / 2, 768 / 2 - textHeight / 2)
     end
 end
 
@@ -99,21 +138,42 @@ end
 function iniciarJogo()
     botaoJogarNovamente:desativar()
     botaoStart:desativar()
+    botaoStartIntro:desativar()
     criarJogador()
     criarLoja()
-    criarCasasMapa1()
+    criarCasas()
     criarTamagotchiEmUmaCasa()
     musicIntro:stop()
     musicJogo:play()
     telaSelecionada = TELA.JOGO
 end
 
+function carregarIntro()
+    botaoJogarNovamente:desativar()
+    botaoStart:desativar()
+    botaoStartIntro:desativar()
+    telaSelecionada = TELA.INTRO
+end
+
 function carregarTelaInicial()
-    telaSelecionada = TELA.INICIO
     botaoStart:ativar()
+    botaoStartIntro:ativar()
     botaoJogarNovamente:desativar()
     musicJogo:stop()
     musicIntro:play()
+    telaSelecionada = TELA.INICIO
+end
+
+function finalizarJogo()
+    pontuacaoFinal = jogador.pontuacao
+    destruirMoedas()
+    destruirLoja()
+    destruirCasas()
+    destruirInteriorCasa()
+    destruirTamagotchis()
+    destruirJogador()
+    telaSelecionada = TELA.FIM
+    botaoJogarNovamente:ativar()
 end
 
 function criarTamagotchiEmUmaCasa()
@@ -128,8 +188,8 @@ function criarTamagotchiEmUmaCasa()
 end
 
 
-function criarJogador()    
-    jogador = Jogador(600, 500)
+function criarJogador()
+    jogador = Jogador(0, 0)
 end
 
 
@@ -137,17 +197,26 @@ function criarLoja()
     Loja(480 + 96 / 2, 0 + 96 / 2)
 end
 
-function criarCasasMapa1()
-    positions = {
-        {x = 192, y = 192},
-        {x = 192, y = 448},
-        {x = 352, y = 448},
-        {x = 592, y = 224},
-        {x = 608, y = 416},
-        {x = 864, y = 208},
-        {x = 880, y = 416},
-        {x = 1018, y = 320}
-    }
+-- function criarCasasMapa1()
+--     positions = CasasPos.mapa1
+
+--     local casaWidth, casaHeight = 128, 128
+--     for i = 1, #positions do
+--         Casa(positions[i].x + casaWidth / 2, positions[i].y + casaHeight / 2)
+--     end
+-- end
+
+-- function criarCasasMapa2()
+--     positions = mapaSelecionado.CASAS
+
+--     local casaWidth, casaHeight = 128, 128
+--     for i = 1, #positions do
+--         Casa(positions[i].x + casaWidth / 2, positions[i].y + casaHeight / 2)
+--     end
+-- end
+
+function criarCasas()
+    local positions = mapaSelecionado.CASAS
 
     local casaWidth, casaHeight = 128, 128
     for i = 1, #positions do
@@ -160,6 +229,20 @@ function destruirMoedas()
     local todasMoedas = GetWorldEntitiesByTag(EntityTags.MOEDAS)
     for i, moeda in ipairs(todasMoedas) do
         moeda:destruir()
+    end
+end
+
+function destruirInteriorCasa()
+    destruirArmadilhas()
+    
+    local todosChao = GetWorldEntitiesByTag(EntityTags.CHAO)
+    for i, chao in ipairs(todosChao) do
+        chao:destruir()
+    end
+    
+    local todosParede = GetWorldEntitiesByTag(EntityTags.PAREDE)
+    for i, parede in ipairs(todosParede) do
+        parede:destruir()
     end
 end
 
@@ -212,17 +295,6 @@ function destruirJogador()
     if not (jogador == nil) then
         jogador:destruir()
     end
-end
-
-function finalizarJogo()
-    destruirMoedas()
-    destruirLoja()
-    destruirCasas()
-    destruirArmadilhas()
-    destruirTamagotchis()
-    destruirJogador()
-    telaSelecionada = TELA.FIM
-    botaoJogarNovamente:ativar()
 end
 
 local love_errorhandler = love.errorhandler
