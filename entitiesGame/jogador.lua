@@ -56,7 +56,7 @@ end
 function Jogador:draw()
     Jogador.super.draw(self)
     self.mochila:draw()
-    love.graphics.print("Pontuação: " .. self.pontuacao, 1250, 350)
+    love.graphics.print("Pontuação: " .. self.pontuacao, 1250, 285)
     for i = 1, self.tamagotchometro do
         love.graphics.draw(IMAGE_TAMAGOTCHI_VIDA, vidasX + 20 * i, vidasY)
     end

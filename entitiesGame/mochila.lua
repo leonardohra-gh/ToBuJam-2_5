@@ -43,6 +43,10 @@ function Mochila:draw()
     love.graphics.draw(ITEM.PATINS.IMAGEM, self.pos.x - botaoWidth / 2 + botaoX + botaoSx, self.pos.y - botaoHeight / 2 + botaoY + botaoSy)
     love.graphics.draw(ITEM.SUPERCHARGER.IMAGEM, self.pos.x - botaoWidth / 2 + botaoX + botaoSx, self.pos.y - botaoHeight / 2 + botaoY + 2 * botaoSy)
     love.graphics.draw(Moedas:GetImagem(), self.pos.x + botaoX - botaoWidth / 2, self.pos.y + botaoY + 2 * botaoSy + 20)
+
+    love.graphics.print(self.itens.patins, self.pos.x+ botaoX + botaoSx + 12, self.pos.y + botaoY + botaoSy + 5)
+    love.graphics.print(self.itens.superCharger, self.pos.x+ botaoX + botaoSx + 12, self.pos.y + botaoY + 2 * botaoSy + 5)
+    love.graphics.print(self.dinheiro, self.pos.x+ botaoX + 12, self.pos.y + botaoY + 2 * botaoSy + 20)
 end
 
 function Mochila:selecionarItem(item)

@@ -36,6 +36,9 @@ function BotaoMochila:draw()
         end
 
         love.graphics.draw(self.itemImage, centroX - width / 2, centroY - height / 2)
+        
+        local x, y = self.physics:getPositionRounded()
+        love.graphics.print(self.qtdItens, x + 12, y + 5)
         -- love.graphics.print(self.qtdItens, centroX - textWidth - width / 2 + 20, centroY - textHeight / 2)
     end
 end
