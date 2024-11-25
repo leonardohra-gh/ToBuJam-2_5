@@ -12,6 +12,7 @@ function Casa:new(x, y)
     local corCasa = math.random(5)
     local imagePath = "assets/casa_" .. corCasa .. ".png"
     local atravessavel, size, drawPriority = nil, nil, PrioridadeDesenho.CASA
+    atravessavel = true
     Casa.super.new(self, x, y, imagePath, World, ShapeTypes.RECTANGLE, BodyTypes.STATIC, EntityTags.CASA, atravessavel, size, drawPriority)
     self.tamagotchi = nil
     self.interior = nil
@@ -46,12 +47,12 @@ function Casa:beginContact(entidade_colisora, coll)
 end
 
 function Casa:Entrar()
-    self.interior = InteriorCasa(10)
-    self.gerarLayout = false
-    local jogador = GetWorldEntitiesByTag(EntityTags.JOGADOR)[1]
-    local x, y = self.interior:getPositionStart()
-    jogador:moverPara(x, y)
-    InactivateEntities({EntityTags.TAMAGOCHI, EntityTags.CASA, EntityTags.LOJA})
+    -- self.interior = InteriorCasa(10)
+    -- self.gerarLayout = false
+    -- local jogador = GetWorldEntitiesByTag(EntityTags.JOGADOR)[1]
+    -- local x, y = self.interior:getPositionStart()
+    -- jogador:moverPara(x, y)
+    -- InactivateEntities({EntityTags.TAMAGOCHI, EntityTags.CASA, EntityTags.LOJA})
 end
 
 function Casa:Sair()

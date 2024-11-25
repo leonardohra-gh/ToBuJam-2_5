@@ -41,7 +41,7 @@ function Tamagotchi:new(x, y)
     }
     self.necessidadeAtual = NECESSIDADE:aleatoria()
     local botoesX, botoesY = self.physics:getPositionRounded()
-    self.interface = InterfaceTamagotchi(botoesX, botoesY - 100)
+    self.interface = InterfaceTamagotchi(self)
     self:updateImagem()
     -- self.botoes = {
     --     DARAGUA = BotaoPadrao(botoesX, botoesY - 20, "", self.darAgua),
@@ -187,6 +187,26 @@ function Tamagotchi:atenderNecessidade(necessidade)
 
     self.necessidadeAtual = NECESSIDADE:aleatoria()
     self:updateImagem()
+end
+
+function Tamagotchi:darAgua()
+    self:atenderNecessidade(NECESSIDADE.AGUA)
+end
+
+function Tamagotchi:brincar()
+    self:atenderNecessidade(NECESSIDADE.BRINCAR)
+end
+
+function Tamagotchi:darBanho()
+    self:atenderNecessidade(NECESSIDADE.BANHO)
+end
+
+function Tamagotchi:dormir()
+    self:atenderNecessidade(NECESSIDADE.DORMIR)
+end
+
+function Tamagotchi:alimentar()
+    self:atenderNecessidade(NECESSIDADE.COMIDA)
 end
 
 function Tamagotchi:printarNecessidades()

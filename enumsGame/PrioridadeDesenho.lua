@@ -6,6 +6,7 @@ local PrioridadeDesenho= {
     CHAO_ESCORREGADIO = 98,
     CONE_VISAO = 99,
     JOGADOR = 2,
+    INTERFACE_TAMAGOTCHI = 1,
     LOJA = 2,
     PAREDE = 98,
     ROBOZINHO = 97,
