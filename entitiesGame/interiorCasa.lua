@@ -126,7 +126,14 @@ function InteriorCasa:generateRooms()
 
     self.estruturaCasa[intersectionI][intersectionJ] = OrientacaoParede.CRUZ
 
-    
+    local iDoor, jDoor = math.random(2, intersectionI), intersectionJ
+    self.estruturaCasa[iDoor][jDoor] = EntityTags.CHAO
+    iDoor, jDoor = intersectionI, math.random(2, intersectionJ)
+    self.estruturaCasa[iDoor][jDoor] = EntityTags.CHAO
+    iDoor, jDoor = math.random(intersectionI, self.width-1), intersectionJ
+    self.estruturaCasa[iDoor][jDoor] = EntityTags.CHAO
+    iDoor, jDoor = intersectionI, math.random(intersectionJ, self.height-1)
+    self.estruturaCasa[iDoor][jDoor] = EntityTags.CHAO
 end
 
 function InteriorCasa:distanceToStart(i, j)
@@ -272,8 +279,8 @@ function InteriorCasa:destruir()
         self.armadilhasCasaEntities[i]:destruir()
     end
 
-    if self.coin then
-        self.coin:destruir()
+    if self.moeda then
+        self.moeda:destruir()
     end
 end
 
