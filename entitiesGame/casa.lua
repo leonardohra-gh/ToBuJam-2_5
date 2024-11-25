@@ -53,6 +53,9 @@ function Casa:Entrar()
     local x, y = self.interior:getPositionStart()
     jogador:moverPara(x, y)
     InactivateEntities({EntityTags.TAMAGOCHI, EntityTags.CASA, EntityTags.LOJA})
+    if self.tamagotchi then
+        self.tamagotchi.physics.body:setActive(true)
+    end
 end
 
 function Casa:Sair()
@@ -64,6 +67,10 @@ function Casa:criarTamagotchi()
     local casaX, casaY = self.physics:getPositionRounded()
     self.tamagotchi = Tamagochi(casaX, casaY - 20)
     
+end
+
+function Casa:moverTamagotchiPara(x, y)
+    self.tamagotchi:moverPara(x, y)
 end
 
 function Casa:destruir()
