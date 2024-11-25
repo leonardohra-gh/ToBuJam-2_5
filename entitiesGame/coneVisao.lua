@@ -32,7 +32,9 @@ function ConeVisao:destruir()
 end
 
 function ConeVisao:moverPara(x, y)
-    self.physics:moveTo(x, y)
+    if self.physics then
+        self.physics:moveTo(x, y)
+    end
 end
 
 

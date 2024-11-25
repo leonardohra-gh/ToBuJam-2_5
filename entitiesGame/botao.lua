@@ -44,22 +44,22 @@ function Botao:draw()
 end
 
 function Botao:isHovered()
-
-    local botaoX, botaoY = self.physics:getPositionRounded()
-    local width, height = self.physics:getSize()
-    local mouseX, mouseY = love.mouse.getPosition()
-
-    if self.physics.shapeType == ShapeTypes.CIRCLE then
-        local raio = width / 2
-        local distParaCentro = math.sqrt(math.pow((mouseX - botaoX), 2) + math.pow((mouseY - botaoY), 2))
-
-        return distParaCentro <= raio
+    if self.physics then
+        local botaoX, botaoY = self.physics:getPositionRounded()
+        local width, height = self.physics:getSize()
+        local mouseX, mouseY = love.mouse.getPosition()
+    
+        if self.physics.shapeType == ShapeTypes.CIRCLE then
+            local raio = width / 2
+            local distParaCentro = math.sqrt(math.pow((mouseX - botaoX), 2) + math.pow((mouseY - botaoY), 2))
+    
+            return distParaCentro <= raio
+        end
+    
+        if self.physics.shapeType == ShapeTypes.RECTANGLE then
+            return math.abs(mouseX - botaoX) <= width / 2 and math.abs(mouseY - botaoY) <= height / 2
+        end
     end
-
-    if self.physics.shapeType == ShapeTypes.RECTANGLE then
-        return math.abs(mouseX - botaoX) <= width / 2 and math.abs(mouseY - botaoY) <= height / 2
-    end
-
 end
 
 function Botao:estaAtivo()

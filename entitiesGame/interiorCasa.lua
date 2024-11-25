@@ -272,6 +272,8 @@ function InteriorCasa:popularArmadilhas()
 end
 
 function InteriorCasa:destruir()
+    local casaX, casaY = self.casaOwner.physics:getPositionRounded()
+    self.casaOwner:moverTamagotchiPara(casaX, casaY)
     for i = 1, #self.estruturaCasaEntities do
         self.estruturaCasaEntities[i]:destruir()
     end
