@@ -9,20 +9,21 @@ local EntityTags = require("enumsGame.EntityTags")
 local BotaoLoja = require("entitiesGame.botaoLoja")
 local Tamagotchi = require("entitiesGame.tamagochi")
 
+local imagePath = "assets/loja.png"
+local imageBalcao = love.graphics.newImage("assets/lojaBalcao.png")
+local balcaoX, balcaoY = 600, 300
+
 function Loja:new(x, y)
-    local imagePath = "assets/loja.png"
     local atravessavel, size, drawPriority = nil, nil, PrioridadeDesenho.LOJA
     Loja.super.new(self, x, y, imagePath, World, ShapeTypes.RECTANGLE, BodyTypes.STATIC, EntityTags.LOJA, atravessavel, size, drawPriority)
-    local botaoWidth, botaoHeight = 64, 32
-    local botoesX, botoesY = x + self.physics.width / 2 + botaoWidth / 2, y - self.physics.height / 2 + botaoHeight / 2
     self.aberta = false
     self.botoes = {
-        comprarPantufa = BotaoLoja(botoesX, botoesY, Items.PANTUFA.NOME .. " $" .. Items.COBERTOR.PRECO, self.venderPantufa),
-        comprarCobertor = BotaoLoja(botoesX, botoesY + botaoHeight, Items.COBERTOR.NOME .. "$" .. Items.COBERTOR.PRECO, self.venderCobertor),
-        comprarBotasNeve = BotaoLoja(botoesX, botoesY + 2 * botaoHeight, Items.BOTASNEVE.NOME .. "$" .. Items.BOTASNEVE.PRECO, self.venderBotasNeve),
-        comprarEscudo = BotaoLoja(botoesX, botoesY + 3 * botaoHeight, Items.ESCUDO.NOME .. "$" .. Items.ESCUDO.PRECO, self.venderEscudo),
-        comprarPatins = BotaoLoja(botoesX, botoesY + 4 * botaoHeight, Items.PATINS.NOME .. "$" .. Items.PATINS.PRECO, self.venderPatins),
-        comprarSuperCharger = BotaoLoja(botoesX, botoesY + 5 * botaoHeight, Items.SUPERCHARGER.NOME .. "$" .. Items.SUPERCHARGER.PRECO, self.venderSuperCharger)
+        comprarPantufa = BotaoLoja(balcaoX + 240, balcaoY + 80, Items.PANTUFA.NOME .. " $" .. Items.COBERTOR.PRECO, "assets/pantufa.png", self.venderPantufa),
+        comprarCobertor = BotaoLoja(balcaoX + 512, balcaoY + 144, Items.COBERTOR.NOME .. " $" .. Items.COBERTOR.PRECO, "assets/cobertor.png", self.venderCobertor),
+        comprarBotasNeve = BotaoLoja(balcaoX + 240, balcaoY + 208, Items.BOTASNEVE.NOME .. " $" .. Items.BOTASNEVE.PRECO, "assets/botasNeve.png", self.venderBotasNeve),
+        comprarEscudo = BotaoLoja(balcaoX + 512, balcaoY + 272, Items.ESCUDO.NOME .. " $" .. Items.ESCUDO.PRECO, "assets/escudo.png", self.venderEscudo),
+        comprarPatins = BotaoLoja(balcaoX + 240, balcaoY + 336, Items.PATINS.NOME .. " $" .. Items.PATINS.PRECO, "assets/patins.png", self.venderPatins),
+        comprarSuperCharger = BotaoLoja(balcaoX + 512, balcaoY + 400, Items.SUPERCHARGER.NOME .. " $" .. Items.SUPERCHARGER.PRECO, "assets/superCharger.png", self.venderSuperCharger)
     }
     for i, botao in pairs(self.botoes) do
         botao:desativar()
@@ -40,6 +41,10 @@ function Loja:draw()
     end
     
     Loja.super.draw(self)
+
+    if self.aberta then
+        love.graphics.draw(imageBalcao, balcaoX, balcaoY)
+    end
 end
 
 function Loja:beginContact(entidade_colisora, coll)

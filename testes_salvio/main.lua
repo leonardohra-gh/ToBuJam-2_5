@@ -171,7 +171,7 @@ end
 
 
 function criarJogador()
-    jogador = Jogador(600, 800)
+    jogador = Jogador(550, 200)
 end
 
 

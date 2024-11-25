@@ -3,12 +3,12 @@ local ShapeTypes = require("core.enums.shape_types")
 local Botao = require("entitiesGame.botao")
 local BotaoLoja = Botao:extend()
 
-local imageSelecionada = love.graphics.newImage("assets/botaoMochilaSelecionado.png")
+local imageHovered = love.graphics.newImage("assets/botaoLojaHovered.png")
 
-function BotaoLoja:new(x, y, texto, acao)
-    BotaoLoja.super.new(self, x, y, "assets/botaoMochila.png", "assets/botaoMochilaHovered.png", texto, ShapeTypes.RECTANGLE, acao)
+function BotaoLoja:new(x, y, texto, imageItem, acao)
+    BotaoLoja.super.new(self, x, y, "assets/botaoLoja.png", "assets/botaoLojaHovered.png", texto, ShapeTypes.RECTANGLE, acao)
     self.selecionado = false
-    self.itemImage = love.graphics.newImage("assets/pantufa.png")
+    self.itemImage = love.graphics.newImage(imageItem)
 end
 
 function BotaoLoja:update(dt)
@@ -19,23 +19,13 @@ end
 
 function BotaoLoja:draw()
     if self.ativo then
-        local width, height = self.physics:getSize()
         local centroX, centroY = self.physics:getPositionRounded()
-        local textWidth  = love.graphics.getFont():getWidth(self.texto)
-        local textHeight = love.graphics.getFont():getHeight()
-        local itemWidth, itemHeight = self.itemImage:getDimensions()
+        love.graphics.draw(self.itemImage, centroX, centroY - 64 / 2)
+        love.graphics.print(self.texto, centroX - 130, centroY - 64 / 2)
 
-        if self.selecionado then
-            local x, y = self.physics:getPositionRounded()
-            love.graphics.draw(imageSelecionada, x - width / 2, y - height / 2)
-        elseif self:isHovered() then
-            love.graphics.draw(self.hoveredImage, centroX - width / 2, centroY - height / 2)
-        else
-            Botao.super.draw(self)
+        if self:isHovered() then
+            love.graphics.draw(imageHovered, centroX, centroY - 64 / 2)
         end
-
-        love.graphics.draw(self.itemImage, centroX + width / 2 - itemWidth / 2 - 20, centroY - height / 2 + itemHeight / 2)
-        love.graphics.print(self.texto, centroX - textWidth - width / 2 + 20, centroY - textHeight / 2)
     end
 end
 

@@ -19,6 +19,12 @@ function Botao:update(dt)
 
     Botao.super.update(self, dt)
 
+    if self:isHovered() then
+        love.mouse.setCursor(love.mouse.getSystemCursor("hand"))
+    else        
+        love.mouse.setCursor()
+    end
+
 end
 
 function Botao:draw()
