@@ -109,6 +109,24 @@ function InteriorCasa:gerarCasaProcedural(qtdArmadilhas)
 end
 
 function InteriorCasa:generateRooms()
+    local intersectionI = math.random(6, self.width-2)
+    local intersectionJ = math.random(6, self.height-2)
+
+    self.estruturaCasa[1][intersectionJ] = OrientacaoParede.T_DIREITA
+    self.estruturaCasa[self.width][intersectionJ] = OrientacaoParede.T_ESQUERDA
+    for i = 2, self.width-1 do
+        self.estruturaCasa[i][intersectionJ] = OrientacaoParede.SIMPLES_HORIZONTAL
+    end
+
+    self.estruturaCasa[intersectionI][1] = OrientacaoParede.T_BAIXO
+    self.estruturaCasa[intersectionI][self.height] = OrientacaoParede.T_CIMA
+    for j = 2, self.height-1 do
+        self.estruturaCasa[intersectionI][j] = OrientacaoParede.SIMPLES_VERTICAL
+    end
+
+    self.estruturaCasa[intersectionI][intersectionJ] = OrientacaoParede.CRUZ
+
+    
 end
 
 function InteriorCasa:distanceToStart(i, j)
@@ -152,7 +170,9 @@ function InteriorCasa:generateGoal()
         self.goal.j = 2
     end
     local x, y = self:getPositionFromIJ(self.goal.i, self.goal.j)
-    self.tamagochi = Tamagochi(x, y)
+    if self.casaOwner.tamagotchi then
+        self.casaOwner:moverTamagotchiPara(x, y)
+    end
 
     local moedaI, moedaJ = math.random(self.width), math.random(self.height)
     while 
