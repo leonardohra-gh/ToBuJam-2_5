@@ -72,7 +72,9 @@ function Casa:criarTamagotchi()
 end
 
 function Casa:moverTamagotchiPara(x, y)
-    self.tamagotchi:moverPara(x, y)
+    if self.tamagotchi then
+        self.tamagotchi:moverPara(x, y)
+    end
 end
 
 function Casa:destruir()
