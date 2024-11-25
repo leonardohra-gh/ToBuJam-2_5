@@ -54,7 +54,7 @@ local tela = {
 
 local filtroNoite = love.graphics.newImage("assets/filtroNoite.png")
 local telaSelecionada = TELA.INICIO
-local TEMPOCRIACAOTAMAGOTCHI = 100
+local TEMPOCRIACAOTAMAGOTCHI = 2000
 local contadorCriarTamagotchi = 0
 local pausado = false
 local pontuacaoFinal = 0

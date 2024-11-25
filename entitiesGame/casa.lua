@@ -47,7 +47,7 @@ function Casa:beginContact(entidade_colisora, coll)
 end
 
 function Casa:Entrar()
-    self.interior = InteriorCasa(10, self)
+    self.interior = InteriorCasa(6, self)
     self.gerarLayout = false
     local jogador = GetWorldEntitiesByTag(EntityTags.JOGADOR)[1]
     local x, y = self.interior:getPositionStart()

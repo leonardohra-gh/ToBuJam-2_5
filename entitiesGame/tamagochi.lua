@@ -26,11 +26,11 @@ function Tamagotchi:new(x, y)
 
     self.estaVivo = true
     self.necessidadesValorInicial = {
-        AGUA_INICIAL = 100 * superCharge,
-        BANHO_INICIAL = 200 * superCharge,
-        BRINCAR_INICIAL = 50 * superCharge,
-        COMIDA_INICIAL = 100 * superCharge,
-        DORMIR_INICIAL = 100 * superCharge
+        AGUA_INICIAL = 300 * superCharge,
+        BANHO_INICIAL = 500 * superCharge,
+        BRINCAR_INICIAL = 600 * superCharge,
+        COMIDA_INICIAL = 1000 * superCharge,
+        DORMIR_INICIAL = 1200 * superCharge
     }
     self.necessidades = {
         AGUA = (0.8 + 0.2 * math.random()) * self.necessidadesValorInicial.AGUA_INICIAL,
