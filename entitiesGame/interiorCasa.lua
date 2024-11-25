@@ -11,14 +11,16 @@ local ChaoCraquelado = require("entitiesGame.chaoCraquelado")
 local ChaoEscorregadio = require("entitiesGame.chaoEscorregadio")
 local LancaDardos = require("entitiesGame.lancaDardos")
 local Robozinho = require("entitiesGame.robozinho")
+local Tamagochi = require("entitiesGame.tamagochi")
 
 function InteriorCasa:new(qtdArmadilhas)
     self.width, self.height = 21, 12
     self.tileWidth, self.tileHeight = 64, 64
     self.estruturaCasa, self.armadilhasCasa = {}, {}
-    self.estruturaCasaEntities, self.armadilhasCasaEntities = {}, {}
+    self.estruturaCasaEntities, self.armadilhasCasaEntities, self.tamagochi = {}, {}, {}
     self.tamagochi = nil
     self.start = {i = 0, j = 0}
+    self.goal = {i = 0, j = 0}
     self:gerarCasaProcedural(qtdArmadilhas)
 end
 
@@ -64,11 +66,8 @@ function InteriorCasa:gerarCasaProcedural(qtdArmadilhas)
         end
     end
 
-    local iPossibilities = {2, self.width - 1}
-    local jPossibilities = {2, self.height - 1}
-    local randomI = iPossibilities[math.random(1, 2)]
-    local randomJ = jPossibilities[math.random(1, 2)]
-    self.start = {i = randomI, j = randomJ}
+    self:generateRandomStart()
+    self:generateGoal()
 
     self:popularEstruturas()
 
@@ -87,12 +86,14 @@ function InteriorCasa:gerarCasaProcedural(qtdArmadilhas)
         table.insert(keyset, k)
     end
 
-    for i = 1, qtdArmadilhas do
+    local i = 1
+    while i <= qtdArmadilhas do
         local random_elem = armadilhas[keyset[math.random(#keyset)]]
         local random_i = math.random(2, self.width-1)
         local random_j = math.random(2, self.height-1)
-        if self:distanceToStart(random_i, random_j) > 2 then
+        if self:distanceToStart(random_i, random_j) > 2 and #self.armadilhasCasa[random_i][random_j] == 0 then
             self.armadilhasCasa[random_i][random_j] = random_elem
+            i = i + 1
         end
     end
 
@@ -105,10 +106,38 @@ function InteriorCasa:distanceToStart(i, j)
 end
 
 function InteriorCasa:getPositionStart()
+    return self:getPositionFromIJ(self.start.i, self.start.j)
+end
+
+function InteriorCasa:getPositionFromIJ(i, j)
     local halfTileWidth, halfTileHeight = self.tileWidth/2, self.tileHeight/2
     local offsetX = 11
-    local xStart, ystart = offsetX + ((self.start.i-1)*self.tileWidth) + halfTileWidth, ((self.start.j-1)*self.tileWidth) + halfTileHeight
-    return xStart, ystart
+    local x, y = offsetX + ((i-1)*self.tileWidth) + halfTileWidth, ((j-1)*self.tileWidth) + halfTileHeight
+    return x, y
+end
+
+function InteriorCasa:generateRandomStart()
+    local iPossibilities = {2, self.width - 1}
+    local jPossibilities = {2, self.height - 1}
+    local randomI = iPossibilities[math.random(1, 2)]
+    local randomJ = jPossibilities[math.random(1, 2)]
+    self.start = {i = randomI, j = randomJ}
+end
+
+function InteriorCasa:generateGoal()
+    if self.start.i == 2 then
+        self.goal.i = self.width - 1
+    else
+        self.goal.i = 2
+    end
+    
+    if self.start.j == 2 then
+        self.goal.j = self.height - 1
+    else 
+        self.goal.j = 2
+    end
+    local x, y = self:getPositionFromIJ(self.goal.i, self.goal.j)
+    self.tamagochi = Tamagochi(x, y)
 end
 
 function InteriorCasa:popularEstruturas()
@@ -130,6 +159,8 @@ function InteriorCasa:popularEstruturas()
         end
     end
 end
+
+
 
 function InteriorCasa:popularArmadilhas()
     -- renderizar a casa
