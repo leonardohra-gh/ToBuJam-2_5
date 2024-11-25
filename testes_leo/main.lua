@@ -51,18 +51,11 @@ function love.update(dt)
 
 end
 function love.draw()
-    if CasaCriada then
-        CasaCriada:renderizarEstrutura()
-    end
-
     DrawWorldEntities()
 
-    if CasaCriada then
-        CasaCriada:renderizarArmadilhas()
-    end
     if DEBUG_MODE then
         DrawWorldEntityCountTopLeft()
-        DrawColliders()
+        -- DrawColliders()
         DrawTester("Leo")
     end
 end

@@ -2,13 +2,14 @@
 local BodyTypes = require("core.enums.body_types")
 local ShapeTypes = require("core.enums.shape_types")
 local Entity = require("core.entity")
+local PrioridadeDesenho = require("enumsGame.PrioridadeDesenho")
 local Tiro = Entity:extend()
 local EntityTags = require("enumsGame.EntityTags")
 
 function Tiro:new(x, y, velocityX, velocityY)
     local imagePath = "assets/tiro.png"
-    local atravessavel = true
-    Tiro.super.new(self, x, y, imagePath, World, ShapeTypes.RECTANGLE, BodyTypes.DYNAMIC, EntityTags.TIRO, atravessavel)
+    local atravessavel, size, drawPriority = true, nil, PrioridadeDesenho.TIRO
+    Tiro.super.new(self, x, y, imagePath, World, ShapeTypes.RECTANGLE, BodyTypes.DYNAMIC, EntityTags.TIRO, atravessavel, size, drawPriority)
     self.physics:setVelocity(velocityX, velocityY)
 end
 

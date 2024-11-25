@@ -4,9 +4,11 @@ local ShapeTypes = require("core.enums.shape_types")
 local EntityTags = require("enumsGame.EntityTags")
 local Entity = require("core.entity")
 local Botao = Entity:extend()
+local PrioridadeDesenho = require("enumsGame.PrioridadeDesenho")
 
 function Botao:new(x, y, imagePath, imageHoveredPath, texto, shapeType, action)
-    Botao.super.new(self, x, y, imagePath, World, shapeType, BodyTypes.STATIC, EntityTags.BOTAO, true)
+    local atravessavel, size, drawPriority = nil, nil, PrioridadeDesenho.BOTAO
+    Botao.super.new(self, x, y, imagePath, World, shapeType, BodyTypes.STATIC, EntityTags.BOTAO, atravessavel, size, drawPriority)
     self.ativo = true
     self.action = action
     self.texto = texto

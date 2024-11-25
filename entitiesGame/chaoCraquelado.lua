@@ -2,15 +2,15 @@
 local BodyTypes = require("core.enums.body_types")
 local ShapeTypes = require("core.enums.shape_types")
 local Entity = require("core.entity")
+local PrioridadeDesenho = require("enumsGame.PrioridadeDesenho")
 local ChaoCraquelado = Entity:extend()
 local EntityTags = require("enumsGame.EntityTags")
 local Size = require("core.structures.size")
 
-function ChaoCraquelado:new(x, y, automaticDraw)
+function ChaoCraquelado:new(x, y)
     local imagePath = "assets/chao_craquelado.png"
-    local atravessavel = true
-    local size = Size(32, 32)
-    ChaoCraquelado.super.new(self, x, y, imagePath, World, ShapeTypes.CIRCLE, BodyTypes.DYNAMIC, EntityTags.CHAO_CRAQUELADO, atravessavel, automaticDraw, size)
+    local atravessavel, size, drawPriority = true,  Size(32, 32), PrioridadeDesenho.CHAO_CRAQUELADO
+    ChaoCraquelado.super.new(self, x, y, imagePath, World, ShapeTypes.CIRCLE, BodyTypes.DYNAMIC, EntityTags.CHAO_CRAQUELADO, atravessavel, size, drawPriority)
 end
 
 function ChaoCraquelado:update(dt)

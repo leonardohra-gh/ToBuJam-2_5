@@ -3,6 +3,7 @@ local BodyTypes = require("core.enums.body_types")
 local ShapeTypes = require("core.enums.shape_types")
 local NECESSIDADE = require("core.enums.necessidades")
 local Entity = require("core.entity")
+local PrioridadeDesenho = require("enumsGame.PrioridadeDesenho")
 local Tamagotchi = Entity:extend()
 local EntityTags = require("enumsGame.EntityTags")
 -- local BotaoPadrao = require("entitiesGame.botaoPadrao")
@@ -18,7 +19,8 @@ local imageNecessidadeComida = "assets/notification_feed.png"
 local imageNecessidadeDormir = "assets/notification_sleep.png"
 
 function Tamagotchi:new(x, y)
-    Tamagotchi.super.new(self, x, y, imagePath, World, ShapeTypes.CIRCLE, BodyTypes.DYNAMIC, EntityTags.TAMAGOCHI, true)
+    local atravessavel, size, drawPriority = true, nil, PrioridadeDesenho.TAMAGOCHI
+    Tamagotchi.super.new(self, x, y, imagePath, World, ShapeTypes.CIRCLE, BodyTypes.DYNAMIC, EntityTags.TAMAGOCHI, atravessavel, size, drawPriority)
 
     self.estaVivo = true
     self.necessidadesValorInicial = {

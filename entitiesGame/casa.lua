@@ -1,4 +1,5 @@
 local Entity = require('core.entity')
+local PrioridadeDesenho = require('enumsGame.PrioridadeDesenho')
 local Casa = Entity:extend()
 local ShapeTypes = require("core.enums.shape_types")
 local BodyTypes = require("core.enums.body_types")
@@ -9,7 +10,8 @@ function Casa:new(x, y)
     math.randomseed(os.time() + math.random())
     local corCasa = math.random(5)
     local imagePath = "assets/casa_" .. corCasa .. ".png"
-    Casa.super.new(self, x, y, imagePath, World, ShapeTypes.RECTANGLE, BodyTypes.STATIC, EntityTags.CASA)
+    local atravessavel, size, drawPriority = nil, nil, PrioridadeDesenho.CASA
+    Casa.super.new(self, x, y, imagePath, World, ShapeTypes.RECTANGLE, BodyTypes.STATIC, EntityTags.CASA, atravessavel, size, drawPriority)
     self.tamagotchi = nil
     -- if math.random() <= 1 then
     --     self:criarTamagotchi()
