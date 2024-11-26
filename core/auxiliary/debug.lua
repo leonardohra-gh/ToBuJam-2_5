@@ -8,11 +8,14 @@ end
 
 function DrawWorldEntityCountTopLeft()
     local worldEntities = GetWorldEntities()
-    local tamagotchis = GetWorldEntitiesByTag(EntityTags.TAMAGOCHI)
-    local casas = GetWorldEntitiesByTag(EntityTags.CASA)
     love.graphics.print("Number of entities: " .. #worldEntities, 10, 10)
-    love.graphics.print("#tamagotchis: " .. #tamagotchis, 10, 30)
-    love.graphics.print("#casas: " .. #casas, 10, 50)
+    
+    local i = 1
+    for tag, tagValue in pairs(EntityTags) do
+        local entities = GetWorldEntitiesByTag(tagValue)
+        love.graphics.print("#" .. tag .. ": " .. #entities, 10, 10 + 20 * i)
+        i = i + 1
+    end
 end
 
 function DrawColliders()

@@ -83,4 +83,12 @@ function InterfaceTamagotchi:desativar()
     end
 end
 
+function InterfaceTamagotchi:destruir()
+    
+    for i, botao in pairs(self.botoes) do
+        botao:destruir()
+        self.toBeDestroyed = true
+    end
+end
+
 return InterfaceTamagotchi

@@ -54,7 +54,7 @@ local tela = {
 
 local filtroNoite = love.graphics.newImage("assets/filtroNoite.png")
 local telaSelecionada = TELA.INICIO
-local TEMPOCRIACAOTAMAGOTCHI = 2000
+local TEMPOCRIACAOTAMAGOTCHI = 2
 local contadorCriarTamagotchi = 0
 local pausado = false
 local pontuacaoFinal = 0
@@ -183,7 +183,7 @@ function carregarTelaInicial()
     telaSelecionada = TELA.INICIO
 end
 
-function finalizarJogo()    
+function finalizarJogo()
     love.graphics.setFont(love.graphics.newFont(18))
     pontuacaoFinal = jogador.pontuacao
     destruirMoedas()

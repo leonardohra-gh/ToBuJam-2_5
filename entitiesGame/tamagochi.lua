@@ -18,7 +18,7 @@ local imageNecessidadeBrincar = "assets/notification_fun.png"
 local imageNecessidadeComida = "assets/notification_feed.png"
 local imageNecessidadeDormir = "assets/notification_sleep.png"
 
-local superCharge = 1
+local superCharge = 0.1
 
 function Tamagotchi:new(x, y)
     local atravessavel, size, drawPriority = true, nil, PrioridadeDesenho.TAMAGOCHI
@@ -278,9 +278,7 @@ function Tamagotchi:chargeAtMax()
 end
 
 function Tamagotchi:destruir()
-    -- for i, botao in pairs(self.botoes) do
-    --     botao:destruir()
-    -- end
+    self.interface:destruir()
     self.toBeDestroyed = true
 end
 

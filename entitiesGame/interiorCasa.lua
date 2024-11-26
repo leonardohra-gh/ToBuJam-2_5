@@ -229,7 +229,7 @@ function InteriorCasa:popularEstruturas()
             end
             
             if self.estruturaCasa[i][j] == EntityTags.SAIDA_CASA then
-                local saida = SaidaCasa(xAtual, yAtual, self.casaOwner)
+                local saida = SaidaCasa(xAtual, yAtual, self.casaOwner) -- TODO destruir isso
                 table.insert(self.estruturaCasaEntities, saida)
             end
         end
