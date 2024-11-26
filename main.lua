@@ -73,6 +73,7 @@ end
 
 function love.update(dt)
     if not pausado then
+        updateCursor()
         UpdateWorldEntities(dt)
         if telaSelecionada == TELA.JOGO then
             contadorCriarTamagotchi = contadorCriarTamagotchi + 1
@@ -80,7 +81,7 @@ function love.update(dt)
         if telaSelecionada == TELA.INTRO then
             telaIntro:update(dt)
         end
-        if TEMPOCRIACAOTAMAGOTCHI <= contadorCriarTamagotchi then -- TODO Leo and not player está no interior da casa
+        if TEMPOCRIACAOTAMAGOTCHI <= contadorCriarTamagotchi then
             contadorCriarTamagotchi = 0
             criarTamagotchiEmUmaCasa()
         end
@@ -139,6 +140,17 @@ function love.mousereleased(x, y, button)
             end
         end
 
+    end
+end
+
+function updateCursor()
+
+    love.mouse.setCursor()
+    local todosBotoes = GetWorldEntitiesByTag(EntityTags.BOTAO)
+    for i, botao in ipairs(todosBotoes) do
+        if botao:isHovered() then
+            love.mouse.setCursor(love.mouse.getSystemCursor("hand"))
+        end
     end
 end
 

@@ -15,6 +15,9 @@ end
 function BotaoMochila:update(dt)
 
     BotaoMochila.super.update(self, dt)
+    if self:isHovered() then
+        a = true
+    end
 
 end
 
