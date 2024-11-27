@@ -158,4 +158,10 @@ function TelaIntro:drawTextBox7()
     love.graphics.print(self.texto.texto29, self.box.box7.x, self.box.box7.y + 3 * textSy)
 end
 
+function TelaIntro:ativarBotoes()
+end
+
+function TelaIntro:desativarBotoes()
+end
+
 return TelaIntro

@@ -18,7 +18,7 @@ local imageNecessidadeBrincar = "assets/notification_fun.png"
 local imageNecessidadeComida = "assets/notification_feed.png"
 local imageNecessidadeDormir = "assets/notification_sleep.png"
 
-local superCharge = 0.1
+local superCharge = 0.01
 
 function Tamagotchi:new(x, y)
     local atravessavel, size, drawPriority = true, nil, PrioridadeDesenho.TAMAGOCHI
