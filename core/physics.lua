@@ -122,6 +122,9 @@ function Physics:setDensity(density)
 end
 
 function Physics:drawCollider()
+    if not self.body:isActive() then
+        return
+    end
     if self.shapeType == ShapeType.CIRCLE then
         local x, y = self.body:getPosition()
         local radius = self.width/2
