@@ -23,8 +23,9 @@ function TelaFim:draw()
     local texto = "Pontuação total: "
     local textWidth  = love.graphics.getFont():getWidth(texto)
     local textHeight = love.graphics.getFont():getHeight()
+    local centroTela = Janela:getCentro()
     love.graphics.setFont(font)
-    love.graphics.print(texto .. pontuacaoFinal, 1366 / 2 - textWidth / 2, 768 / 2 - textHeight / 2)
+    love.graphics.print(texto .. pontuacaoFinal, centroTela.x - textWidth / 2, centroTela.y - textHeight / 2)
     love.graphics.setFont(MAIN_FONT)
 end
 
