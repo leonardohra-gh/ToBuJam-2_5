@@ -39,6 +39,7 @@ local filtroNoite = love.graphics.newImage("assets/filtroNoite.png")
 
 
 local TELA = nil
+dificuldadeJogo = 0
 
 function love.load()
     love.window.setMode(Janela:getTamanho().x, Janela:getTamanho().y)
@@ -149,6 +150,12 @@ function updateCursor()
         if botao:isHovered() then
             love.mouse.setCursor(love.mouse.getSystemCursor("hand"))
         end
+    end
+end
+
+function updateDificuldade(value)
+    if telaAtual == TELA.INICIO then        
+        dificuldadeJogo = value
     end
 end
 
