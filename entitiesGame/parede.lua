@@ -10,7 +10,7 @@ local OrientacaoParede = require("enumsGame.OrientacaoParede")
 function Parede:new(x, y, orientacao)
     orientacao = orientacao or OrientacaoParede.SIMPLES_VERTICAL
     local atravessavel, size, drawPriority = false, nil, PrioridadeDesenho.PAREDE
-    Parede.super.new(self, x, y, orientacao, World, ShapeTypes.CIRCLE, BodyTypes.STATIC, EntityTags.PAREDE, atravessavel, size, drawPriority)
+    Parede.super.new(self, x, y, orientacao, World, ShapeTypes.RECTANGLE, BodyTypes.STATIC, EntityTags.PAREDE, atravessavel, size, drawPriority)
 end
 
 function Parede:update(dt)
