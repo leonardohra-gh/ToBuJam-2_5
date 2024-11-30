@@ -79,8 +79,11 @@ function Casa:moverTamagotchiPara(x, y)
 end
 
 function Casa:destruir()
-    if not self.tamagotchi == nil then
+    if not (self.tamagotchi == nil) then
         self.tamagotchi:destruir()
+    end
+    if not (self.interior == nil) then
+        self.interior:destruir()
     end
     self.toBeDestroyed = true
 end

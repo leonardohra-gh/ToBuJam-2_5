@@ -1,6 +1,4 @@
 
-local BodyTypes = require("core.enums.body_types")
-local ShapeTypes = require("core.enums.shape_types")
 local Object = require("libs.classic")
 local SaidaCasa = require("entitiesGame.saidaCasa")
 local InteriorCasa = Object:extend()
@@ -12,7 +10,6 @@ local ChaoCraquelado = require("entitiesGame.chaoCraquelado")
 local ChaoEscorregadio = require("entitiesGame.chaoEscorregadio")
 local LancaDardos = require("entitiesGame.lancaDardos")
 local Robozinho = require("entitiesGame.robozinho")
-local Tamagochi = require("entitiesGame.tamagochi")
 local Moeda = require("entitiesGame.moedas")
 
 function InteriorCasa:new(qtdArmadilhas, casaOwner)

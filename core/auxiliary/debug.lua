@@ -7,6 +7,7 @@ function DrawTester(tester)
 end
 
 function DrawWorldEntityCountTopLeft()
+    love.graphics.setFont(SMALL_FONT)
     local worldEntities = GetWorldEntities()
     love.graphics.print("Number of entities: " .. #worldEntities, 10, 10)
     
@@ -16,6 +17,7 @@ function DrawWorldEntityCountTopLeft()
         love.graphics.print("#" .. tag .. ": " .. #entities, 10, 10 + 20 * i)
         i = i + 1
     end
+    love.graphics.setFont(MAIN_FONT)
 end
 
 function DrawColliders()

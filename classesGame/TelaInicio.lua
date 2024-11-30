@@ -33,6 +33,7 @@ function TelaInicio:draw()
     end
     botaoSlider:draw()
     love.graphics.print("Dificuldade = " .. dificuldadeJogo, 350, 650)
+    love.graphics.setFont(MAIN_FONT)
 end
 
 function TelaInicio:ativarBotoes()

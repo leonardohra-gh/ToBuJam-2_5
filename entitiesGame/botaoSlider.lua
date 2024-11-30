@@ -4,7 +4,7 @@ local Object = require("libs.classic")
 local BotaoSlider = Object:extend()
 
 
-function BotaoSlider:new(x, y, min, max, width, height)
+function BotaoSlider:new(x, y, min, max, width, height, step)
     -- BotaoSlider.super.new(self, x, y, "assets/botaoMochila.png", "assets/botaoMochilaHovered.png", qtdItens, ShapeTypes.RECTANGLE, self.alternarSelecao)
     self.x = x
     self.y = y
@@ -13,6 +13,7 @@ function BotaoSlider:new(x, y, min, max, width, height)
     self.value = min
     self.width = width
     self.height = height
+    self.step = step or 1
     self.circulo = {
         pos = {
             x = x,
@@ -28,7 +29,7 @@ function BotaoSlider:update(dt)
     if self:isHovered() and love.mouse.isDown(1) then
         local mouseX, mouseY = love.mouse.getPosition()
         self.circulo.pos.x = mouseX
-        self.value = self.min + (self.max - self.min) * (self.circulo.pos.x- self.x) / (self.width - 2 * self.circulo.raio)
+        self.value = self:calcValue()
         updateDificuldade(self.value)
     end
     
@@ -52,6 +53,15 @@ function BotaoSlider:isHovered()
     -- return distMouseCirculo <= self.circulo.raio
 
     return self.x <= mouseX and mouseX <= self.x + self.width - 2 * self.circulo.raio and self.y <= mouseY and mouseY <= self.y + self.height
+end
+
+function BotaoSlider:calcValue()
+    exactValue = self.min + (self.max - self.min) * (self.circulo.pos.x - self.x) / (self.width - 2 * self.circulo.raio)
+
+    nSteps = math.round(exactValue / self.step)
+    roundedValue = nSteps * self.step
+
+    return roundedValue
 end
 
 

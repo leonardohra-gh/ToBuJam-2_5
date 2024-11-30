@@ -18,12 +18,12 @@ local imageNecessidadeBrincar = "assets/notification_fun.png"
 local imageNecessidadeComida = "assets/notification_feed.png"
 local imageNecessidadeDormir = "assets/notification_sleep.png"
 
-local superCharge = 0.1
 
 function Tamagotchi:new(x, y)
     local atravessavel, size, drawPriority = true, nil, PrioridadeDesenho.TAMAGOCHI
     Tamagotchi.super.new(self, x, y, imagePath, World, ShapeTypes.CIRCLE, BodyTypes.DYNAMIC, EntityTags.TAMAGOCHI, atravessavel, size, drawPriority)
-
+    
+    local superCharge = 1 - dificuldadeJogo / 101
     self.estaVivo = true
     self.necessidadesValorInicial = {
         AGUA_INICIAL = 300 * superCharge,

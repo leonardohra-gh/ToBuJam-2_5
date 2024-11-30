@@ -5,13 +5,13 @@ local Mochila = Object:extend()
 local BotaoMochila = require("entitiesGame.botaoMochila")
 local Moedas = require("entitiesGame.moedas")
 
-local botaoWidth, botaoHeight = 32, 32
-local botaoX, botaoY = 25, 25
-local botaoSx, botaoSy = 46, 40
+local botaoWidth, botaoHeight = 34, 38
+local botaoX, botaoY = 35, 39
+local botaoSx, botaoSy = 34 + 24, 6 + 32 + 16
 local mochilaInterface = love.graphics.newImage("assets/mochilaInterface.png")
 
 function Mochila:new()
-    self.pos = {x = 1250, y = 130}
+    self.pos = {x = 1225, y = 130}
     self.dinheiro = 0
     self.itens = {
         pantufa = 0,
@@ -42,11 +42,11 @@ function Mochila:draw()
     love.graphics.draw(mochilaInterface, self.pos.x, self.pos.y)
     love.graphics.draw(ITEM.PATINS.IMAGEM, self.pos.x - botaoWidth / 2 + botaoX + botaoSx, self.pos.y - botaoHeight / 2 + botaoY + botaoSy)
     love.graphics.draw(ITEM.SUPERCHARGER.IMAGEM, self.pos.x - botaoWidth / 2 + botaoX + botaoSx, self.pos.y - botaoHeight / 2 + botaoY + 2 * botaoSy)
-    love.graphics.draw(Moedas:GetImagem(), self.pos.x + botaoX - botaoWidth / 2, self.pos.y + botaoY + 2 * botaoSy + 20)
+    love.graphics.draw(Moedas:GetImagem(), self.pos.x + botaoX - botaoWidth / 2, self.pos.y + botaoY + 2 * botaoSy + 30)
 
-    love.graphics.print(self.itens.patins, self.pos.x+ botaoX + botaoSx + 12, self.pos.y + botaoY + botaoSy + 5)
-    love.graphics.print(self.itens.superCharger, self.pos.x+ botaoX + botaoSx + 12, self.pos.y + botaoY + 2 * botaoSy + 5)
-    love.graphics.print(self.dinheiro, self.pos.x+ botaoX + 12, self.pos.y + botaoY + 2 * botaoSy + 20)
+    love.graphics.print(self.itens.patins, self.pos.x+ botaoX + botaoSx + 12, self.pos.y + botaoY + botaoSy + 10)
+    love.graphics.print(self.itens.superCharger, self.pos.x+ botaoX + botaoSx + 12, self.pos.y + botaoY + 2 * botaoSy + 10)
+    love.graphics.print(self.dinheiro, self.pos.x+ botaoX + 12, self.pos.y + botaoY + 2 * botaoSy + 30)
 end
 
 function Mochila:selecionarItem(item)
@@ -90,16 +90,12 @@ end
 
 function Mochila:AddItem(item)
     if item == ITEM.PANTUFA then
-        -- self.itens.pantufa = self.itens.pantufa + 1
         self.botoes.pantufa:AddItem()
     elseif item == ITEM.COBERTOR then
-        -- self.itens.cobertor = self.itens.cobertor + 1
         self.botoes.cobertor:AddItem()
     elseif item == ITEM.BOTASNEVE then
-        -- self.itens.botasDeNeve = self.itens.botasDeNeve + 1
         self.botoes.botasDeNeve:AddItem()
     elseif item == ITEM.ESCUDO then
-        -- self.itens.escudo = self.itens.escudo + 1
         self.botoes.escudo:AddItem()
     elseif item == ITEM.PATINS then
         self.itens.patins = self.itens.patins + 1
@@ -111,16 +107,12 @@ end
 
 function Mochila:RemoverItem(item)
     if item == ITEM.PANTUFA and 1 <= self.itens.pantufa then
-        -- self.itens.pantufa = self.itens.pantufa - 1
         self.botoes.pantufa:RemoverItem()
     elseif item == ITEM.COBERTOR and 1 <= self.itens.cobertor then
-        -- self.itens.cobertor = self.itens.cobertor - 1
         self.botoes.cobertor:RemoverItem()
     elseif item == ITEM.BOTASNEVE and 1 <= self.itens.botasDeNeve then
-        -- self.itens.botasDeNeve = self.itens.botasDeNeve - 1
         self.botoes.botasDeNeve:RemoverItem()
     elseif item == ITEM.ESCUDO and 1 <= self.itens.escudo then
-        -- self.itens.escudo = self.itens.escudo - 1
         self.botoes.escudo:RemoverItem()
     elseif item == ITEM.PATINS and 1 <= self.itens.patins then
         self.itens.patins = self.itens.patins - 1

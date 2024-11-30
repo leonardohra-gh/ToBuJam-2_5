@@ -7,7 +7,7 @@ local TelaFim = Tela:extend()
 
 local pontuacaoFinal = 0
 local image = love.graphics.newImage("assets/telaFim.png")
-local font = love.graphics.newFont(18)
+local font = love.graphics.newFont(24)
 local botaoJogarNovamente = nil
 
 function TelaFim:new()
@@ -20,12 +20,10 @@ function TelaFim:update(dt)
 end
 
 function TelaFim:draw()
-    local texto = "Pontuação total: "
-    local textWidth  = love.graphics.getFont():getWidth(texto)
-    local textHeight = love.graphics.getFont():getHeight()
     local centroTela = Janela:getCentro()
     love.graphics.setFont(font)
-    love.graphics.print(texto .. pontuacaoFinal, centroTela.x - textWidth / 2, centroTela.y - textHeight / 2)
+    love.graphics.printf("Dificuldade: " .. dificuldadeJogo, centroTela.x - 250, centroTela.y - 30, 500, "center")
+    love.graphics.printf("Pontuação total: " .. pontuacaoFinal, centroTela.x - 250, centroTela.y, 500, "center")
     love.graphics.setFont(MAIN_FONT)
 end
 

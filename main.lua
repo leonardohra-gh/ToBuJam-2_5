@@ -3,30 +3,14 @@ require("core.auxiliary.world_functions")
 require("core.auxiliary.utils")
 require("core.auxiliary.debug")
 local EntityTags = require("enumsGame.EntityTags")
-local MAPA = require("enumsGame.Mapas")
 local Jogador = require("entitiesGame.jogador")
 local Loja = require("entitiesGame.loja")
-local Casa = require("entitiesGame.casa")
 local Janela = require("classesGame.Janela")
 local TelaInicio = require("classesGame.TelaInicio")
 local TelaIntro = require("classesGame.TelaIntro")
 local TelaJogo = require("classesGame.TelaJogo")
 local TelaFim = require("classesGame.TelaFim")
 local SoundControls = require("classesGame.SoundControls")
-
-interiorCasa = nil
-
-MAIN_FONT = love.graphics.newFont(14)
-
-local mapaJogo = nil
-local telaAtual = nil
-
-if math.random() <= 0.5 then
-    mapaJogo = MAPA.tipo1
-else
-    mapaJogo = MAPA.tipo2
-end
-TelaJogo:setMapa(mapaJogo)
 
 if arg[2] == "debug" then
     require("lldebugger").start()
@@ -35,10 +19,15 @@ end
 
 -- love.load -> love.update -> love.draw -> love.update -> love.draw -> love.update (...)
 
+
+
 local filtroNoite = love.graphics.newImage("assets/filtroNoite.png")
-
-
+MAIN_FONT = love.graphics.newFont(16)
+SMALL_FONT = love.graphics.newFont(12)
+LARGE_FONT = love.graphics.newFont(24)
 local TELA = nil
+local telaAtual = nil
+interiorCasa = nil
 dificuldadeJogo = 0
 
 function love.load()
@@ -67,7 +56,6 @@ end
 
 function carregarTelaInicial()
     mudarTelaPara(TELA.INICIO)
-    love.graphics.setFont(MAIN_FONT)
 end
 
 function carregarIntro()
@@ -76,9 +64,9 @@ end
 
 function iniciarJogo()
     mudarTelaPara(TELA.JOGO)
+    telaAtual:criarCasas()
     criarJogador()
     criarLoja()
-    criarCasas()
     criarTamagotchiEmUmaCasa()
 end
 
@@ -86,7 +74,7 @@ function finalizarJogo()
     destruirMoedas()
     destruirLoja()
     destruirCasas()
-    destruirInteriorCasa()
+    destruirTiros()
     destruirTamagotchis()
     destruirJogador()
     mudarTelaPara(TELA.FIM)
@@ -154,7 +142,7 @@ function updateCursor()
 end
 
 function updateDificuldade(value)
-    if telaAtual == TELA.INICIO then        
+    if telaAtual == TELA.INICIO then
         dificuldadeJogo = value
     end
 end
@@ -174,7 +162,8 @@ end
 
 
 function criarJogador()
-    jogador = Jogador(0, 0)
+    local centroTela = Janela:getCentro()
+    jogador = Jogador(centroTela.x, 704)
 end
 
 
@@ -182,12 +171,6 @@ function criarLoja()
     Loja(480 + 96 / 2, 0 + 96 / 2)
 end
 
-function criarCasas()
-    local casaWidth, casaHeight = 128, 128
-    for i, pos in pairs(mapaJogo.CASAS_POS) do
-        Casa(pos.x + casaWidth / 2, pos.y + casaHeight / 2)
-    end
-end
 
 function destruirMoedas()
     
@@ -209,6 +192,15 @@ function destruirInteriorCasa()
     for i, parede in ipairs(todosParede) do
         parede:destruir()
     end
+end
+
+function destruirTiros()
+
+    local todosTiros = GetWorldEntitiesByTag(EntityTags.TIRO)
+    for i, tiro in ipairs(todosTiros) do
+        tiro:destruir()
+    end
+
 end
 
 function destruirArmadilhas()
@@ -260,6 +252,20 @@ function destruirJogador()
     if not (jogador == nil) then
         jogador:destruir()
     end
+end
+
+function getRandom()
+    math.randomseed(os.time())
+    math.random()
+    math.random()
+    return math.random()
+end
+
+function getRandomInt(n)
+    math.randomseed(os.time())
+    math.random()
+    math.random()
+    return math.round(1 + (n - 1) * math.random())
 end
 
 local love_errorhandler = love.errorhandler
