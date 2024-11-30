@@ -43,6 +43,7 @@ function love.load()
     -- end
     --criarCasasAleatorias()
     local casa = Casa(500, 500)
+    casa:criarTamagotchi()
     -- local xStart, yStart = interiorCasa:getPositionStart()
     -- player:moverPara(xStart, yStart)
 end

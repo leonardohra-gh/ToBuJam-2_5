@@ -11,6 +11,7 @@ local ChaoEscorregadio = require("entitiesGame.chaoEscorregadio")
 local LancaDardos = require("entitiesGame.lancaDardos")
 local Robozinho = require("entitiesGame.robozinho")
 local Moeda = require("entitiesGame.moedas")
+require("funcoesGlobaisGame.arrayFunctions")
 
 function InteriorCasa:new(qtdArmadilhas, casaOwner)
     self.width, self.height = 21, 12
@@ -123,13 +124,13 @@ function InteriorCasa:generateRooms()
 
     self.estruturaCasa[intersectionI][intersectionJ] = OrientacaoParede.CRUZ
 
-    local iDoor, jDoor = math.random(2, intersectionI), intersectionJ
+    local iDoor, jDoor = math.random(2, intersectionI-1), intersectionJ
     self.estruturaCasa[iDoor][jDoor] = EntityTags.CHAO
-    iDoor, jDoor = intersectionI, math.random(2, intersectionJ)
+    iDoor, jDoor = intersectionI, math.random(2, intersectionJ-1)
     self.estruturaCasa[iDoor][jDoor] = EntityTags.CHAO
-    iDoor, jDoor = math.random(intersectionI, self.width-1), intersectionJ
+    iDoor, jDoor = math.random(intersectionI+1, self.width-1), intersectionJ
     self.estruturaCasa[iDoor][jDoor] = EntityTags.CHAO
-    iDoor, jDoor = intersectionI, math.random(intersectionJ, self.height-1)
+    iDoor, jDoor = intersectionI, math.random(intersectionJ+1, self.height-1)
     self.estruturaCasa[iDoor][jDoor] = EntityTags.CHAO
 end
 
@@ -154,11 +155,30 @@ function InteriorCasa:getPositionFromIJ(i, j)
 end
 
 function InteriorCasa:generateRandomStart()
-    local iPossibilities = {2, self.width - 1}
-    local jPossibilities = {2, self.height - 1}
-    local randomI = iPossibilities[math.random(1, 2)]
-    local randomJ = jPossibilities[math.random(1, 2)]
-    self.start = {i = randomI, j = randomJ}
+    local iCloseToWall = {2, self.width - 1}
+    local jCloseToWall = {2, self.height - 1}
+    local iPossibilities = ArrayFromMToN(2, self.width - 1)
+    local jPossibilities = ArrayFromMToN(2, self.height - 1)
+    
+    if math.random(1, 2) == 1 then
+        local randomI, randomJ = self:tryRandomPositionUntilValid(iCloseToWall, jPossibilities)
+        self.start = {i = randomI, j = randomJ}
+    else
+        local randomI, randomJ = self:tryRandomPositionUntilValid(iPossibilities, jCloseToWall)
+        self.start = {i = randomI, j = randomJ}
+    end
+    
+end
+
+function InteriorCasa:tryRandomPositionUntilValid(iPossibilities, jPossibilities)
+    local randomI = iPossibilities[math.random(1, #(iPossibilities))]
+    local randomJ = jPossibilities[math.random(1, #(jPossibilities))]
+    while not self:isValidPosition(randomI, randomJ) do
+        randomI = iPossibilities[math.random(1, #(iPossibilities))]
+        randomJ = jPossibilities[math.random(1, #(jPossibilities))]
+    end
+
+    return randomI, randomJ
 end
 
 function InteriorCasa:generateGoal()
@@ -179,7 +199,7 @@ function InteriorCasa:generateGoal()
     end
 
     local moedaI, moedaJ = math.random(self.width), math.random(self.height)
-    while 
+    while
         self:distanceBetween(moedaI, moedaJ, self.goal.i, self.goal.j) > 3 or
         self:distanceBetween(moedaI, moedaJ, self.goal.i, self.goal.j) == 0 or
         self:isWall(moedaI, moedaJ) do
@@ -197,10 +217,18 @@ function InteriorCasa:generateDoorStart()
     local doorI, doorJ = 1, 1
     if i == 2 then
         doorI = 1
-    else
+        doorJ = j
+    elseif i == self.width - 1 then
         doorI = i + 1
+        doorJ = j
+    elseif j == 2 then
+        doorI = i
+        doorJ = 1
+    elseif j == self.height - 1 then
+        doorI = i
+        doorJ = j + 1
     end
-    doorJ = j
+
 
     self.estruturaCasa[doorI][doorJ] = EntityTags.SAIDA_CASA
 end
@@ -237,6 +265,16 @@ function InteriorCasa:isWall(i, j)
     return string.find(self.estruturaCasa[i][j], "assets/paredes/")
 end
 
+function InteriorCasa:isSurroundedByWalls(i, j)
+    return (self.estruturaCasa[i-1][j] and self:isWall(i-1, j)) and
+           (self.estruturaCasa[i][j-1] and self:isWall(i, j-1)) and
+           (self.estruturaCasa[i+1][j] and self:isWall(i+1, j)) and
+           (self.estruturaCasa[i][j+1] and self:isWall(i, j+1))
+end
+
+function InteriorCasa:isValidPosition(i, j)
+    return not (self:isSurroundedByWalls(i, j) or self:isWall(i, j))
+end
 
 function InteriorCasa:popularArmadilhas()
     -- renderizar a casa
