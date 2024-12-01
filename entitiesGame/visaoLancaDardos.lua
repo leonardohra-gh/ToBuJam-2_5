@@ -28,7 +28,7 @@ function VisaoLancaDardos:new(x, y, height, width)
                                 )
     self.shootingCooldown = 0.5
     self.cooldownTimer = 0
-    self.shootingVelocityX, self.shootingVelocityY = 800, 0
+    self.shootingVelocityX, self.shootingVelocityY = 400, 0
     self.shouldShoot = false
 end
 

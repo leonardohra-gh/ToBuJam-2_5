@@ -204,9 +204,9 @@ function destruirTiros()
 end
 
 function destruirArmadilhas()
-    local todosChaoCraquelado = GetWorldEntitiesByTag(EntityTags.CHAO_CRAQUELADO)
-    for i, chaoCraquelado in ipairs(todosChaoCraquelado) do
-        chaoCraquelado:destruir()
+    local todosPatinhoBorracha = GetWorldEntitiesByTag(EntityTags.PATINHO_BORRACHA)
+    for i, patinhoBorracha in ipairs(todosPatinhoBorracha) do
+        patinhoBorracha:destruir()
     end
 
     local todosRobos = GetWorldEntitiesByTag(EntityTags.ROBOZINHO)
