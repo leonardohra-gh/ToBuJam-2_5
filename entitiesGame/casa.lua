@@ -17,9 +17,6 @@ function Casa:new(x, y)
     self.tamagotchi = nil
     self.interior = nil
     self.gerarLayout = false
-    -- if math.random() <= 1 then
-    --     self:criarTamagotchi()
-    -- end
 end
 
 function Casa:update(dt)
@@ -48,22 +45,31 @@ function Casa:beginContact(entidade_colisora, coll)
 end
 
 function Casa:Entrar()
-    self.interior = InteriorCasa(6, self)
-    self.gerarLayout = false
-    local jogador = GetWorldEntitiesByTag(EntityTags.JOGADOR)[1]
-    local x, y = self.interior:getPositionStart()
-    jogador:moverPara(x, y)
-    InactivateEntities({EntityTags.TAMAGOCHI, EntityTags.CASA, EntityTags.LOJA})
-    if self.tamagotchi then
-        self.tamagotchi.physics.body:setActive(true)
+    if not jogadorDentroDaCasa then
+        self.interior = InteriorCasa(6, self)
+        self.gerarLayout = false
+        local jogador = GetWorldEntitiesByTag(EntityTags.JOGADOR)[1]
+        jogador:savePosAoEntrarNaCasa()
+    
+        local x, y = self.interior:getPositionStart()
+        jogador:moverPara(x, y)
+        InactivateEntities({EntityTags.TAMAGOCHI, EntityTags.CASA, EntityTags.LOJA})
+        if self.tamagotchi then
+            self.tamagotchi.physics.body:setActive(true)
+        end
+        jogadorDentroDaCasa = true
     end
-    jogadorDentroDaCasa = true
 end
 
 function Casa:Sair()
-    self.interior:destruir()
-    ActivateEntities({EntityTags.TAMAGOCHI, EntityTags.CASA, EntityTags.LOJA})
-    jogadorDentroDaCasa = false
+    if jogadorDentroDaCasa then
+        self.interior:destruir()
+        ActivateEntities({EntityTags.TAMAGOCHI, EntityTags.CASA, EntityTags.LOJA})
+        local jogador = GetWorldEntitiesByTag(EntityTags.JOGADOR)[1]
+        local pos = jogador:getPosAoEntrarNaCasa()
+        jogador:moverPara(pos.x, pos.y)
+        jogadorDentroDaCasa = false
+    end
 end
 
 function Casa:criarTamagotchi()
@@ -79,8 +85,11 @@ function Casa:moverTamagotchiPara(x, y)
 end
 
 function Casa:destruir()
-    if not self.tamagotchi == nil then
+    if not (self.tamagotchi == nil) then
         self.tamagotchi:destruir()
+    end
+    if not (self.interior == nil) then
+        self.interior:destruir()
     end
     self.toBeDestroyed = true
 end

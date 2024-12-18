@@ -1,6 +1,6 @@
 local TilesDaCasa= {
     CHAO,
-    CHAO_CRAQUELADO,
+    PATINHO_BORRACHA,
     CHAO_ESCORREGADIO
     
 }

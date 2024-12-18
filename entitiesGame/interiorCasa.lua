@@ -1,6 +1,4 @@
 
-local BodyTypes = require("core.enums.body_types")
-local ShapeTypes = require("core.enums.shape_types")
 local Object = require("libs.classic")
 local SaidaCasa = require("entitiesGame.saidaCasa")
 local InteriorCasa = Object:extend()
@@ -8,11 +6,11 @@ local OrientacaoParede = require("enumsGame.OrientacaoParede")
 local EntityTags       = require("enumsGame.EntityTags")
 local Parede = require("entitiesGame.parede")
 local Chao = require("entitiesGame.chao")
-local ChaoCraquelado = require("entitiesGame.chaoCraquelado")
+local PatinhoBorracha = require("entitiesGame.patinhoBorracha")
+local ChaoBarulhento = require("entitiesGame.chaoBarulhento")
 local ChaoEscorregadio = require("entitiesGame.chaoEscorregadio")
 local LancaDardos = require("entitiesGame.lancaDardos")
 local Robozinho = require("entitiesGame.robozinho")
-local Tamagochi = require("entitiesGame.tamagochi")
 local Moeda = require("entitiesGame.moedas")
 require("funcoesGlobaisGame.arrayFunctions")
 
@@ -89,7 +87,7 @@ function InteriorCasa:gerarCasaProcedural(qtdArmadilhas)
     end
 
 
-    local armadilhas = {EntityTags.CHAO_CRAQUELADO, EntityTags.CHAO_ESCORREGADIO, EntityTags.LANCA_DARDOS, EntityTags.ROBOZINHO}
+    local armadilhas = {EntityTags.PATINHO_BORRACHA, EntityTags.CHAO_ESCORREGADIO, EntityTags.LANCA_DARDOS, EntityTags.ROBOZINHO, EntityTags.CHAO_BARULHENTO}
     local keyset = {}
     for k in pairs(armadilhas) do
         table.insert(keyset, k)
@@ -263,7 +261,7 @@ function InteriorCasa:popularEstruturas()
             end
             
             if self.estruturaCasa[i][j] == EntityTags.SAIDA_CASA then
-                local saida = SaidaCasa(xAtual, yAtual, self.casaOwner) -- TODO destruir isso
+                local saida = SaidaCasa(xAtual, yAtual, self.casaOwner)
                 table.insert(self.estruturaCasaEntities, saida)
             end
         end
@@ -295,13 +293,17 @@ function InteriorCasa:popularArmadilhas()
         for j = 1, self.height do
             local xAtual, yAtual = offsetX + ((i-1)*self.tileWidth) + halfTileWidth, ((j-1)*self.tileWidth) + halfTileHeight
 
-            if self.armadilhasCasa[i][j] == EntityTags.CHAO_CRAQUELADO then
-                local chaoCraquelado = ChaoCraquelado(xAtual, yAtual)
-                table.insert(self.armadilhasCasaEntities, chaoCraquelado)
+            if self.armadilhasCasa[i][j] == EntityTags.PATINHO_BORRACHA then
+                local patinhoBorracha = PatinhoBorracha(xAtual, yAtual)
+                table.insert(self.armadilhasCasaEntities, patinhoBorracha)
             end
             if self.armadilhasCasa[i][j] == EntityTags.CHAO_ESCORREGADIO then
                 local chaoEscorregadio = ChaoEscorregadio(xAtual, yAtual)
                 table.insert(self.armadilhasCasaEntities, chaoEscorregadio)
+            end
+            if self.armadilhasCasa[i][j] == EntityTags.CHAO_BARULHENTO then
+                local chaoBarulhento = ChaoBarulhento(xAtual, yAtual)
+                table.insert(self.armadilhasCasaEntities, chaoBarulhento)
             end
             if self.armadilhasCasa[i][j] == EntityTags.LANCA_DARDOS then
                 local lancaDardos = LancaDardos(xAtual, yAtual, 300)

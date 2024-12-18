@@ -10,7 +10,7 @@ local Mochila = require('entitiesGame.mochila')
 local TAMAGOTCHI_VIDAS = 5
 local IMAGE_TAMAGOTCHI_VIDA = love.graphics.newImage("assets/tamagotchiVida.png")
 local IMAGE_LIFE_BAR = love.graphics.newImage("assets/life_bar.png")
-local vidasX, vidasY = 1170 - 16 / 2, 95
+local vidasX, vidasY = 1350 - 16 / 2, 95
 local MAX_SPEED = 300
 local SPEED_INC = 50
 
@@ -23,6 +23,7 @@ function Jogador:new(x, y)
     self.pontuacao = 0
     self.movementDisabled = false
     self.tamagotchometro = TAMAGOTCHI_VIDAS
+    self.posAoEntrarNaCasa = nil
 end
 
 function Jogador:mover()
@@ -58,10 +59,10 @@ end
 function Jogador:draw()
     Jogador.super.draw(self)
     self.mochila:draw()
-    love.graphics.print("Pontuação: " .. self.pontuacao, 1250, 285)
-    love.graphics.draw(IMAGE_LIFE_BAR, vidasX + 25, vidasY)
+    love.graphics.print("Pontuação: " .. self.pontuacao, 1250, 320)
+    love.graphics.draw(IMAGE_LIFE_BAR, vidasX - 155, vidasY)
     for i = 1, self.tamagotchometro do
-        love.graphics.draw(IMAGE_TAMAGOTCHI_VIDA, vidasX + 30 * i, vidasY)
+        love.graphics.draw(IMAGE_TAMAGOTCHI_VIDA, vidasX - 30 * i, vidasY)
     end
 end
 
@@ -109,6 +110,16 @@ function Jogador:DiminuirTamagotchiVidas()
     if self.tamagotchometro <= 0 then
         finalizarJogo()
     end
+end
+
+function Jogador:getPosAoEntrarNaCasa()
+    return self.posAoEntrarNaCasa
+end
+
+function Jogador:savePosAoEntrarNaCasa()
+    local x, y = self.physics:getPositionRounded()
+    local velocityX, velocityY = self.physics:getVelocity()
+    self.posAoEntrarNaCasa = {x = x - velocityX * 0.2, y = y - velocityY * 0.2}
 end
 
 function Jogador:destruir()

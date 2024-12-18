@@ -1,23 +1,24 @@
 
+local MAPA = require("enumsGame.Mapas")
+local Casa = require("entitiesGame.casa")
+local Janela = require("classesGame.Janela")
 local Tela = require("classesGame.Tela")
 local TelaJogo = Tela:extend()
 
-local image = nil
-local jogoPausado = false
-local textoPausa = "Jogo pausado"
-local imagePausa = love.graphics.newImage("assets/telaPausa.png")
-local imageMapa1 = love.graphics.newImage("assets/mapa_1.png")
-
 local TEMPOCRIACAOTAMAGOTCHI = 2
+
+local mapaJogo = nil
+local jogoPausado = false
+local imagePausa = love.graphics.newImage("assets/telaPausa.png")
 local contadorCriarTamagotchi = 0
 
 function TelaJogo:new()
-    TelaJogo.super.new(self, imageMapa1)
+    mapaJogo = MAPA[getRandomInt(2)]
+    TelaJogo.super.new(self, mapaJogo.IMAGE)
 end
 
 function TelaJogo:update(dt)
     contadorCriarTamagotchi = contadorCriarTamagotchi + 1
-    
     if TEMPOCRIACAOTAMAGOTCHI <= contadorCriarTamagotchi then
         contadorCriarTamagotchi = 0
         criarTamagotchiEmUmaCasa()
@@ -25,12 +26,11 @@ function TelaJogo:update(dt)
 end
 
 function TelaJogo:draw()
-    love.graphics.draw(image)
+    TelaJogo.super.draw(self)
     if jogoPausado then
         love.graphics.draw(imagePausa)
-        local textWidth  = love.graphics.getFont():getWidth(textoPausa)
-	    local textHeight = love.graphics.getFont():getHeight()
-        love.graphics.print(textoPausa, 1366 / 2 - textWidth / 2, 768 / 2 - textHeight / 2)
+        local centroTela = Janela:getCentro()
+        love.graphics.printf("Jogo pausado", centroTela.x - 250, centroTela.y, 500, "center")
     end
 end
 
@@ -42,14 +42,17 @@ function TelaJogo:pause()
     jogoPausado = not jogoPausado
 end
 
-function TelaJogo:setMapa(mapaJogo)
-    image = love.graphics.newImage(mapaJogo.IMAGEPATH)
-end
-
 function TelaJogo:ativarBotoes()
 end
 
 function TelaJogo:desativarBotoes()
+end
+
+function TelaJogo:criarCasas()
+    local casaWidth, casaHeight = 128, 128
+    for i, pos in pairs(mapaJogo.CASAS_POS) do
+        Casa(pos.x + casaWidth / 2, pos.y + casaHeight / 2)
+    end
 end
 
 return TelaJogo

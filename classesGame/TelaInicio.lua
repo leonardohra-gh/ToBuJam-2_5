@@ -8,6 +8,7 @@ local TelaInicio = Tela:extend()
 
 local image = love.graphics.newImage("assets/telaInicial.png")
 local botoes = nil
+local botaoSliderPos = {x = 500, y = 650}
 
 function TelaInicio:new()
     local centroTela = Janela:getCentro()
@@ -16,7 +17,7 @@ function TelaInicio:new()
         start = Botao(centroTela.x - 200, centroTela.y, "assets/botaoRect.png", "assets/botaoRectHovered.png", "Start", SHAPE.RECTANGLE, iniciarJogo),
         intro = Botao(centroTela.x + 200, centroTela.y, "assets/botaoRect.png", "assets/botaoRectHovered.png", "Start intro", SHAPE.RECTANGLE, carregarIntro)
     }
-    botaoSlider = BotaoSlider(300, 700, 0, 100, 150, 20)
+    botaoSlider = BotaoSlider(botaoSliderPos.x, botaoSliderPos.y, 0, 100, 192, 36)
 end
 
 function TelaInicio:update(dt)
@@ -32,7 +33,8 @@ function TelaInicio:draw()
         botao:draw()
     end
     botaoSlider:draw()
-    love.graphics.print("Dificuldade = " .. dificuldadeJogo, 350, 650)
+    love.graphics.printf("Dificuldade = " .. dificuldadeJogo, botaoSliderPos.x + 192 / 2 - 250, botaoSliderPos.y - 20, 500, "center")
+    love.graphics.setFont(MAIN_FONT)
 end
 
 function TelaInicio:ativarBotoes()

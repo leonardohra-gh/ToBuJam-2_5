@@ -4,7 +4,7 @@ require("core.auxiliary.debug")
 Jogador = require("entitiesGame.jogador")
 Parede = require("entitiesGame.parede")
 Chao = require("entitiesGame.chao")
-ChaoCraquelado = require("entitiesGame.chaoCraquelado")
+PatinhoBorracha = require("entitiesGame.patinhoBorracha")
 ChaoEscorregadio = require("entitiesGame.chaoEscorregadio")
 LancaDardos = require("entitiesGame.lancaDardos")
 Robozinho = require("entitiesGame.robozinho")
@@ -30,7 +30,7 @@ function love.load()
     -- local chao = Chao(300, 300)
     -- local chaoEscorregadio = chaoEscorregadio(300, 300)
     -- local parede2 = Parede(900, 300)
-    --local chaoCraquelado = ChaoCraquelado(100, 200)
+    --local patinhoBorracha = PatinhoBorracha(100, 200)
     -- local ruaSize = 96
     -- local mult = 1.5
     -- local xi, yi = 0, 400
