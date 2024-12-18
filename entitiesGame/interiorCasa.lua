@@ -100,7 +100,9 @@ function InteriorCasa:gerarCasaProcedural(qtdArmadilhas)
         local random_elem = armadilhas[keyset[math.random(#keyset)]]
         local random_i = math.random(2, self.width-1)
         local random_j = math.random(2, self.height-1)
-        if self:distanceToStart(random_i, random_j) > 2 and #self.armadilhasCasa[random_i][random_j] == 0 and (not string.find(self.estruturaCasa[random_i][random_j], "assets/paredes/")) then
+        if self:distanceToStart(random_i, random_j) > 2 and #self.armadilhasCasa[random_i][random_j] == 0 and 
+        (not string.find(self.estruturaCasa[random_i][random_j], "assets/paredes/")) and
+        self:distanceToGoal(random_i, random_j) > 2 then
             self.armadilhasCasa[random_i][random_j] = random_elem
             i = i + 1
         end
@@ -139,6 +141,10 @@ end
 
 function InteriorCasa:distanceToStart(i, j)
     return self:distanceBetween(i, j, self.start.i, self.start.j)
+end
+
+function InteriorCasa:distanceToGoal(i, j)
+    return self:distanceBetween(i, j, self.goal.i, self.goal.j)
 end
 
 function InteriorCasa:distanceBetween(i0, j0, i1, j1)
