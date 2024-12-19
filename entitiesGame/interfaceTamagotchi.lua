@@ -12,7 +12,7 @@ local imagem = love.graphics.newImage("assets/tamagotchiInterface.png")
 
 function InterfaceTamagotchi:new(tamagotchi)
     
-    self.image = love.graphics.newImage("assets/tamagotchiInterface.png")
+    self.image = imagem
     InterfaceTamagotchi.super.new(self, 200, 100, "assets/tamagotchiInterface.png", World, ShapeTypes.RECTANGLE, BodyTypes.STATIC, EntityTags.InterfaceTamagotchi, true, nil, PrioridadeDesenho.INTERFACE_TAMAGOTCHI)
     self.pos = {x = 200, y = 100}
     self.botoes = {

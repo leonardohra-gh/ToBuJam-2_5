@@ -64,6 +64,7 @@ end
 
 function iniciarJogo()
     mudarTelaPara(TELA.JOGO)
+    telaAtual:atualizarTempoCriacaoTamagotchi()
     telaAtual:criarCasas()
     criarJogador()
     criarLoja()
@@ -155,7 +156,7 @@ function criarTamagotchiEmUmaCasa()
     for i, casa in ipairs(todasCasas) do
         if casa.tamagotchi == nil then
             casa:criarTamagotchi()
-            break
+            return
         end
     end
 end

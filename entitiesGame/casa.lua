@@ -32,7 +32,7 @@ function Casa:draw()
     end
 
     Casa.super.draw(self)
-    if not (self.tamagotchi == nil) then
+    if not (self.tamagotchi == nil) and not self.tamagotchi.satisfeito then
         self.tamagotchi:desenharNecessidades()
         self.tamagotchi:draw()
     end    

@@ -5,7 +5,7 @@ local Janela = require("classesGame.Janela")
 local Tela = require("classesGame.Tela")
 local TelaJogo = Tela:extend()
 
-local TEMPOCRIACAOTAMAGOTCHI = 2
+local TEMPOCRIACAOTAMAGOTCHI = 130
 
 local mapaJogo = nil
 local jogoPausado = false
@@ -18,7 +18,7 @@ function TelaJogo:new()
 end
 
 function TelaJogo:update(dt)
-    contadorCriarTamagotchi = contadorCriarTamagotchi + 1
+    contadorCriarTamagotchi = contadorCriarTamagotchi + dt
     if TEMPOCRIACAOTAMAGOTCHI <= contadorCriarTamagotchi then
         contadorCriarTamagotchi = 0
         criarTamagotchiEmUmaCasa()
@@ -46,6 +46,10 @@ function TelaJogo:ativarBotoes()
 end
 
 function TelaJogo:desativarBotoes()
+end
+
+function TelaJogo:atualizarTempoCriacaoTamagotchi()
+    TEMPOCRIACAOTAMAGOTCHI = TEMPOCRIACAOTAMAGOTCHI - dificuldadeJogo
 end
 
 function TelaJogo:criarCasas()

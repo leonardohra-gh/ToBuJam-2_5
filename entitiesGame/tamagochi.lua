@@ -18,6 +18,7 @@ local imageNecessidadeBrincar = "assets/notification_fun.png"
 local imageNecessidadeComida = "assets/notification_feed.png"
 local imageNecessidadeDormir = "assets/notification_sleep.png"
 
+local TEMPO_SATISFEITO = 15
 
 function Tamagotchi:new(x, y)
     local atravessavel, size, drawPriority = true, nil, PrioridadeDesenho.TAMAGOCHI
@@ -32,24 +33,18 @@ function Tamagotchi:new(x, y)
         COMIDA_INICIAL = 1000 * superCharge,
         DORMIR_INICIAL = 1200 * superCharge
     }
+    self.satisfeito = true
+    self.contadorSatisfeito = 0
     self.necessidades = {
-        AGUA = (0.8 + 0.2 * math.random()) * self.necessidadesValorInicial.AGUA_INICIAL,
-        BANHO = (0.8 + 0.2 * math.random()) * self.necessidadesValorInicial.BANHO_INICIAL,
-        BRINCAR = (0.8 + 0.2 * math.random()) * self.necessidadesValorInicial.BRINCAR_INICIAL,
-        COMIDA = (0.8 + 0.2 * math.random()) * self.necessidadesValorInicial.COMIDA_INICIAL,
-        DORMIR = (0.8 + 0.2 * math.random()) * self.necessidadesValorInicial.DORMIR_INICIAL
+        AGUA = self.necessidadesValorInicial.AGUA_INICIAL,
+        BANHO = self.necessidadesValorInicial.BANHO_INICIAL,
+        BRINCAR = self.necessidadesValorInicial.BRINCAR_INICIAL,
+        COMIDA = self.necessidadesValorInicial.COMIDA_INICIAL,
+        DORMIR = self.necessidadesValorInicial.DORMIR_INICIAL
     }
     self.necessidadeAtual = NECESSIDADE:aleatoria()
-    local botoesX, botoesY = self.physics:getPositionRounded()
     self.interface = InterfaceTamagotchi(self)
     self:updateImagem()
-    -- self.botoes = {
-    --     DARAGUA = BotaoPadrao(botoesX, botoesY - 20, "", self.darAgua),
-        
-    -- }
-    -- for i, botao in pairs(self.botoes) do
-    --     botao:desativar()
-    -- end
 end
 
 function Tamagotchi:moverPara(x, y)
@@ -59,8 +54,17 @@ end
 function Tamagotchi:update(dt)
     
     if self.estaVivo then
-        self:aumentarNecessidade(dt)
-        self.estaVivo = self:checarVida()
+
+        if self.satisfeito then
+            self.contadorSatisfeito = self.contadorSatisfeito + dt
+            if TEMPO_SATISFEITO <= self.contadorSatisfeito then
+                self.contadorSatisfeito = 0
+                self.satisfeito = false
+            end
+        else
+            self:aumentarNecessidade(dt)
+            self.estaVivo = self:checarVida()
+        end
     else
         self:destruir()
         local jogador = GetWorldEntitiesByTag(EntityTags.JOGADOR)[1]
@@ -81,7 +85,7 @@ function Tamagotchi:draw()
         end
     end
 
-    if self.estaVivo and self.physics.body:isActive() then
+    if self.estaVivo and not self.satisfeito and self.physics.body:isActive() then
         if not jogadorDentroDaCasa then
             Tamagotchi.super.draw(self)
             self.interface:draw()
@@ -132,7 +136,6 @@ end
 
 function Tamagotchi:desenharNecessidades()
     if self.estaVivo and self.physics.body:isActive() then
-        Tamagotchi.super.draw(self)
         local x, y = self.physics:getPositionRounded()
         local barX, barY = x - 50 / 2, y - 50
         if self.necessidadeAtual == NECESSIDADE.AGUA then
@@ -204,6 +207,8 @@ function Tamagotchi:atenderNecessidade(necessidade)
             self.necessidades.DORMIR = self.necessidadesValorInicial.DORMIR_INICIAL
         end
     
+        self.satisfeito = true
+        self.contadorSatisfeito = 0
         self.necessidadeAtual = NECESSIDADE:aleatoria()
         self:updateImagem()
     end
