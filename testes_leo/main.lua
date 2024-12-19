@@ -22,7 +22,7 @@ end
 function love.load()
     love.window.setMode(1366, 768)
     CreateWorld()
-    local player = Jogador(800, 300)
+    local player = Jogador(500, 600)
     --local parede = Parede(300, 300)
     -- local lancaDardos = LancaDardos(364, 300, 300)
     -- local parede = Parede(900, 300)
