@@ -19,12 +19,12 @@ local imageNecessidadeComida = "assets/notification_feed.png"
 local imageNecessidadeDormir = "assets/notification_sleep.png"
 
 local TEMPO_SATISFEITO = 15
+local superCharge = 0
 
 function Tamagotchi:new(x, y)
     local atravessavel, size, drawPriority = true, nil, PrioridadeDesenho.TAMAGOCHI
     Tamagotchi.super.new(self, x, y, imagePath, World, ShapeTypes.CIRCLE, BodyTypes.DYNAMIC, EntityTags.TAMAGOCHI, atravessavel, size, drawPriority)
-    
-    local superCharge = 1 - dificuldadeJogo / 101
+
     self.estaVivo = true
     self.necessidadesValorInicial = {
         AGUA_INICIAL = 300 * superCharge,
@@ -263,6 +263,10 @@ end
 -- function Tamagotchi:estaVivo()
 --     return self.estaVivo
 -- end
+
+function atualizarSuperCharge()
+    superCharge = 1 - dificuldadeJogo / 101
+end
 
 function Tamagotchi:checkInterfaceClick()
     if self.interface.ativa and self.interface:isHovered() then

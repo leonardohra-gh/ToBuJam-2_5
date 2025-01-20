@@ -12,14 +12,13 @@ local mochilaInterface = love.graphics.newImage("assets/mochilaInterface.png")
 
 function Mochila:new()
     self.pos = {x = 1225, y = 130}
-    self.dinheiro = 0
+    self.dinheiro =10000
     self.itens = {
         pantufa = 0,
         cobertor = 0,
         botasDeNeve = 0,
         escudo = 0,
-        patins = 0,
-        superCharger = 0
+        patins = 0
     }
     self.itensSelecionados = {
         pantufa = false,
@@ -41,11 +40,9 @@ end
 function Mochila:draw()
     love.graphics.draw(mochilaInterface, self.pos.x, self.pos.y)
     love.graphics.draw(ITEM.PATINS.IMAGEM, self.pos.x - botaoWidth / 2 + botaoX + botaoSx, self.pos.y - botaoHeight / 2 + botaoY + botaoSy)
-    love.graphics.draw(ITEM.SUPERCHARGER.IMAGEM, self.pos.x - botaoWidth / 2 + botaoX + botaoSx, self.pos.y - botaoHeight / 2 + botaoY + 2 * botaoSy)
     love.graphics.draw(Moedas:GetImagem(), self.pos.x + botaoX - botaoWidth / 2, self.pos.y + botaoY + 2 * botaoSy + 30)
 
     love.graphics.print(self.itens.patins, self.pos.x+ botaoX + botaoSx + 12, self.pos.y + botaoY + botaoSy + 10)
-    love.graphics.print(self.itens.superCharger, self.pos.x+ botaoX + botaoSx + 12, self.pos.y + botaoY + 2 * botaoSy + 10)
     love.graphics.print(self.dinheiro, self.pos.x+ botaoX + 12, self.pos.y + botaoY + 2 * botaoSy + 30)
 end
 
@@ -99,8 +96,6 @@ function Mochila:AddItem(item)
         self.botoes.escudo:AddItem()
     elseif item == ITEM.PATINS then
         self.itens.patins = self.itens.patins + 1
-    elseif item == ITEM.SUPERCHARGER then
-        self.itens.superCharger = self.itens.superCharger + 1
     end
     
 end
@@ -116,8 +111,6 @@ function Mochila:RemoverItem(item)
         self.botoes.escudo:RemoverItem()
     elseif item == ITEM.PATINS and 1 <= self.itens.patins then
         self.itens.patins = self.itens.patins - 1
-    elseif item == ITEM.SUPERCHARGER and 1 <= self.itens.superCharger then
-        self.itens.superCharger = self.itens.superCharger - 1
     end
     
 end

@@ -29,16 +29,16 @@ end
 function Jogador:mover()
     local velocityX, velocityY = 0, 0
     
-    if love.keyboard.isDown("right") then
+    if love.keyboard.isDown("right") or love.keyboard.isDown("d") then
         velocityX = self.speed
     end
-    if love.keyboard.isDown("left") then
+    if love.keyboard.isDown("left") or love.keyboard.isDown("a") then
         velocityX = - self.speed
     end
-    if love.keyboard.isDown("up") then
+    if love.keyboard.isDown("up") or love.keyboard.isDown("w") then
         velocityY = - self.speed
     end
-    if love.keyboard.isDown("down") then
+    if love.keyboard.isDown("down") or love.keyboard.isDown("s") then
         velocityY = self.speed
     end
     

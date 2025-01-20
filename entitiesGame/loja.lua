@@ -23,7 +23,6 @@ function Loja:new(x, y)
         comprarBotasNeve = BotaoLoja(balcaoX + 240, balcaoY + 208, Items.BOTASNEVE.NOME .. " $" .. Items.BOTASNEVE.PRECO, "assets/botasNeve.png", self.venderBotasNeve),
         comprarEscudo = BotaoLoja(balcaoX + 512, balcaoY + 272, Items.ESCUDO.NOME .. " $" .. Items.ESCUDO.PRECO, "assets/escudo.png", self.venderEscudo),
         comprarPatins = BotaoLoja(balcaoX + 240, balcaoY + 336, Items.PATINS.NOME .. " $" .. Items.PATINS.PRECO, "assets/patins.png", self.venderPatins),
-        comprarSuperCharger = BotaoLoja(balcaoX + 512, balcaoY + 400, Items.SUPERCHARGER.NOME .. " $" .. Items.SUPERCHARGER.PRECO, "assets/superCharger.png", self.venderSuperCharger)
     }
     for i, botao in pairs(self.botoes) do
         botao:desativar()
@@ -92,14 +91,11 @@ end
 function Loja:venderPatins()
     local jogador = GetWorldEntitiesByTag(EntityTags.JOGADOR)[1]
     if jogador:PodeAumentarVelocidade() then
-        venderItem(Items.PATINS)
-        jogador:AddVelocidade()
+        local vendeu = venderItem(Items.PATINS)
+        if vendeu then
+            jogador:AddVelocidade()
+        end
     end
-end
-
-function Loja:venderSuperCharger()
-    venderItem(Items.SUPERCHARGER)
-    Tamagotchi:chargeUp()
 end
 
 function Loja:destruir()
@@ -110,12 +106,17 @@ function Loja:destruir()
 end
 
 function venderItem(item)
+
     local precoItem = item.PRECO
     local jogador = GetWorldEntitiesByTag(EntityTags.JOGADOR)[1]
     if jogador.mochila:TemDinheiroSuficiente(precoItem) then
         jogador.mochila:AddItem(item)
         jogador.mochila:RemoverDinheiro(precoItem)
+        return true
     end
+
+    return false
+
 end
 
 return Loja

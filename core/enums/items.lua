@@ -28,12 +28,6 @@ local Items= {
         PRECO = 500,
         IMAGEM_PATH = "assets/patins.png",
         IMAGEM = love.graphics.newImage("assets/patins.png")
-    },
-    SUPERCHARGER = {
-        NOME = "Supercharger",
-        PRECO = 150,
-        IMAGEM_PATH = "assets/superCharger.png",
-        IMAGEM = love.graphics.newImage("assets/superCharger.png")
     }
 }
 

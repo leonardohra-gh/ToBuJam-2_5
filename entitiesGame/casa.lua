@@ -7,21 +7,23 @@ local EntityTags = require("enumsGame.EntityTags")
 local Tamagochi = require("entitiesGame.tamagochi")
 local InteriorCasa = require("entitiesGame.interiorCasa")
 
+local keyboard_E = love.graphics.newImage("assets/keyboard_E.png")
+
 function Casa:new(x, y)
     math.randomseed(os.time() + math.random())
     local corCasa = math.random(5)
     local imagePath = "assets/casa_" .. corCasa .. ".png"
     local atravessavel, size, drawPriority = nil, nil, PrioridadeDesenho.CASA
-    atravessavel = true
+    atravessavel = false
     Casa.super.new(self, x, y, imagePath, World, ShapeTypes.RECTANGLE, BodyTypes.STATIC, EntityTags.CASA, atravessavel, size, drawPriority)
     self.tamagotchi = nil
     self.interior = nil
-    self.gerarLayout = false
+    self.jogadorPodeEntrar = false
 end
 
 function Casa:update(dt)
     Casa.super.update(self, dt)
-    if self.gerarLayout then
+    if self.jogadorPodeEntrar and love.keyboard.isDown("e") then
         self:Entrar()
     end
 end
@@ -35,19 +37,30 @@ function Casa:draw()
     if not (self.tamagotchi == nil) and not self.tamagotchi.satisfeito then
         self.tamagotchi:desenharNecessidades()
         self.tamagotchi:draw()
-    end    
+    end
+    
+    if self.jogadorPodeEntrar then
+        local x, y = self.physics:getPositionRounded()
+        love.graphics.draw(keyboard_E, x + 10, y - 50)
+    end
 end
 
 function Casa:beginContact(entidade_colisora, coll)
     if entidade_colisora.tag == EntityTags.JOGADOR then
-        self.gerarLayout = true
+        self.jogadorPodeEntrar = true
+    end
+end
+
+function Casa:endContact(entidade_colisora, coll)
+    if entidade_colisora.tag == EntityTags.JOGADOR then
+        self.jogadorPodeEntrar = false
     end
 end
 
 function Casa:Entrar()
     if not jogadorDentroDaCasa then
         self.interior = InteriorCasa(6, self)
-        self.gerarLayout = false
+        self.jogadorPodeEntrar = false
         local jogador = GetWorldEntitiesByTag(EntityTags.JOGADOR)[1]
         jogador:savePosAoEntrarNaCasa()
     
